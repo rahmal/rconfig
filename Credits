@@ -1,0 +1,10 @@
+Thanks to everyone I included here. RConfig would not exist without their contributions.
+
+Mike Sandler, Kurt Stephens, CashNetUSA (CNU):
+  - The core of RConfig started as a stand-alone class called CnuConfig, living within the CNU codebase.  
+  - It was originally created by Mike Sandler as a config solution for CNU's internal web apps.
+  - It only supported yaml files, but it boatsed a dottable notation not seen in any other ruby config libraries.
+  - It was later enhanced by Kurt Stephens to support indifferent access, and callbacks.
+
+BJ Dierkes (ParseConfig):
+  - The (key=value), properties-based config file parser in RConfig is loosely based on code Diekes' ParseConfig gem.
