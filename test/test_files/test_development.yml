@@ -1,0 +1,13 @@
+#test_mode: false
+secure_login: true
+perform_caching: true
+lazy: true
+
+default: "yo!" # Test for #default override for .default notation
+
+hash_1:
+  foo: "foo"
+  bar: "bar"
+  bok: "GB"
+  gb:  "GB"
+

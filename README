@@ -1,0 +1,35 @@
+RConfig
+=============
+by Rahmal Conda - http://www.rahmalconda.com
+
+ * RConfig provides a dottable, hash, array, and argument access to YAML 
+   configuration files
+ * Implements multilevel caching to reduce disk accesses
+ * Overlays multiple configuration files in an intelligent manner
+
+
+Requirements
+============
+
+Currently you need all of those things to get Gullery to run:
+
+ * Ruby -v of 1.8.2 (25-05-2004) or greater.
+ * A database that is supported by Rails migrations.
+ * Ruby drivers for your database.
+ * For best performance, you should have a web server running either
+   Apache or Lighttpd along with FastCGI, although these aren't
+   strictly required--you can use Ruby's built-in web server for
+   low-volume testing.
+
+
+Installation
+============
+
+Usage
+============
+
+Running tests
+=============
+
+
+

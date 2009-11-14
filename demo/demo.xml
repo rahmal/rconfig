@@ -1,0 +1,13 @@
+<demo>
+<admin_email>root@localhost</admin_email>
+<listen_ip>127.0.0.1</listen_ip>
+<listen_port>87345</listen_port>
+<group1>
+  <user_name>johnny</user_name>
+  <group_name>daemons</group_name>
+</group1>
+<group2>
+  <user_name>rita</user_name>
+  <group_name>daemons</group_name>
+</group2>
+</demo>
