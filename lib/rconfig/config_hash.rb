@@ -1,7 +1,6 @@
   class ConfigHash < HashWithIndifferentAccess
 
     # HashWithIndifferentAccess#dup always returns HashWithIndifferentAccess!
-    # -- kurt@cashnetusa.com 2007/10/18
     def dup
       self.class.new(self)
     end
@@ -38,13 +37,13 @@
       value = self[method]
       case args.size
         when 0:
-          # e.g.: RConfig.global.method
+          # e.g.: RConfig.application.method
           ;
         when 1:
-          # e.g.: RConfig.global.method(one_arg)
+          # e.g.: RConfig.application.method(one_arg)
           value = value.send(args[0])
         else
-          # e.g.: RConfig.global.method(arg_one, args_two, ...)
+          # e.g.: RConfig.application.method(arg_one, args_two, ...)
           value = value[args]
       end
       # value =  convert_value(value)
@@ -72,7 +71,6 @@
     
     ## 
     # HashWithIndifferentAccess#update is broken!
-    # This took way too long to figure this out:
     # Hash#update returns self,
     # BUT,
     # HashWithIndifferentAccess#update does not!
@@ -84,7 +82,6 @@
     #   => { :b => 2, :c => 3 } # WTF?
     #
     # Subclasses should *never* override methods and break their protocols!!!!
-    # -- kurt@cashnetusa.com 2007/03/28
     def update(hash)
       super(hash)
       self
