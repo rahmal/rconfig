@@ -1,35 +1,76 @@
-RConfig
-=============
-by Rahmal Conda - http://www.rahmalconda.com
 
- * RConfig provides a dottable, hash, array, and argument access to YAML 
-   configuration files
- * Implements multilevel caching to reduce disk accesses
- * Overlays multiple configuration files in an intelligent manner
+= RConfig 
 
+The complete solution for Ruby Configuration Management. RConfig is a Ruby library that manages configuration within Ruby applications. It bridges the gap between yaml, xml, and key/value based properties files, by providing a centralized solution to handle application configuration from one location. It provides the simplicity of hash-based access, that Rubyists have come to know and love, supporting your configuration style of choice, while providing many new features, and an elegant API.
 
-Requirements
-============
+== Features
+ 
+* Simple, easy to install and use.
+* Supports yaml, xml, and properties files.
+* Yaml and xml files supprt infinite level of configuration grouping.
+* Intuitive dot-notation 'key chaining' argument access.
+* Simple well-known hash/array based argument access.
+* Implements multilevel caching to reduce disk accesses
+* Overlays multiple configuration files to support environment and host-specific configuration.
+  
+== Example
 
-Currently you need all of those things to get Gullery to run:
+  demo.yml =>
+   server:
+     address: host.domain.com
+     port: 81
+   ...
 
- * Ruby -v of 1.8.2 (25-05-2004) or greater.
- * A database that is supported by Rails migrations.
- * Ruby drivers for your database.
- * For best performance, you should have a web server running either
-   Apache or Lighttpd along with FastCGI, although these aren't
-   strictly required--you can use Ruby's built-in web server for
-   low-volume testing.
+ demo.rb => 
+  require 'rubygems'
+  require 'rconfig'
+  RConfig.demo[:server][:port] => 81
+  RConfig.demo.server.address  => 'host.domain.com'
+  ...
 
+== Requirements
 
-Installation
-============
+* Ruby (Developed on 1.8.6)
+* RubyGems 
+* active_support
 
-Usage
-============
+== Install
 
-Running tests
-=============
+  sudo gem install rconfig
 
+== Tasks
 
+* Finish gemspec; build gem
+* Fix tests; convert to RSpec and Cucumber
+* Finish Documentation, including RDoc
+* Support multiple file types at once?
+
+== Known Issues
+  
+* Gem not currently built or released.  Requires manual install untit gemspec is completed
+
+== License
+
+(The MIT License)
+
+Copyright (c) 2009 Rahmal Conda <rahmal@gmail.com>
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+'Software'), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
