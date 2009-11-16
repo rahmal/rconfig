@@ -1,25 +1,21 @@
 #!/usr/bin/env ruby
 
+root_dir = File.dirname(__FILE__)
+conf_dir = File.expand_path(File.dirname(__FILE__))
+
+$LOAD_PATH << File.join(root_dir,"..","lib")
 
 # Test environment:
 ENV['TIER'] = 'development'
-TEST_DIR = File.expand_path(File.dirname(__FILE__))
-ENV['CONFIG_PATH'] = TEST_DIR + "/test_files/"
-ENV['CONFIG_FILE_TYPE'] = 'yml'
+ENV['CONFIG_PATH'] = conf_dir + "/test_files/"
 ENV.delete('CONFIG_OVERLAY') # Avoid unintended magic.
 
 # Test dependencies:
-require 'rubygems'
-#gem 'activesupport'
-require 'active_support'
 require 'test/unit'
 require 'fileutils' # FileUtils.touch
 
 # Test target:
-require "#{TEST_DIR}/../lib/rconfig/config_parser"
-require "#{TEST_DIR}/../lib/rconfig/config_hash"
-require "#{TEST_DIR}/../lib/rconfig/core_ext/hash"
-require "#{TEST_DIR}/../lib/rconfig"
+require 'rconfig'
 
 
 class RConfigTest < Test::Unit::TestCase

@@ -4,5 +4,5 @@ Mike Sandler, Kurt Stephens, CashNetUSA (CNU):
   - The core of logic of RConfig is based on a stand-alone class called CnuConfig, that resided in the CNU codebase.  
   - It was originally created by Mike Sandler as a config solution for CNU's internal web apps.
   - It only supported yaml files, but it boatsed a dottable notation not seen in any other ruby config libraries.
-  - It was later enhanced by Kurt Stephens to support indifferent access, and callbacks.
+  - It was later enhanced by Kurt Stephens to support indifferent access, reload support, and callbacks.
   - I have made some signifcant enhancements to RConfig since that original debut, all of which are in this gem.

@@ -73,11 +73,8 @@ class RConfig
   # conf, properties => <key=value> based config files
   #              xml => self-explanatory
   # Defaults to yml, if not specified.
-  YML_FILE_TYPES = [:yml, :yaml] unless defined? YML_FILE_TYPES
-  XML_FILE_TYPES = [:xml] unless defined? XML_FILE_TYPES
-  CNF_FILE_TYPES = [:cnf, :conf, :config, :properties] unless defined? CNF_FILE_TYPES
-  unless defined? CONFIG_FILE_TYPES
-    CONFIG_FILE_TYPES = YML_FILE_TYPES + XML_FILE_TYPES + CNF_FILE_TYPES
+  unless defined? CONFIG_FILE_TYPE
+    CONFIG_FILE_TYPE = (ENV['CONFIG_FILE_TYPE'] || 'yml')
   end
 
   # Use CONFIG_HOSTNAME environment variable to
@@ -103,177 +100,40 @@ class RConfig
     HOSTNAME, [HOSTNAME, :config_local]
   ] unless defined? SUFFIXES
 
-  ### Helper methods for white-box testing and debugging.
 
-  # Flag indicating whether or not to log errors that occur 
-  # in the process of handling config files.
-  @@verbose = (ENV['DEBUG_LEVEL'] == 'verbose')
-  def self.verbose=(x)
-    @@verbose = x.nil? ? false : x;
+  # Define a directory path for searching for config files.
+  unless defined? CONFIG_PATH
+    # A list of ';' or ':' separated directories to search for
+    # config files.
+    # Defaults to 'CONFIG_ROOT'.
+    CONFIG_PATH = 
+      ((x = ENV['CONFIG_PATH']) && ! x.blank? && x) || 
+      'CONFIG_ROOT'
   end
 
-  # A hash of each file that has been loaded.
-  @@config_file_loaded = nil
-  def self.config_file_loaded=(x)
-    @@config_file_loaded = x
-  end
-  def self.config_file_loaded
-    @@config_file_loaded
-  end
-  ### End Helper methods
 
-  # The list of directories to search for configuration files.
-  @@config_paths = []
-
-  # Hash of suffixes for a given config name.
-  # @@suffixes['name'] vs @@suffix['name_GB']
-  @@suffixes = {}
-
-  # Hash of yaml file names and their respective contents,  
-  # last modified time, and the last time it was loaded.
-  # @@cache[filename] = [yaml_contents, mod_time, time_loaded]
-  @@cache = {}
-
-  # Hash of config file base names and their existing filenames
-  # including the suffixes.  
-  # @@cache_files['ldap'] = ['ldap.yml', 'ldap_local.yml', 'ldap_<hostname>.yml']
-  @@cache_files = {}
-
-  # Hash of config base name and the contents of all its respective 
-  # files merged into hashes. This hash holds the data that is 
-  # accessed when RConfig is called. This gets re-created each time
-  # the config files are loaded.
-  # @@cache_hash['ldap'] = config_hash
-  @@cache_hash = {}
-
-  # The hash holds the same info as @@cache_hash, but it is only
-  # loaded once. If reload is disabled, data will from this hash 
-  # will always be passed back when RConfig is called.
-  @@cache_config_files = {} # Keep around incase reload_disabled.
-
-  # Hash of config base name and the last time it was checked for
-  # update.
-  # @@last_auto_check['ldap'] = Time.now
-  @@last_auto_check = {}
-
-  # Hash of callbacks Procs for when a particular config file has changed.
-  @@on_load = {}
-
-  # Flag indicating whether or not reload should be executed.
-  # It is defaulted to true in production, false otherwise.
-  @@reload_disabled = (ENV_TIER == 'production')
-  def self.reload_disabled=(x)
-    @@reload_disabled = x.nil? ? false : x
-  end
-
-  # The number of seconds between reloading of config files
-  # and automatic reload checks. Defaults to 5 minutes.
-  @@reload_delay = 300
-  def self.reload_delay=(x)
-    @@reload_delay = (x || 300)
-  end
-
-  ##
-  # Flushes cached config data, so that it can be reloaded from disk.
-  # It is recommended that this should be used with caution, and any
-  # need to reload in a production setting should minimized or
-  # completely avoided if possible.
-  def self.reload(force = false)
-    if force || !@@reload_disabled
-      flush_cache
-    end
-    nil
-  end
-
-  ##
-  # Sets the list of directories to search for
-  # configuration files.
-  # If reload is disabled, it can only be set once.
-  def self.config_paths=(paths)
-    return if @reload_disabled && config_paths_set?
-    if paths.is_a? String
-      path_sep = (paths =~ /;/) ? ';' : ':'
-      paths = paths.split(/#{path_sep}+/)
-    end
-    raise "The list of paths is invalid: [#{paths.inspect}]" if paths.blank?
-    paths.all? do |dir|
-      dir = CONFIG_ROOT if dir == 'CONFIG_ROOT'
-      unless File.directory?(dir)
-        raise "This directory is invalid: [#{dir.inspect}]"
-      end
-    end
-    reload
-    @@config_paths = paths
-  end
-  class << self; alias_method :set_config_paths, :config_paths= end
-
-  ##
-  # Adds the specified path to the list of directories to search for
-  # configuration files.
-  # It only allows one path to be entered at a time.
-  # If reload is disabled, it can onle be set once.
-  def self.set_config_path path
-    return if @reload_disabled && config_paths_set?
-    return unless path.is_a?(String)      # only allow string argument
-    path_sep = (path =~ /;/) ? ';' : ':'  # if string contains multiple paths
-    path = path.split(/#{path_sep}+/)[0]  # only accept first one.
-   
-    if @@config_paths.blank? 
-      set_config_paths(path)
-    else 
-      config_paths << path if File.directory?(path)
-      reload
-      @@config_paths
-    end    
-  end
-  class << self; alias_method :add_config_path, :set_config_path end
-      
-  ##
   # Returns a list of directories to search for
   # configuration files.
   # 
-  # Can be preset with config_paths=/set_config_path, 
-  # controlled via ENV['CONFIG_PATH'], 
-  # or defaulted to CONFIG_ROOT (assumming some sort of 
-  # application initiation as in RAILS).
+  # Can be controlled via ENV['CONFIG_PATH']
   # Defaults to [ CONFIG_ROOT ].
   #
-  # Examples:
-  #   export CONFIG_PATH="$HOME/work/config:CONFIG_ROOT" 
-  #   CONFIG_ROOT = RAILS_ROOT + "/config" unless defined? CONFIG_ROOT
+  # Example:
+  #   CONFIG_PATH="$HOME/work/config:CONFIG_ROOT" script/console
   #
-  def self.config_paths
-    return @@config_paths unless @@config_paths.blank?
-
-    begin
-      config_paths = ENV['CONFIG_PATH']
-    rescue
-      verbose_log "Forget something? No config paths! ENV['CONFIG_PATH'] is not set.",
-                  "Hint:  Use config_paths= or set_config_path."
-    end
-
-    begin
-      config_paths = [CONFIG_ROOT] rescue nil
-    rescue
-      verbose_log "Forget something?  No config paths! CONFIG_ROOT is not set.",
-                  "Hint:  Use config_paths= or set_config_path."
-    end
-
-    if @@config_paths.blank?
-       # TODO: Need real error.
-       raise "Forget something?  No config paths!\n" +
-             "Niether ENV['CONFIG_PATH'] or CONFIG_ROOT is set.\n" +
-             "Hint:  Use config_paths= or set_config_path."
-    end
-
-    @@config_paths
-  end
-
-  ##
-  # Indicates whether or not config_paths have been set.
-  # Returns true if @@config_paths has at least one directory.
-  def self.config_paths_set?
-    not @@config_paths.blank?
+  def self._config_path
+    @@_config_path ||=
+      begin
+        path_sep = (CONFIG_PATH =~ /;/) ? ';' : ':'
+        path = CONFIG_PATH.split(/#{path_sep}+/)
+        path = 
+          path.collect! do | x | 
+            x == 'CONFIG_ROOT' ? 
+              CONFIG_ROOT : 
+              x
+          end
+        path.freeze
+      end
   end
 
 
@@ -282,12 +142,14 @@ class RConfig
   # E.g. 'gb' for UK locale.
   #
   # Defaults from ENV['CONFIG_OVERLAY'].
-  def self.overlay
-    @@overlay ||= (x = ENV['CONFIG_OVERLAY']) && x.dup.freeze
+  def self._overlay
+    @@overlay ||= 
+      (x = ENV['CONFIG_OVERLAY']) &&
+      x.dup.freeze
   end
 
-  def self.overlay=(x)
-    flush_cache if @@overlay != x
+  def self._overlay=(x)
+    _flush_cache if @@overlay != x
     @@overlay = x && x.dup.freeze
   end
 
@@ -300,17 +162,18 @@ class RConfig
   # This allows code to specifically ask for config overlays
   # for a particular locale.
   #
-  def self.suffixes(name)
+  def self._suffixes(name)
     name = name.to_s
     @@suffixes[name] ||= 
       begin
-        ol = overlay
+        ol = _overlay
         name_x = name.dup
         if name_x.sub!(/_([A-Z]+)$/, '')
           ol = $1
         end
         name_x.freeze
-        result = if ol
+        result = 
+        if ol
           ol_ = ol.upcase
           ol = ol.downcase
           x = [ ]
@@ -327,14 +190,91 @@ class RConfig
         else
           [ name.dup.freeze, SUFFIXES.freeze ]
         end
-        result.freeze
 
-        verbose_log "suffixes(#{name}) => #{result.inspect}"
+        # $stderr.puts "#{name} => #{result.inspect}"
+        result.freeze
 
         result
       end
   end
 
+
+  # Hash of suffixes for a given config name.
+  # @@suffixes['name'] vs @@suffix['name_GB']
+  @@suffixes = { }
+
+  # Hash of yaml file names and their respective contents,  
+  # last modified time, and the last time it was loaded.
+  # @@cache[filename] = [yaml_contents, mod_time, time_loaded]
+  @@cache = {}
+
+  # Hash of config file base names and their existing filenames
+  # including the suffixes.  
+  # @@cache_files['ldap'] = ['ldap.yml', 'ldap_local.yml', 'ldap_<hostname>.yml']
+  @@cache_files = {}
+
+  # Hash of config base name and the contents of all its respective 
+  # files merged into hashes. This hash holds the data that is 
+  # accessed when RConfig is called. This gets re-created each time
+  # the config files are loaded.
+  # @@cache_hash['ldap'] = config_hash
+  @@cache_hash = { }
+
+  # The hash holds the same info as @@cache_hash, but it is only
+  # loaded once. If reload is disabled, data will from this hash 
+  # will always be passed back when RConfig is called.
+  @@cache_config_files = { } # Keep around incase reload_disabled.
+
+  # Hash of config base name and the last time it was checked for
+  # update.
+  # @@last_auto_check['ldap'] = Time.now
+  @@last_auto_check = { }
+
+  # Hash of callbacks Procs for when a particular config file has changed.
+  @@on_load = { }
+
+  # DON'T CALL THIS IN production.
+  def self._flush_cache
+    @@suffixes = { }
+    @@cache = { } 
+    @@cache_files = { } 
+    @@cache_hash = { }
+    @@last_auto_check = { }
+    self
+  end
+
+  # Flag indicating whether or not reload should be executed.
+  @@reload_disabled = false
+  def self._reload_disabled=(x)
+    @@reload_disabled = x.nil? ? false : x
+  end
+
+  # The number of seconds between reloading of config files
+  # and automatic reload checks.
+  @@reload_delay = 300
+  def self._reload_delay=(x)
+    @@reload_delay = x ||
+      300
+  end
+
+  # Flag indicating whether or not to log errors that occur 
+  # in the process of handling config files.
+  @@verbose = (ENV['DEBUG_LEVEL'] == 'verbose')
+  def self._verbose=(x)
+    @@verbose = x.nil? ? false : x;
+  end
+
+  # Helper methods for white-box testing and debugging.
+  
+  # A hash of each file that has been loaded.
+  # Can be used for white-box testing or debugging.
+  @@config_file_loaded = nil
+  def self._config_file_loaded=(x)
+    @@config_file_loaded = x
+  end
+  def self._config_file_loaded
+    @@config_file_loaded
+  end
 
   ##
   # Get each config file's yaml hash for the given config name, 
@@ -354,44 +294,51 @@ class RConfig
     now = Time.now
 
     # Get array of all the existing files file the config name.
-    config_files = self.get_config_files(name)
+    config_files = self._get_config_files(name)
 
-    verbose_log "load_config_files(#{name.inspect})" 
+    # STDERR.puts "load_config_files(#{name.inspect})"
     
     # Get all the data from all yaml files into as hashes
     hashes = config_files.collect do |f|
-      name, name_x, filename, ext, mtime = *f
+      name, name_x, filename, mtime = *f
 
       # Get the cached file info the specific file, if 
       # it's been loaded before.
       val, last_mtime, last_loaded = @@cache[filename] 
 
-      verbose_log "f = #{f.inspect}",
-        "cache #{name_x} filename = #{filename.inspect}",
-        "cache #{name_x} val = #{val.inspect}",
-        "cache #{name_x} last_mtime = #{last_mtime.inspect}",
-        "cache #{name_x} last_loaded = #{last_loaded.inspect}"
+      #if @@verbose && name_x == 'test'
+      #  STDERR.puts "f = #{f.inspect}"
+      #  STDERR.puts "cache #{name_x} filename = #{filename.inspect}"
+      #  STDERR.puts "cache #{name_x} val = #{val.inspect}"
+      #  STDERR.puts "cache #{name_x} last_mtime = #{last_mtime.inspect}"
+      #  STDERR.puts "cache #{name_x} last_loaded = #{last_loaded.inspect}"
+      #end
 
-      # Load the file if its never been loaded or its been more than
-      # so many minutes since last load attempt. (default: 5 minutes) 
-      if val.blank? || (now - last_loaded > @@reload_delay)
-        if force || val.blank? || mtime != last_mtime
-
-          verbose_log "mtime #{name.inspect} #{filename.inspect} " + 
-                      "changed #{mtime != last_mtime} : #{mtime.inspect} #{last_mtime.inspect}"
+      # Load the file if its never been loaded or its been more 
+      # than 5 minutes since last load attempt.
+      if val == nil || 
+        now - last_loaded > @@reload_delay
+        if force || 
+            val == nil || 
+            mtime != last_mtime
           
-          # Get contents from config file
-          File.open(filename) do |f|
-            verbose_log "RConfig: loading #{filename.inspect}" 
-            val = parse_file(f, ext)              
-            val = val[name] if ext == :xml # xml document must have root tag matching the file name.
-            verbose_log "RConfig: loaded #{filename.inspect} => #{val.inspect}" 
-            (@@config_file_loaded ||= { })[name] = config_files
+          # STDERR.puts "mtime #{name.inspect} #{filename.inspect} changed #{mtime != last_mtime} : #{mtime.inspect} #{last_mtime.inspect}" if @@verbose && name_x == 'test'
+
+          # mtime is nil if file does not exist.
+          if mtime 
+            File.open( filename ) do | f |
+              STDERR.puts "\nRConfig: loading #{filename.inspect}" if @@verbose
+              val = parse_file(f)
+              # xml document must have root tag matching the file name to be well-formed.
+              val = val[name] if CONFIG_FILE_TYPE == 'xml'
+              STDERR.puts "RConfig: loaded #{filename.inspect} => #{val.inspect}" if @@verbose
+              (@@config_file_loaded ||= { })[name] = config_files
+            end
           end
             
           # Save cached config file contents, and mtime.
           @@cache[filename] = [ val, mtime, now ]
-          verbose_log "cache[#{filename.inspect}] = #{@@cache[filename].inspect}" 
+          # STDERR.puts "cache[#{filename.inspect}] = #{@@cache[filename].inspect}" if @@verbose && name_x == 'test'
 
           # Flush merged hash cache.
           @@cache_hash[name] = nil
@@ -399,17 +346,17 @@ class RConfig
           # Config files changed or disappeared.
           @@cache_files[name] = config_files
 
-        end # if val == nil || (now - last_loaded > @@reload_delay)
-      end   # if force || val == nil || mtime != last_mtime
+         end
+      end
 
       val
     end
     hashes.compact!
 
-    verbose_log "load_config_files(#{name.inspect}) => #{hashes.inspect}"
+    # STDERR.puts "load_config_files(#{name.inspect}) => #{hashes.inspect}"
 
     # Keep last loaded config files around in case @@reload_dsabled.
-    @@cache_config_files[name] = hashes #unless hashes.empty?
+    @@cache_config_files[name] = hashes
 
     hashes
   end
@@ -417,17 +364,17 @@ class RConfig
   ##
   # Parses file based on file type.
   # 
-  def self.parse_file(conf_file, ext)
-    hash = case ext
-    when *YML_FILE_TYPES
+  def self.parse_file conf_file
+    hash = case CONFIG_FILE_TYPE
+    when 'yml','yaml'
       YAML::load(conf_file)
-    when *XML_FILE_TYPES
+    when 'xml'
       Hash.from_xml(conf_file)
-    when *CNF_FILE_TYPES
+    when 'conf','config','properties'
       PropertiesFileParser.parse(conf_file)
     else
       #TODO: Raise real error
-      raise "Unknown File type:#{ext}"
+      raise "Unknown File type:#{CONFIG_FILE_TYPE}"
     end
     hash.freeze
   end
@@ -441,23 +388,25 @@ class RConfig
   #     "/the/absolute/path/to/yaml.yml",
   #     # The mtime of the yml file or nil, if it doesn't exist.
   #   ]
-  def self.get_config_files(name) 
-    files = []
+  def self._get_config_files(name) 
+    files = [ ]
 
-    config_paths.reverse.each do | dir |
-      # splatting *suffix allows us to deal with multipart suffixes 
-      name_no_overlay, suffixes = suffixes(name)
+    _config_path.reverse.each do | dir |
+      # alexg: splatting *suffix allows us to deal with multipart suffixes 
+      name_no_overlay, suffixes = _suffixes(name)
       suffixes.map { | suffix | [ name_no_overlay, *suffix ].compact.join('_') }.each do | name_x |
-        CONFIG_FILE_TYPES.each do |ext|    
-          filename = filename_for_name(name_x, dir, ext)
-          if File.exists?(filename)
-            files << [ name, name_x, filename, ext, File.stat(filename).mtime ]
-          end
-        end
+        filename = filename_for_name(name_x, dir)
+        files <<
+        [ name,
+          name_x, 
+          filename, 
+          File.exist?(filename) ? File.stat(filename).mtime : nil, 
+        ]
       end
     end
 
-    verbose_log "get_config_files(#{name}) => #{files.select{|x| x[3]}.inspect}" 
+    # $stderr.puts "_get_config_files #{name} => "
+    # $stderr.puts "#{files.select{|x| x[3]}.inspect}"
 
     files
   end
@@ -465,8 +414,8 @@ class RConfig
   ##
   # Return the config file information for the given config name.
   #
-  def self.config_files(name)
-    @@cache_files[name] ||= get_config_files(name)
+  def self._config_files(name)
+    @@cache_files[name] ||= _get_config_files(name)
   end
 
   ##
@@ -476,28 +425,34 @@ class RConfig
   # Returns true if any files for config have changes since
   # last load.
   def self.config_changed?(name)
-    verbose_log "config_changed?(#{name.inspect})" 
+    # STDERR.puts "config_changed?(#{name.inspect})"
     name = name.to_s # if name.is_a?(Symbol)
-    ! (@@cache_files[name] === get_config_files(name))
+    ! (@@cache_files[name] === _get_config_files(name))
   end
 
   ## 
   # Get the merged config hash for the named file.
+  #
+  def self.config_hash(name)
+    name = name.to_s # if name.is_a?(Symbol)
+    _config_hash(name)
+  end
+
+
+  ## 
   # Returns a cached indifferent access faker hash merged
   # from all config files for a name.
   #
-  def self.config_hash(name)
-    verbose_log "config_hash(#{name.inspect})"
-
-    name = name.to_s
+  def self._config_hash(name)
+    # STDERR.puts "_config_hash(#{name.inspect})"; result = 
     unless result = @@cache_hash[name]
       result = @@cache_hash[name] = 
-        make_indifferent(
-          merge_hashes(
-            load_config_files(name)
-          )
-        )
-      verbose_log "config_hash(#{name.inspect}): reloaded" 
+        _make_indifferent(
+                          _merge_hashes(
+                                        load_config_files(name)))
+
+      STDERR.puts "_config_hash(#{name.inspect}): reloaded" if @@verbose
+      
     end
 
     result
@@ -537,50 +492,53 @@ class RConfig
 
 
   # Do reload callbacks.
-  def self.fire_on_load(name)
+  def self._fire_on_load(name)
     callbacks = 
       (@@on_load['ANY'] || EMPTY_ARRAY) + 
       (@@on_load[name] || EMPTY_ARRAY)
     callbacks.uniq!
-    verbose_log "fire_on_load(#{name.inspect}): callbacks[#{callbacks.inspect}]"  unless callbacks.empty?
-    callbacks.each{|cb| cb.call()}
+    STDERR.puts "_fire_on_load(#{name.inspect}): callbacks = #{callbacks.inspect}" if @@verbose && ! callbacks.empty?
+    callbacks.each do | cb |
+      cb.call()
+    end
   end
 
 
   # If config files have changed,
   # Caches are flushed, on_load triggers are run.
   def self.check_config_changed(name = nil)
-    changed = []
+    changed = [ ]
+
+    # STDERR.puts "check_config_changed(#{name.inspect})"
     if name == nil
       @@cache_hash.keys.dup.each do | name |
-        if config_has_changed?(name)
+        if _check_config_changed(name)
           changed << name
         end
       end
     else
       name = name.to_s #  if name.is_a?(Symbol)
-      if config_has_changed?(name)
+      if _check_config_changed(name)
         changed << name
       end
     end
-
-    verbose_log "check_config_changed(#{name.inspect}) => #{changed.inspect}" 
+    STDERR.puts "check_config_changed(#{name.inspect}) => #{changed.inspect}" if @@verbose && ! changed.empty?
 
     changed.empty? ? nil : changed
   end
 
 
-  def self.config_has_changed?(name)
-    verbose_log "config_has_changed?(#{name.inspect}), reload_disabled=#{@@reload_disabled}" 
-
+  def self._check_config_changed(name)
     changed = false
 
-    if config_changed?(name) && !@@reload_disabled 
+    # STDERR.puts "RConfig: config changed? #{name.inspect} reload_disabled = #{@@reload_disabled}" if @@verbose
+    if config_changed?(name) && ! @@reload_disabled 
+      STDERR.puts "RConfig: config changed #{name.inspect}" if @@verbose
       if @@cache_hash[name]
         @@cache_hash[name] = nil
 
         # force on_load triggers.
-        fire_on_load(name)
+        _fire_on_load(name)
       end
 
       changed = true
@@ -593,7 +551,7 @@ class RConfig
   ##
   # Returns a merge of hashes.
   #
-  def self.merge_hashes(hashes)
+  def self._merge_hashes(hashes)
     hashes.inject({ }) { | n, h | n.weave(h, false) }
   end
 
@@ -602,20 +560,20 @@ class RConfig
   # Recursively makes hashes into frozen IndifferentAccess ConfigFakerHash
   # Arrays are also traversed and frozen.
   #
-  def self.make_indifferent(x)
+  def self._make_indifferent(x)
     case x
     when Hash
       unless x.frozen?
         x.each_pair do | k, v |
-          x[k] = make_indifferent(v)
+          x[k] = _make_indifferent(v)
         end
         x = ConfigHash.new.merge!(x).freeze
       end
-      verbose_log "make_indefferent: x = #{x.inspect}:#{x.class}"
+      # STDERR.puts "x = #{x.inspect}:#{x.class}"
     when Array
       unless x.frozen?
         x.collect! do | v |
-          make_indifferent(v)
+          _make_indifferent(v)
         end
         x.freeze
       end
@@ -647,11 +605,11 @@ class RConfig
   # returned from the application config, it will also check
   # ENV for a value matching the specified key.
   #
-  # Ex.1  RConfig[:test_mode] =>
+  # Ex.1  RConfig[:test_mode] == 
   #        RConfig.application[:test_mode] || 
   #        RConfig.application.test_mode
   #
-  # Ex.2  RConfig[:web_app_root] => ENV['WEB_APP_ROOT']
+  # Ex.2  RConfig[:web_app_root] == ENV['WEB_APP_ROOT']
   #       
   # NOTE: The application config file can be in any of 
   #       the supported formats (yml, xml, conf, etc.)
@@ -664,9 +622,9 @@ class RConfig
   # Get the value specified by the args, in the file specified by th name 
   #
   def self.with_file(name, *args)
-    # verbose_log "with_file(#{name.inspect}, #{args.inspect})"; result = 
+    # STDERR.puts "with_file(#{name.inspect}, #{args.inspect})"; result = 
     args.inject(get_config_file(name)) { | v, i | 
-      # verbose_log "v = #{v.inspect}, i = #{i.inspect}"
+      # STDERR.puts "v = #{v.inspect}, i = #{i.inspect}"
       case v
       when Hash
         v[i.to_s]
@@ -676,7 +634,7 @@ class RConfig
         nil
       end
     }
-    # verbose_log "with_file(#{name.inspect}, #{args.inspect}) => #{result.inspect}"; result
+    # STDERR.puts "with_file(#{name.inspect}, #{args.inspect}) => #{result.inspect}"; result
   end
   
   ##
@@ -684,19 +642,16 @@ class RConfig
   # Will auto check every 5 minutes, for longer running apps.
   #
   def self.get_config_file(name)
-    name = name.to_s 
+    # STDERR.puts "get_config_file(#{name.inspect})"
+    name = name.to_s # if name.is_a?(Symbol)
     now = Time.now
-
     if (! @@last_auto_check[name]) || (now - @@last_auto_check[name]) > @@reload_delay
       @@last_auto_check[name] = now
       check_config_changed(name)
     end
-
-    result = config_hash(name)
-
-    verbose_log "get_config_file(#{name.inspect}) => #{result.inspect}"
-
-    result
+    # result = 
+    _config_hash(name)
+    # STDERR.puts "get_config_file(#{name.inspect}) => #{result.inspect}"; result
   end
   
   
@@ -724,7 +679,7 @@ class RConfig
   # Creates a dottable hash for all Hash objects, recursively.
   #
   def self.create_dottable_hash(value)
-    make_indifferent(value)
+    _make_indifferent(value)
   end
 
   ##
@@ -736,40 +691,32 @@ class RConfig
   #   RConfig.provider.foo   => RConfig.with_file(:provider).foo
   #
   def self.method_missing(method, *args)
+    # STDERR.puts "#{self}.method_missing(#{method.inspect}, #{args.inspect})"
     value = with_file(method, *args)
-    verbose_log "#{self}.method_missing(#{method.inspect}, #{args.inspect}) => #{value.inspect}"
+    # STDERR.puts "#{self}.method_missing(#{method.inspect}, #{args.inspect}) => #{value.inspect}"
     value
   end
 
   ##
-  # Creating an instance isn't required.  But if you just have to a reference to RConfig
-  # you can get it using RConfig.instance.  It's a singleton, so there's never more than
-  # one.  The instance has no state, and no methods of it's own accept what it inherits 
-  # from object. But this method delegates back to the class, so configuration data is 
-  # still accessible.
-
-  # Example:
+  # DO NOT USE in production, if you think you need to use this in production: DONT!!!!
   #
-  #   config = RConfig.instance
-  #   config.provider(:foo) => RConfig.provider(:foo)
-  #   config.provider.foo   => RConfig.provider.foo
-  #
-  def method_missing(method, *args)
-    self.class.method_missing(method, *args)
+  def self.reload(force = false)
+    if force || ! @@reload_disabled
+      return unless ['development', 'integration'].include?(ENV_TIER)
+      _flush_cache
+    end
+    nil
   end
 
   ##
   # Creating an instance isn't required.  But if you just have to a reference to RConfig
-  # you can get it using RConfig.instance.  It's a singleton, so there's never more than
-  # one.  The instance has no state, and no methods of it's own accept what it inherits 
-  # from object. But this method delegates back to the class, so configuration data is 
-  # still accessible.
-  #
-  # Example:
-  #
-  #   config = RConfig.instance
-  #   config[:foo] => RConfig[:foo]
-  #
+  # you can get using RConfig.instance.  It's a singleton, so there's never more than
+  # one.  The instamce has no methods of it's own accept what it inherits from object.
+  # But it delegates back to the class, so configuration data is still accessible.
+  def method_missing(method, *args)
+    self.class.method_missing(method, *args)
+  end
+
   def [](key)
     self.class[key]
   end
@@ -777,28 +724,11 @@ class RConfig
 protected
 
   ##
-  # Flushes cached config data. This should avoided in production
-  # environments, if possible.
-  def self.flush_cache
-    @@suffixes = { }
-    @@cache = { } 
-    @@cache_files = { } 
-    @@cache_hash = { }
-    @@last_auto_check = { }
-    self
-  end
-
-  ##
   # Get complete file name, including file path for the given config name
   # and directory.
-  def self.filename_for_name(name, dir = config_paths[0], ext = :yml)
-    File.join(dir, "#{name}.#{ext}")
+  #
+  def self.filename_for_name(name, dir = _config_path[0])
+    File.join(dir, name.to_s + '.' + CONFIG_FILE_TYPE)
   end
-
-  ##
-  # Helper method for logging verbose messages.
-  def self.verbose_log *args
-    $stderr.puts(args.join("\n")) if @@verbose
-  end
-
+   
 end # RConfig

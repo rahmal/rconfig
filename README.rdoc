@@ -10,10 +10,14 @@ The complete solution for Ruby Configuration Management. RConfig is a Ruby libra
 * Yaml and xml files supprt infinite level of configuration grouping.
 * Intuitive dot-notation 'key chaining' argument access.
 * Simple well-known hash/array based argument access.
-* Implements multilevel caching to reduce disk accesses
+* Implements multilevel caching to reduce disk access.
+* Short-hand access to 'global' application configuration, and shell environment.
 * Overlays multiple configuration files to support environment and host-specific configuration.
   
 == Example
+
+  shell/console =>
+    export LANG=en
 
   demo.yml =>
    server:
@@ -21,18 +25,25 @@ The complete solution for Ruby Configuration Management. RConfig is a Ruby libra
      port: 81
    ...
 
+  application.properties =>
+    debug_level = verbose
+  ...
+
  demo.rb => 
-  require 'rubygems'
   require 'rconfig'
+  RConfig.config_paths = ['$HOME/config', '#{APP_ROOT}/config', '/demo/conf']
   RConfig.demo[:server][:port] => 81
   RConfig.demo.server.address  => 'host.domain.com'
+
+  RConfig[:debug_level] => 'verbose'
+  RConfig[:lang] => 'en'
   ...
 
 == Requirements
 
-* Ruby (Developed on 1.8.6)
-* RubyGems 
-* active_support
+* Ruby (Developed on 1.8.7)
+* RubyGems (Developed on 1.3.5)
+* active_support (2.2.2+)
 
 == Install
 
@@ -43,7 +54,6 @@ The complete solution for Ruby Configuration Management. RConfig is a Ruby libra
 * Finish gemspec; build gem
 * Fix tests; convert to RSpec and Cucumber
 * Finish Documentation, including RDoc
-* Support multiple file types at once?
 
 == Known Issues
   
