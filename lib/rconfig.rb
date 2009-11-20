@@ -33,3 +33,7 @@ require 'rconfig/core_ext'
 require 'rconfig/config_hash'
 require 'rconfig/properties_file_parser'
 require 'rconfig/rconfig'
+
+# Create global reference to RConfig instance
+$config = RConfig.instance
+

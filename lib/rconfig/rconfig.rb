@@ -1,43 +1,37 @@
+
 require 'socket'
 require 'yaml'
 
 require 'rconfig/properties_file_parser'
 require 'rconfig/config_hash'
 require 'rconfig/core_ext'
+require 'rconfig/exceptions'
 
 ##
+#++
 #=RConfig
 #
-# * Provides dottable, hash, array, and argument access to YAML 
-#   configuration files
-# * Implements multilevel caching to reduce disk accesses
-# * Overlays multiple configuration files in an intelligent manner
+# Copyright (c) 2009 Rahmal Conda <rahmal@gmail.com>
+# -------------------------------------------------------------------
+# The complete solution for Ruby Configuration Management. RConfig is a Ruby library that 
+# manages configuration within Ruby applications. It bridges the gap between yaml, xml, and 
+# key/value based properties files, by providing a centralized solution to handle application 
+# configuration from one location. It provides the simplicity of hash-based access, that 
+# Rubyists have come to know and love, supporting your configuration style of choice, while 
+# providing many new features, and an elegant API.
 #
-# Config file access example:
-#  Given a configuration file named test.yaml and test_local.yaml
-#  test.yaml:
-# ...
-# hash_1:
-#   foo: "foo"
-#   bar: "bar"
-#   bok: "bok"
-# ...
-# test_local.yaml:
-# ...
-# hash_1:
-#   foo: "foo"
-#   bar: "baz"
-#   zzz: "zzz"
-# ...
+# -------------------------------------------------------------------
+# * Simple, easy to install and use.
+# * Supports yaml, xml, and properties files.
+# * Yaml and xml files supprt infinite level of configuration grouping.
+# * Intuitive dot-notation 'key chaining' argument access.
+# * Simple well-known hash/array based argument access.
+# * Implements multilevel caching to reduce disk access.
+# * Short-hand access to 'global' application configuration, and shell environment.
+# * Overlays multiple configuration files to support environment, host, and 
+#   even locale-specific configuration.
 #
-#  irb> RConfig.test
-#  => {"array_1"=>["a", "b", "c", "d"], "perform_caching"=>true,
-#  "default"=>"yo!", "lazy"=>true, "hash_1"=>{"zzz"=>"zzz", "foo"=>"foo",
-#  "bok"=>"bok", "bar"=>"baz"}, "secure_login"=>true, "test_mode"=>true}
-#
-#  --Notice that the hash produced is the result of merging the above
-#  config files in a particular order
-#
+# -------------------------------------------------------------------
 #  The overlay order of the config files is defined by SUFFIXES:
 #  * nil
 #  * _local
@@ -48,17 +42,40 @@ require 'rconfig/core_ext'
 #  * _{hostname} (.i.e _whiskey)
 #  * _{hostname}_config_local (.i.e _whiskey_config_local)
 #
-#  ------------------------------------------------------------------
-#  irb> RConfig.test_local
-#  => {"hash_1"=>{"zzz"=>"zzz", "foo"=>"foo", "bar"=>"baz"}, "test_mode"=>true} 
+# -------------------------------------------------------------------
 #
+# Example:
+#
+#  shell/console =>
+#    export LANG=en
+#
+#  demo.yml =>
+#   server:
+#     address: host.domain.com
+#     port: 81
+#   ...
+#
+#  application.properties =>
+#    debug_level = verbose
+#  ...
+#
+# demo.rb => 
+#  require 'rconfig'
+#  RConfig.config_paths = ['$HOME/config', '#{APP_ROOT}/config', '/demo/conf']
+#  RConfig.demo[:server][:port] => 81
+#  RConfig.demo.server.address  => 'host.domain.com'
+#
+#  RConfig[:debug_level] => 'verbose'
+#  RConfig[:lang] => 'en'
+#  ...
+#
+#--
 class RConfig
-  include Singleton # Don't instantiate this class
+  include Singleton 
 
-  VERSION = '0.1'
+  VERSION = File.read('VERSION').strip!.freeze
 
-  EMPTY_ARRAY = [ ].freeze unless defined? EMPTY_ARRAY
-  EMPTY_HASH = { }.freeze unless defined? EMPTY_HASH
+  EMPTY_ARRAY = [].freeze unless defined? EMPTY_ARRAY
 
   # ENV TIER i.e. (development, integration, staging, or production)
   # Defaults to RAILS_ENV if running in Rails, otherwise, it checks
@@ -105,9 +122,14 @@ class RConfig
 
   ### Helper methods for white-box testing and debugging.
 
-  # Flag indicating whether or not to log errors that occur 
-  # in the process of handling config files.
+  # Flag indicating whether or not to log errors and 
+  # errors and application run-time information. It
+  # defaults to environment debug level setting, or
+  # false if the env variable is not set.
   @@verbose = (ENV['DEBUG_LEVEL'] == 'verbose')
+
+  # Sets the flag indicating whether or not to log
+  # errors and application run-time information.
   def self.verbose=(x)
     @@verbose = x.nil? ? false : x;
   end
@@ -159,18 +181,29 @@ class RConfig
   # Hash of callbacks Procs for when a particular config file has changed.
   @@on_load = {}
 
+  # Flag variable indicating whether or not reload should be executed.
+  # Defaults to false.
+  @@reload_disabled = false
+
+  # Sets the flag indicating whether or not reload should be executed.
+  def self.allow_reload=(reload)
+    raise
+    @@reload_disabled = (not reload)
+  end
+
   # Flag indicating whether or not reload should be executed.
-  # It is defaulted to true in production, false otherwise.
-  @@reload_disabled = (ENV_TIER == 'production')
-  def self.reload_disabled=(x)
-    @@reload_disabled = x.nil? ? false : x
+  def self.reload?
+    !@@reload_disabled
   end
 
   # The number of seconds between reloading of config files
   # and automatic reload checks. Defaults to 5 minutes.
-  @@reload_delay = 300
-  def self.reload_delay=(x)
-    @@reload_delay = (x || 300)
+  @@reload_interval = 300
+
+  # Sets the number of seconds between reloading of config files
+  # and automatic reload checks. Defaults to 5 minutes.
+  def self.reload_interval=(x)
+    @@reload_interval = (x || 300)
   end
 
   ##
@@ -179,27 +212,62 @@ class RConfig
   # need to reload in a production setting should minimized or
   # completely avoided if possible.
   def self.reload(force = false)
-    if force || !@@reload_disabled
+    if force || reload?
       flush_cache
     end
     nil
   end
 
+
+  ##
+  # Convenience method to initialize necessary fields including,
+  # config paths, overlay, reload_disabled, and verbose, all at
+  # one time.
+  def self.initialize(*args)
+    case args[0]
+    when Hash
+      params = args[0].symbolize_keys
+      paths  = params[:paths]
+      ovrlay = params[:overlay]
+      reload = params[:reload]
+      verbos = params[:verbose]      
+    else
+      paths, ovrlay, reload, verbos = *args
+    end
+    self.config_paths = paths
+    self.overlay = ovrlay
+    self.allow_reload = reload
+    self.verbose = verbos
+  end
+  
+
   ##
   # Sets the list of directories to search for
   # configuration files.
+  # The argument must be an array of strings representing
+  # the paths to the directories, or a string representing
+  # either a single path or a list of paths separated by
+  # either a colon (:) or a semi-colon (;).
   # If reload is disabled, it can only be set once.
   def self.config_paths=(paths)
-    return if @reload_disabled && config_paths_set?
+    return if @@reload_disabled && config_paths_set?
     if paths.is_a? String
       path_sep = (paths =~ /;/) ? ';' : ':'
       paths = paths.split(/#{path_sep}+/)
     end
-    raise "The list of paths is invalid: [#{paths.inspect}]" if paths.blank?
+    unless paths.is_a? Array
+      raise ArgumentError, 
+            "Path(s) must be a String or an Array [#{paths.inspect}]"
+    end
+    if paths.empty?
+      raise ArgumentError, 
+            "Must provide at least one paths: [#{paths.inspect}]"
+    end
     paths.all? do |dir|
       dir = CONFIG_ROOT if dir == 'CONFIG_ROOT'
       unless File.directory?(dir)
-        raise "This directory is invalid: [#{dir.inspect}]"
+        raise InvalidConfigPathError, 
+              "This directory is invalid: [#{dir.inspect}]"
       end
     end
     reload
@@ -213,7 +281,7 @@ class RConfig
   # It only allows one path to be entered at a time.
   # If reload is disabled, it can onle be set once.
   def self.set_config_path path
-    return if @reload_disabled && config_paths_set?
+    return if @@reload_disabled && config_paths_set?
     return unless path.is_a?(String)      # only allow string argument
     path_sep = (path =~ /;/) ? ';' : ':'  # if string contains multiple paths
     path = path.split(/#{path_sep}+/)[0]  # only accept first one.
@@ -253,15 +321,15 @@ class RConfig
     end
 
     begin
-      config_paths = [CONFIG_ROOT] rescue nil
+      config_paths = [CONFIG_ROOT] 
     rescue
       verbose_log "Forget something?  No config paths! CONFIG_ROOT is not set.",
                   "Hint:  Use config_paths= or set_config_path."
     end
 
     if @@config_paths.blank?
-       # TODO: Need real error.
-       raise "Forget something?  No config paths!\n" +
+       raise InvalidConfigPathError,
+             "Forget something?  No config paths!\n" +
              "Niether ENV['CONFIG_PATH'] or CONFIG_ROOT is set.\n" +
              "Hint:  Use config_paths= or set_config_path."
     end
@@ -374,7 +442,7 @@ class RConfig
 
       # Load the file if its never been loaded or its been more than
       # so many minutes since last load attempt. (default: 5 minutes) 
-      if val.blank? || (now - last_loaded > @@reload_delay)
+      if val.blank? || (now - last_loaded > @@reload_interval)
         if force || val.blank? || mtime != last_mtime
 
           verbose_log "mtime #{name.inspect} #{filename.inspect} " + 
@@ -399,7 +467,7 @@ class RConfig
           # Config files changed or disappeared.
           @@cache_files[name] = config_files
 
-        end # if val == nil || (now - last_loaded > @@reload_delay)
+        end # if val == nil || (now - last_loaded > @@reload_interval)
       end   # if force || val == nil || mtime != last_mtime
 
       val
@@ -427,7 +495,7 @@ class RConfig
       PropertiesFileParser.parse(conf_file)
     else
       #TODO: Raise real error
-      raise "Unknown File type:#{ext}"
+      raise ConfigError, "Unknown File type:#{ext}"
     end
     hash.freeze
   end
@@ -505,9 +573,9 @@ class RConfig
 
 
   ##
-  # Register a callback when a config has been reloaded.
-  #
-  # The config :ANY will register a callback for any config file change.
+  # Register a callback when a config has been reloaded. If no config name
+  # is specified, the callback will be registered under the name :ANY. The 
+  # name :ANY will register a callback for any config file change.
   #
   # Example:
   #
@@ -536,7 +604,9 @@ class RConfig
   end
 
 
-  # Do reload callbacks.
+  # Executes all of the reload callbacks registered to the specified config name, 
+  # and all of the callbacks registered to run on any config, as specified by the
+  # :ANY symbol.
   def self.fire_on_load(name)
     callbacks = 
       (@@on_load['ANY'] || EMPTY_ARRAY) + 
@@ -575,7 +645,7 @@ class RConfig
 
     changed = false
 
-    if config_changed?(name) && !@@reload_disabled 
+    if config_changed?(name) && reload?
       if @@cache_hash[name]
         @@cache_hash[name] = nil
 
@@ -687,7 +757,7 @@ class RConfig
     name = name.to_s 
     now = Time.now
 
-    if (! @@last_auto_check[name]) || (now - @@last_auto_check[name]) > @@reload_delay
+    if (! @@last_auto_check[name]) || (now - @@last_auto_check[name]) > @@reload_interval
       @@last_auto_check[name] = now
       check_config_changed(name)
     end
@@ -801,4 +871,4 @@ protected
     $stderr.puts(args.join("\n")) if @@verbose
   end
 
-end # RConfig
+end # class RConfig

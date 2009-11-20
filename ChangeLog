@@ -1,4 +1,21 @@
 
+0.3
+=====
+* Re-factored rconfig core.
+* Added new helper method to init rconfig.
+* Re-factored core_ext/hash.
+* Added custom exceptions.
+* Added global instance $config, for convenience.
+* Updated comments.
+
+0.2
+=====
+* Added support for setting config path(s) programmtically.
+* Added support for using multiple file types at once.
+* Cleaned up STDERR statements.
+
+
+
 0.1
 =====
 * First public release

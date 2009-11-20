@@ -26,7 +26,7 @@ The complete solution for Ruby Configuration Management. RConfig is a Ruby libra
    ...
 
   application.properties =>
-    debug_level = verbose
+    debug_level=verbose
   ...
 
  demo.rb => 

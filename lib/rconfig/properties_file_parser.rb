@@ -1,14 +1,24 @@
 
 #++
+# Copyright (c) 2009 Rahmal Conda <rahmal@gmail.com>
+#
 # This class parses key/value based properties files used for configuration.
 # It is used by rconfig to import configuration files of the aforementioned
-# format.
+# format. Unlike yaml, and xml files it can only support two levels. First,
+# it can have root level properties.
 #
-# For further information please refer to the './doc' directory
-# as well as the ChangeLog and README files included.
+# Example:
+#            server_url=host.domain.com
+#            server_port=8080
 #
-# Note: A group is a set of parameters defined for a subpart of a 
-# config file
+# Secondly, it can have properties grouped into catagories. The group names
+# must be specified within brackets like [ ... ]
+#
+# Example:
+#            [server]
+#            url=host.domain.com
+#            port=8080
+#
 #--
 class PropertiesFileParser
   include Singleton # Don't instantiate this class
