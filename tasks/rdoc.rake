@@ -1,8 +1,8 @@
 
 namespace :rdoc do
   
-  desc 'Remove rdocs'
-  task :rm do
+  desc 'Clean-up rdocs'
+  task :clean do
     sh "rm -rf doc"
   end
 
