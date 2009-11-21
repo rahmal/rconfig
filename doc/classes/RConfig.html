@@ -233,16 +233,6 @@ demo.rb =&gt;
       <div class="name-list">
         <table summary="Constants">
         <tr class="top-aligned-row context-row">
-          <td class="context-item-name">VERSION</td>
-          <td>=</td>
-          <td class="context-item-value">File.read('VERSION').strip!.freeze</td>
-        </tr>
-        <tr class="top-aligned-row context-row">
-          <td class="context-item-name">EMPTY_ARRAY</td>
-          <td>=</td>
-          <td class="context-item-value">[].freeze unless defined? EMPTY_ARRAY</td>
-        </tr>
-        <tr class="top-aligned-row context-row">
           <td class="context-item-name">ENV_TIER</td>
           <td>=</td>
           <td class="context-item-value">defined?(RAILS_ENV) ? RAILS_ENV : (ENV['TIER'] || 'production')</td>
@@ -316,6 +306,11 @@ database_whiskey.yml overrides database_integration.yml
     overrides database.yml
 </pre>
 </td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">EMPTY_ARRAY</td>
+          <td>=</td>
+          <td class="context-item-value">[].freeze unless defined? EMPTY_ARRAY</td>
         </tr>
         </table>
       </div>
@@ -399,10 +394,10 @@ NOTE: The application config file can be in any of
             onclick="toggleCode('M000038-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000038-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 727</span>
-727:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-operator">[]</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">file</span>=<span class="ruby-identifier">:application</span>)
-728:     <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">get_config_file</span>(<span class="ruby-identifier">file</span>)[<span class="ruby-identifier">key</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">ENV</span>[<span class="ruby-identifier">key</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">upcase</span>]
-729:   <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 726</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-operator">[]</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">file</span>=<span class="ruby-identifier">:application</span>)
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">get_config_file</span>(<span class="ruby-identifier">file</span>)[<span class="ruby-identifier">key</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">ENV</span>[<span class="ruby-identifier">key</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">upcase</span>]
+  <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -426,11 +421,11 @@ href="RConfig.html#M000017">reload</a> should be executed.
             onclick="toggleCode('M000014-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000014-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 187</span>
-187:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">allow_reload=</span>(<span class="ruby-identifier">reload</span>)
-188:     <span class="ruby-identifier">raise</span>
-189:     <span class="ruby-ivar">@@reload_disabled</span> = (<span class="ruby-keyword kw">not</span> <span class="ruby-identifier">reload</span>)
-190:   <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 184</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">allow_reload=</span>(<span class="ruby-identifier">reload</span>)
+    <span class="ruby-identifier">raise</span>
+    <span class="ruby-ivar">@@reload_disabled</span> = (<span class="ruby-keyword kw">not</span> <span class="ruby-identifier">reload</span>)
+  <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -454,26 +449,26 @@ href="RConfig.html#M000032">on_load</a> triggers are run.
             onclick="toggleCode('M000034-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000034-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 620</span>
-620:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">check_config_changed</span>(<span class="ruby-identifier">name</span> = <span class="ruby-keyword kw">nil</span>)
-621:     <span class="ruby-identifier">changed</span> = []
-622:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span>
-623:       <span class="ruby-ivar">@@cache_hash</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">dup</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">|</span>
-624:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">config_has_changed?</span>(<span class="ruby-identifier">name</span>)
-625:           <span class="ruby-identifier">changed</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">name</span>
-626:         <span class="ruby-keyword kw">end</span>
-627:       <span class="ruby-keyword kw">end</span>
-628:     <span class="ruby-keyword kw">else</span>
-629:       <span class="ruby-identifier">name</span> = <span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-comment cmt">#  if name.is_a?(Symbol)</span>
-630:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">config_has_changed?</span>(<span class="ruby-identifier">name</span>)
-631:         <span class="ruby-identifier">changed</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">name</span>
-632:       <span class="ruby-keyword kw">end</span>
-633:     <span class="ruby-keyword kw">end</span>
-634: 
-635:     <span class="ruby-identifier">verbose_log</span> <span class="ruby-node">&quot;check_config_changed(#{name.inspect}) =&gt; #{changed.inspect}&quot;</span> 
-636: 
-637:     <span class="ruby-identifier">changed</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-value">? </span><span class="ruby-keyword kw">nil</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">changed</span>
-638:   <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 619</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">check_config_changed</span>(<span class="ruby-identifier">name</span> = <span class="ruby-keyword kw">nil</span>)
+    <span class="ruby-identifier">changed</span> = []
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span>
+      <span class="ruby-ivar">@@cache_hash</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">dup</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">|</span>
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">config_has_changed?</span>(<span class="ruby-identifier">name</span>)
+          <span class="ruby-identifier">changed</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">name</span>
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-identifier">name</span> = <span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-comment cmt">#  if name.is_a?(Symbol)</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">config_has_changed?</span>(<span class="ruby-identifier">name</span>)
+        <span class="ruby-identifier">changed</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">name</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+
+    <span class="ruby-identifier">verbose_log</span> <span class="ruby-node">&quot;check_config_changed(#{name.inspect}) =&gt; #{changed.inspect}&quot;</span> 
+
+    <span class="ruby-identifier">changed</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-value">? </span><span class="ruby-keyword kw">nil</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">changed</span>
+  <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -500,12 +495,12 @@ Returns true if any files for config have changes since last load.
             onclick="toggleCode('M000030-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000030-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 544</span>
-544:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">config_changed?</span>(<span class="ruby-identifier">name</span>)
-545:     <span class="ruby-identifier">verbose_log</span> <span class="ruby-node">&quot;config_changed?(#{name.inspect})&quot;</span> 
-546:     <span class="ruby-identifier">name</span> = <span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-comment cmt"># if name.is_a?(Symbol)</span>
-547:     <span class="ruby-operator">!</span> (<span class="ruby-ivar">@@cache_files</span>[<span class="ruby-identifier">name</span>] <span class="ruby-operator">===</span> <span class="ruby-identifier">get_config_files</span>(<span class="ruby-identifier">name</span>))
-548:   <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 541</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">config_changed?</span>(<span class="ruby-identifier">name</span>)
+    <span class="ruby-identifier">verbose_log</span> <span class="ruby-node">&quot;config_changed?(#{name.inspect})&quot;</span> 
+    <span class="ruby-identifier">name</span> = <span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-comment cmt"># if name.is_a?(Symbol)</span>
+    <span class="ruby-operator">!</span> (<span class="ruby-ivar">@@cache_files</span>[<span class="ruby-identifier">name</span>] <span class="ruby-operator">===</span> <span class="ruby-identifier">get_config_files</span>(<span class="ruby-identifier">name</span>))
+  <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -525,10 +520,10 @@ Returns true if any files for config have changes since last load.
             onclick="toggleCode('M000013-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000013-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 140</span>
-140:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">config_file_loaded</span>
-141:     <span class="ruby-ivar">@@config_file_loaded</span>
-142:   <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 137</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">config_file_loaded</span>
+    <span class="ruby-ivar">@@config_file_loaded</span>
+  <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -548,10 +543,10 @@ Returns true if any files for config have changes since last load.
             onclick="toggleCode('M000012-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000012-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 137</span>
-137:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">config_file_loaded=</span>(<span class="ruby-identifier">x</span>)
-138:     <span class="ruby-ivar">@@config_file_loaded</span> = <span class="ruby-identifier">x</span>
-139:   <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 134</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">config_file_loaded=</span>(<span class="ruby-identifier">x</span>)
+    <span class="ruby-ivar">@@config_file_loaded</span> = <span class="ruby-identifier">x</span>
+  <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -574,10 +569,10 @@ Return the config file information for the given config name.
             onclick="toggleCode('M000029-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000029-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 534</span>
-534:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">config_files</span>(<span class="ruby-identifier">name</span>)
-535:     <span class="ruby-ivar">@@cache_files</span>[<span class="ruby-identifier">name</span>] <span class="ruby-operator">||=</span> <span class="ruby-identifier">get_config_files</span>(<span class="ruby-identifier">name</span>)
-536:   <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 531</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">config_files</span>(<span class="ruby-identifier">name</span>)
+    <span class="ruby-ivar">@@cache_files</span>[<span class="ruby-identifier">name</span>] <span class="ruby-operator">||=</span> <span class="ruby-identifier">get_config_files</span>(<span class="ruby-identifier">name</span>)
+  <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -597,25 +592,25 @@ Return the config file information for the given config name.
             onclick="toggleCode('M000035-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000035-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 641</span>
-641:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">config_has_changed?</span>(<span class="ruby-identifier">name</span>)
-642:     <span class="ruby-identifier">verbose_log</span> <span class="ruby-node">&quot;config_has_changed?(#{name.inspect}), reload_disabled=#{@@reload_disabled}&quot;</span> 
-643: 
-644:     <span class="ruby-identifier">changed</span> = <span class="ruby-keyword kw">false</span>
-645: 
-646:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">config_changed?</span>(<span class="ruby-identifier">name</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">reload?</span>
-647:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@@cache_hash</span>[<span class="ruby-identifier">name</span>]
-648:         <span class="ruby-ivar">@@cache_hash</span>[<span class="ruby-identifier">name</span>] = <span class="ruby-keyword kw">nil</span>
-649: 
-650:         <span class="ruby-comment cmt"># force on_load triggers.</span>
-651:         <span class="ruby-identifier">fire_on_load</span>(<span class="ruby-identifier">name</span>)
-652:       <span class="ruby-keyword kw">end</span>
-653: 
-654:       <span class="ruby-identifier">changed</span> = <span class="ruby-keyword kw">true</span>
-655:     <span class="ruby-keyword kw">end</span>
-656: 
-657:     <span class="ruby-identifier">changed</span>
-658:   <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 640</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">config_has_changed?</span>(<span class="ruby-identifier">name</span>)
+    <span class="ruby-identifier">verbose_log</span> <span class="ruby-node">&quot;config_has_changed?(#{name.inspect}), reload_disabled=#{@@reload_disabled}&quot;</span> 
+
+    <span class="ruby-identifier">changed</span> = <span class="ruby-keyword kw">false</span>
+
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">config_changed?</span>(<span class="ruby-identifier">name</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">reload?</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@@cache_hash</span>[<span class="ruby-identifier">name</span>]
+        <span class="ruby-ivar">@@cache_hash</span>[<span class="ruby-identifier">name</span>] = <span class="ruby-keyword kw">nil</span>
+
+        <span class="ruby-comment cmt"># force on_load triggers.</span>
+        <span class="ruby-identifier">fire_on_load</span>(<span class="ruby-identifier">name</span>)
+      <span class="ruby-keyword kw">end</span>
+
+      <span class="ruby-identifier">changed</span> = <span class="ruby-keyword kw">true</span>
+    <span class="ruby-keyword kw">end</span>
+
+    <span class="ruby-identifier">changed</span>
+  <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -639,23 +634,23 @@ access faker hash merged from all config files for a name.
             onclick="toggleCode('M000031-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000031-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 555</span>
-555:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">config_hash</span>(<span class="ruby-identifier">name</span>)
-556:     <span class="ruby-identifier">verbose_log</span> <span class="ruby-node">&quot;config_hash(#{name.inspect})&quot;</span>
-557: 
-558:     <span class="ruby-identifier">name</span> = <span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_s</span>
-559:     <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">result</span> = <span class="ruby-ivar">@@cache_hash</span>[<span class="ruby-identifier">name</span>]
-560:       <span class="ruby-identifier">result</span> = <span class="ruby-ivar">@@cache_hash</span>[<span class="ruby-identifier">name</span>] = 
-561:         <span class="ruby-identifier">make_indifferent</span>(
-562:           <span class="ruby-identifier">merge_hashes</span>(
-563:             <span class="ruby-identifier">load_config_files</span>(<span class="ruby-identifier">name</span>)
-564:           )
-565:         )
-566:       <span class="ruby-identifier">verbose_log</span> <span class="ruby-node">&quot;config_hash(#{name.inspect}): reloaded&quot;</span> 
-567:     <span class="ruby-keyword kw">end</span>
-568: 
-569:     <span class="ruby-identifier">result</span>
-570:   <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 552</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">config_hash</span>(<span class="ruby-identifier">name</span>)
+    <span class="ruby-identifier">verbose_log</span> <span class="ruby-node">&quot;config_hash(#{name.inspect})&quot;</span>
+
+    <span class="ruby-identifier">name</span> = <span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_s</span>
+    <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">result</span> = <span class="ruby-ivar">@@cache_hash</span>[<span class="ruby-identifier">name</span>]
+      <span class="ruby-identifier">result</span> = <span class="ruby-ivar">@@cache_hash</span>[<span class="ruby-identifier">name</span>] = 
+        <span class="ruby-identifier">make_indifferent</span>(
+          <span class="ruby-identifier">merge_hashes</span>(
+            <span class="ruby-identifier">load_config_files</span>(<span class="ruby-identifier">name</span>)
+          )
+        )
+      <span class="ruby-identifier">verbose_log</span> <span class="ruby-node">&quot;config_hash(#{name.inspect}): reloaded&quot;</span> 
+    <span class="ruby-keyword kw">end</span>
+
+    <span class="ruby-identifier">result</span>
+  <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -691,33 +686,33 @@ Examples:
             onclick="toggleCode('M000021-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000021-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 311</span>
-311:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">config_paths</span>
-312:     <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@@config_paths</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@@config_paths</span>.<span class="ruby-identifier">blank?</span>
-313: 
-314:     <span class="ruby-keyword kw">begin</span>
-315:       <span class="ruby-identifier">config_paths</span> = <span class="ruby-constant">ENV</span>[<span class="ruby-value str">'CONFIG_PATH'</span>]
-316:     <span class="ruby-keyword kw">rescue</span>
-317:       <span class="ruby-identifier">verbose_log</span> <span class="ruby-value str">&quot;Forget something? No config paths! ENV['CONFIG_PATH'] is not set.&quot;</span>,
-318:                   <span class="ruby-value str">&quot;Hint:  Use config_paths= or set_config_path.&quot;</span>
-319:     <span class="ruby-keyword kw">end</span>
-320: 
-321:     <span class="ruby-keyword kw">begin</span>
-322:       <span class="ruby-identifier">config_paths</span> = [<span class="ruby-constant">CONFIG_ROOT</span>] 
-323:     <span class="ruby-keyword kw">rescue</span>
-324:       <span class="ruby-identifier">verbose_log</span> <span class="ruby-value str">&quot;Forget something?  No config paths! CONFIG_ROOT is not set.&quot;</span>,
-325:                   <span class="ruby-value str">&quot;Hint:  Use config_paths= or set_config_path.&quot;</span>
-326:     <span class="ruby-keyword kw">end</span>
-327: 
-328:     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@@config_paths</span>.<span class="ruby-identifier">blank?</span>
-329:        <span class="ruby-identifier">raise</span> <span class="ruby-constant">InvalidConfigPathError</span>,
-330:              <span class="ruby-value str">&quot;Forget something?  No config paths!\n&quot;</span> <span class="ruby-operator">+</span>
-331:              <span class="ruby-value str">&quot;Niether ENV['CONFIG_PATH'] or CONFIG_ROOT is set.\n&quot;</span> <span class="ruby-operator">+</span>
-332:              <span class="ruby-value str">&quot;Hint:  Use config_paths= or set_config_path.&quot;</span>
-333:     <span class="ruby-keyword kw">end</span>
-334: 
-335:     <span class="ruby-ivar">@@config_paths</span>
-336:   <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 308</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">config_paths</span>
+    <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@@config_paths</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@@config_paths</span>.<span class="ruby-identifier">blank?</span>
+
+    <span class="ruby-keyword kw">begin</span>
+      <span class="ruby-identifier">config_paths</span> = <span class="ruby-constant">ENV</span>[<span class="ruby-value str">'CONFIG_PATH'</span>]
+    <span class="ruby-keyword kw">rescue</span>
+      <span class="ruby-identifier">verbose_log</span> <span class="ruby-value str">&quot;Forget something? No config paths! ENV['CONFIG_PATH'] is not set.&quot;</span>,
+                  <span class="ruby-value str">&quot;Hint:  Use config_paths= or set_config_path.&quot;</span>
+    <span class="ruby-keyword kw">end</span>
+
+    <span class="ruby-keyword kw">begin</span>
+      <span class="ruby-identifier">config_paths</span> = [<span class="ruby-constant">CONFIG_ROOT</span>] 
+    <span class="ruby-keyword kw">rescue</span>
+      <span class="ruby-identifier">verbose_log</span> <span class="ruby-value str">&quot;Forget something?  No config paths! CONFIG_ROOT is not set.&quot;</span>,
+                  <span class="ruby-value str">&quot;Hint:  Use config_paths= or set_config_path.&quot;</span>
+    <span class="ruby-keyword kw">end</span>
+
+    <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@@config_paths</span>.<span class="ruby-identifier">blank?</span>
+       <span class="ruby-identifier">raise</span> <span class="ruby-constant">InvalidConfigPathError</span>,
+             <span class="ruby-value str">&quot;Forget something?  No config paths!\n&quot;</span> <span class="ruby-operator">+</span>
+             <span class="ruby-value str">&quot;Niether ENV['CONFIG_PATH'] or CONFIG_ROOT is set.\n&quot;</span> <span class="ruby-operator">+</span>
+             <span class="ruby-value str">&quot;Hint:  Use config_paths= or set_config_path.&quot;</span>
+    <span class="ruby-keyword kw">end</span>
+
+    <span class="ruby-ivar">@@config_paths</span>
+  <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -745,31 +740,31 @@ once.
             onclick="toggleCode('M000019-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000019-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 250</span>
-250:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">config_paths=</span>(<span class="ruby-identifier">paths</span>)
-251:     <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@@reload_disabled</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">config_paths_set?</span>
-252:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">paths</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">String</span>
-253:       <span class="ruby-identifier">path_sep</span> = (<span class="ruby-identifier">paths</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/;/</span>) <span class="ruby-operator">?</span> <span class="ruby-value str">';'</span> <span class="ruby-operator">:</span> <span class="ruby-value str">':'</span>
-254:       <span class="ruby-identifier">paths</span> = <span class="ruby-identifier">paths</span>.<span class="ruby-identifier">split</span>(<span class="ruby-node">/#{path_sep}+/</span>)
-255:     <span class="ruby-keyword kw">end</span>
-256:     <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">paths</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">Array</span>
-257:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, 
-258:             <span class="ruby-node">&quot;Path(s) must be a String or an Array [#{paths.inspect}]&quot;</span>
-259:     <span class="ruby-keyword kw">end</span>
-260:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">paths</span>.<span class="ruby-identifier">empty?</span>
-261:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, 
-262:             <span class="ruby-node">&quot;Must provide at least one paths: [#{paths.inspect}]&quot;</span>
-263:     <span class="ruby-keyword kw">end</span>
-264:     <span class="ruby-identifier">paths</span>.<span class="ruby-identifier">all?</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">dir</span><span class="ruby-operator">|</span>
-265:       <span class="ruby-identifier">dir</span> = <span class="ruby-constant">CONFIG_ROOT</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">dir</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'CONFIG_ROOT'</span>
-266:       <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">dir</span>)
-267:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">InvalidConfigPathError</span>, 
-268:               <span class="ruby-node">&quot;This directory is invalid: [#{dir.inspect}]&quot;</span>
-269:       <span class="ruby-keyword kw">end</span>
-270:     <span class="ruby-keyword kw">end</span>
-271:     <span class="ruby-identifier">reload</span>
-272:     <span class="ruby-ivar">@@config_paths</span> = <span class="ruby-identifier">paths</span>
-273:   <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 247</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">config_paths=</span>(<span class="ruby-identifier">paths</span>)
+    <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@@reload_disabled</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">config_paths_set?</span>
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">paths</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">String</span>
+      <span class="ruby-identifier">path_sep</span> = (<span class="ruby-identifier">paths</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/;/</span>) <span class="ruby-operator">?</span> <span class="ruby-value str">';'</span> <span class="ruby-operator">:</span> <span class="ruby-value str">':'</span>
+      <span class="ruby-identifier">paths</span> = <span class="ruby-identifier">paths</span>.<span class="ruby-identifier">split</span>(<span class="ruby-node">/#{path_sep}+/</span>)
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">paths</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">Array</span>
+      <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, 
+            <span class="ruby-node">&quot;Path(s) must be a String or an Array [#{paths.inspect}]&quot;</span>
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">paths</span>.<span class="ruby-identifier">empty?</span>
+      <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, 
+            <span class="ruby-node">&quot;Must provide at least one paths: [#{paths.inspect}]&quot;</span>
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-identifier">paths</span>.<span class="ruby-identifier">all?</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">dir</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">dir</span> = <span class="ruby-constant">CONFIG_ROOT</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">dir</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'CONFIG_ROOT'</span>
+      <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">dir</span>)
+        <span class="ruby-identifier">raise</span> <span class="ruby-constant">InvalidConfigPathError</span>, 
+              <span class="ruby-node">&quot;This directory is invalid: [#{dir.inspect}]&quot;</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-identifier">reload</span>
+    <span class="ruby-ivar">@@config_paths</span> = <span class="ruby-identifier">paths</span>
+  <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -794,10 +789,10 @@ href="RConfig.html#M000021">config_paths</a> has at least one directory.
             onclick="toggleCode('M000022-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000022-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 341</span>
-341:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">config_paths_set?</span>
-342:     <span class="ruby-keyword kw">not</span> <span class="ruby-ivar">@@config_paths</span>.<span class="ruby-identifier">blank?</span>
-343:   <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 338</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">config_paths_set?</span>
+    <span class="ruby-keyword kw">not</span> <span class="ruby-ivar">@@config_paths</span>.<span class="ruby-identifier">blank?</span>
+  <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -821,10 +816,10 @@ recursively.
             onclick="toggleCode('M000042-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000042-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 794</span>
-794:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">create_dottable_hash</span>(<span class="ruby-identifier">value</span>)
-795:     <span class="ruby-identifier">make_indifferent</span>(<span class="ruby-identifier">value</span>)
-796:   <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 793</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">create_dottable_hash</span>(<span class="ruby-identifier">value</span>)
+    <span class="ruby-identifier">make_indifferent</span>(<span class="ruby-identifier">value</span>)
+  <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -849,20 +844,20 @@ block
             onclick="toggleCode('M000041-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000041-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 777</span>
-777:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">disable_reload</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
-778:     <span class="ruby-comment cmt"># This should increment @@reload_disabled on entry, decrement on exit.</span>
-779:     <span class="ruby-identifier">result</span> = <span class="ruby-keyword kw">nil</span>
-780:     <span class="ruby-identifier">reload_disabled_save</span> = <span class="ruby-ivar">@@reload_disabled</span>
-781:     <span class="ruby-keyword kw">begin</span>
-782:       <span class="ruby-ivar">@@reload_disabled</span> = <span class="ruby-keyword kw">true</span>
-783:       <span class="ruby-identifier">result</span> = <span class="ruby-keyword kw">yield</span>
-784:     <span class="ruby-keyword kw">ensure</span>
-785:       <span class="ruby-ivar">@@reload_disabled</span> = <span class="ruby-identifier">reload_disabled_save</span>
-786:       <span class="ruby-identifier">check_config_changed</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@@reload_disabled</span>
-787:     <span class="ruby-keyword kw">end</span>
-788:     <span class="ruby-identifier">result</span>
-789:   <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 776</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">disable_reload</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+    <span class="ruby-comment cmt"># This should increment @@reload_disabled on entry, decrement on exit.</span>
+    <span class="ruby-identifier">result</span> = <span class="ruby-keyword kw">nil</span>
+    <span class="ruby-identifier">reload_disabled_save</span> = <span class="ruby-ivar">@@reload_disabled</span>
+    <span class="ruby-keyword kw">begin</span>
+      <span class="ruby-ivar">@@reload_disabled</span> = <span class="ruby-keyword kw">true</span>
+      <span class="ruby-identifier">result</span> = <span class="ruby-keyword kw">yield</span>
+    <span class="ruby-keyword kw">ensure</span>
+      <span class="ruby-ivar">@@reload_disabled</span> = <span class="ruby-identifier">reload_disabled_save</span>
+      <span class="ruby-identifier">check_config_changed</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@@reload_disabled</span>
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-identifier">result</span>
+  <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -887,15 +882,15 @@ registered to run on any config, as specified by the :ANY symbol.
             onclick="toggleCode('M000033-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000033-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 608</span>
-608:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">fire_on_load</span>(<span class="ruby-identifier">name</span>)
-609:     <span class="ruby-identifier">callbacks</span> = 
-610:       (<span class="ruby-ivar">@@on_load</span>[<span class="ruby-value str">'ANY'</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">EMPTY_ARRAY</span>) <span class="ruby-operator">+</span> 
-611:       (<span class="ruby-ivar">@@on_load</span>[<span class="ruby-identifier">name</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">EMPTY_ARRAY</span>)
-612:     <span class="ruby-identifier">callbacks</span>.<span class="ruby-identifier">uniq!</span>
-613:     <span class="ruby-identifier">verbose_log</span> <span class="ruby-node">&quot;fire_on_load(#{name.inspect}): callbacks[#{callbacks.inspect}]&quot;</span>  <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">callbacks</span>.<span class="ruby-identifier">empty?</span>
-614:     <span class="ruby-identifier">callbacks</span>.<span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">cb</span><span class="ruby-operator">|</span> <span class="ruby-identifier">cb</span>.<span class="ruby-identifier">call</span>()}
-615:   <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 607</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">fire_on_load</span>(<span class="ruby-identifier">name</span>)
+    <span class="ruby-identifier">callbacks</span> = 
+      (<span class="ruby-ivar">@@on_load</span>[<span class="ruby-value str">'ANY'</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">EMPTY_ARRAY</span>) <span class="ruby-operator">+</span> 
+      (<span class="ruby-ivar">@@on_load</span>[<span class="ruby-identifier">name</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">EMPTY_ARRAY</span>)
+    <span class="ruby-identifier">callbacks</span>.<span class="ruby-identifier">uniq!</span>
+    <span class="ruby-identifier">verbose_log</span> <span class="ruby-node">&quot;fire_on_load(#{name.inspect}): callbacks[#{callbacks.inspect}]&quot;</span>  <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">callbacks</span>.<span class="ruby-identifier">empty?</span>
+    <span class="ruby-identifier">callbacks</span>.<span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">cb</span><span class="ruby-operator">|</span> <span class="ruby-identifier">cb</span>.<span class="ruby-identifier">call</span>()}
+  <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -919,22 +914,22 @@ running apps.
             onclick="toggleCode('M000040-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000040-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 754</span>
-754:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">get_config_file</span>(<span class="ruby-identifier">name</span>)
-755:     <span class="ruby-identifier">name</span> = <span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_s</span> 
-756:     <span class="ruby-identifier">now</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
-757: 
-758:     <span class="ruby-keyword kw">if</span> (<span class="ruby-operator">!</span> <span class="ruby-ivar">@@last_auto_check</span>[<span class="ruby-identifier">name</span>]) <span class="ruby-operator">||</span> (<span class="ruby-identifier">now</span> <span class="ruby-operator">-</span> <span class="ruby-ivar">@@last_auto_check</span>[<span class="ruby-identifier">name</span>]) <span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@@reload_interval</span>
-759:       <span class="ruby-ivar">@@last_auto_check</span>[<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">now</span>
-760:       <span class="ruby-identifier">check_config_changed</span>(<span class="ruby-identifier">name</span>)
-761:     <span class="ruby-keyword kw">end</span>
-762: 
-763:     <span class="ruby-identifier">result</span> = <span class="ruby-identifier">config_hash</span>(<span class="ruby-identifier">name</span>)
-764: 
-765:     <span class="ruby-identifier">verbose_log</span> <span class="ruby-node">&quot;get_config_file(#{name.inspect}) =&gt; #{result.inspect}&quot;</span>
-766: 
-767:     <span class="ruby-identifier">result</span>
-768:   <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 753</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">get_config_file</span>(<span class="ruby-identifier">name</span>)
+    <span class="ruby-identifier">name</span> = <span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_s</span> 
+    <span class="ruby-identifier">now</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
+
+    <span class="ruby-keyword kw">if</span> (<span class="ruby-operator">!</span> <span class="ruby-ivar">@@last_auto_check</span>[<span class="ruby-identifier">name</span>]) <span class="ruby-operator">||</span> (<span class="ruby-identifier">now</span> <span class="ruby-operator">-</span> <span class="ruby-ivar">@@last_auto_check</span>[<span class="ruby-identifier">name</span>]) <span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@@reload_interval</span>
+      <span class="ruby-ivar">@@last_auto_check</span>[<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">now</span>
+      <span class="ruby-identifier">check_config_changed</span>(<span class="ruby-identifier">name</span>)
+    <span class="ruby-keyword kw">end</span>
+
+    <span class="ruby-identifier">result</span> = <span class="ruby-identifier">config_hash</span>(<span class="ruby-identifier">name</span>)
+
+    <span class="ruby-identifier">verbose_log</span> <span class="ruby-node">&quot;get_config_file(#{name.inspect}) =&gt; #{result.inspect}&quot;</span>
+
+    <span class="ruby-identifier">result</span>
+  <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -965,27 +960,27 @@ Each element is an Array, containing:
             onclick="toggleCode('M000028-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000028-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 510</span>
-510:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">get_config_files</span>(<span class="ruby-identifier">name</span>) 
-511:     <span class="ruby-identifier">files</span> = []
-512: 
-513:     <span class="ruby-identifier">config_paths</span>.<span class="ruby-identifier">reverse</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span> <span class="ruby-identifier">dir</span> <span class="ruby-operator">|</span>
-514:       <span class="ruby-comment cmt"># splatting *suffix allows us to deal with multipart suffixes </span>
-515:       <span class="ruby-identifier">name_no_overlay</span>, <span class="ruby-identifier">suffixes</span> = <span class="ruby-identifier">suffixes</span>(<span class="ruby-identifier">name</span>)
-516:       <span class="ruby-identifier">suffixes</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span> <span class="ruby-identifier">suffix</span> <span class="ruby-operator">|</span> [ <span class="ruby-identifier">name_no_overlay</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">suffix</span> ].<span class="ruby-identifier">compact</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">'_'</span>) }.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span> <span class="ruby-identifier">name_x</span> <span class="ruby-operator">|</span>
-517:         <span class="ruby-constant">CONFIG_FILE_TYPES</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">ext</span><span class="ruby-operator">|</span>    
-518:           <span class="ruby-identifier">filename</span> = <span class="ruby-identifier">filename_for_name</span>(<span class="ruby-identifier">name_x</span>, <span class="ruby-identifier">dir</span>, <span class="ruby-identifier">ext</span>)
-519:           <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">filename</span>)
-520:             <span class="ruby-identifier">files</span> <span class="ruby-operator">&lt;&lt;</span> [ <span class="ruby-identifier">name</span>, <span class="ruby-identifier">name_x</span>, <span class="ruby-identifier">filename</span>, <span class="ruby-identifier">ext</span>, <span class="ruby-constant">File</span>.<span class="ruby-identifier">stat</span>(<span class="ruby-identifier">filename</span>).<span class="ruby-identifier">mtime</span> ]
-521:           <span class="ruby-keyword kw">end</span>
-522:         <span class="ruby-keyword kw">end</span>
-523:       <span class="ruby-keyword kw">end</span>
-524:     <span class="ruby-keyword kw">end</span>
-525: 
-526:     <span class="ruby-identifier">verbose_log</span> <span class="ruby-node">&quot;get_config_files(#{name}) =&gt; #{files.select{|x| x[3]}.inspect}&quot;</span> 
-527: 
-528:     <span class="ruby-identifier">files</span>
-529:   <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 507</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">get_config_files</span>(<span class="ruby-identifier">name</span>) 
+    <span class="ruby-identifier">files</span> = []
+
+    <span class="ruby-identifier">config_paths</span>.<span class="ruby-identifier">reverse</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span> <span class="ruby-identifier">dir</span> <span class="ruby-operator">|</span>
+      <span class="ruby-comment cmt"># splatting *suffix allows us to deal with multipart suffixes </span>
+      <span class="ruby-identifier">name_no_overlay</span>, <span class="ruby-identifier">suffixes</span> = <span class="ruby-identifier">suffixes</span>(<span class="ruby-identifier">name</span>)
+      <span class="ruby-identifier">suffixes</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span> <span class="ruby-identifier">suffix</span> <span class="ruby-operator">|</span> [ <span class="ruby-identifier">name_no_overlay</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">suffix</span> ].<span class="ruby-identifier">compact</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">'_'</span>) }.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span> <span class="ruby-identifier">name_x</span> <span class="ruby-operator">|</span>
+        <span class="ruby-constant">CONFIG_FILE_TYPES</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">ext</span><span class="ruby-operator">|</span>    
+          <span class="ruby-identifier">filename</span> = <span class="ruby-identifier">filename_for_name</span>(<span class="ruby-identifier">name_x</span>, <span class="ruby-identifier">dir</span>, <span class="ruby-identifier">ext</span>)
+          <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">filename</span>)
+            <span class="ruby-identifier">files</span> <span class="ruby-operator">&lt;&lt;</span> [ <span class="ruby-identifier">name</span>, <span class="ruby-identifier">name_x</span>, <span class="ruby-identifier">filename</span>, <span class="ruby-identifier">ext</span>, <span class="ruby-constant">File</span>.<span class="ruby-identifier">stat</span>(<span class="ruby-identifier">filename</span>).<span class="ruby-identifier">mtime</span> ]
+          <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+
+    <span class="ruby-identifier">verbose_log</span> <span class="ruby-node">&quot;get_config_files(#{name}) =&gt; #{files.select{|x| x[3]}.inspect}&quot;</span> 
+
+    <span class="ruby-identifier">files</span>
+  <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -1011,23 +1006,23 @@ at one time.
             onclick="toggleCode('M000018-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000018-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 224</span>
-224:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">initialize</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
-225:     <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">args</span>[<span class="ruby-value">0</span>]
-226:     <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Hash</span>
-227:       <span class="ruby-identifier">params</span> = <span class="ruby-identifier">args</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">symbolize_keys</span>
-228:       <span class="ruby-identifier">paths</span>  = <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:paths</span>]
-229:       <span class="ruby-identifier">ovrlay</span> = <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:overlay</span>]
-230:       <span class="ruby-identifier">reload</span> = <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:reload</span>]
-231:       <span class="ruby-identifier">verbos</span> = <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:verbose</span>]      
-232:     <span class="ruby-keyword kw">else</span>
-233:       <span class="ruby-identifier">paths</span>, <span class="ruby-identifier">ovrlay</span>, <span class="ruby-identifier">reload</span>, <span class="ruby-identifier">verbos</span> = <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>
-234:     <span class="ruby-keyword kw">end</span>
-235:     <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">config_paths</span> = <span class="ruby-identifier">paths</span>
-236:     <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">overlay</span> = <span class="ruby-identifier">ovrlay</span>
-237:     <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">allow_reload</span> = <span class="ruby-identifier">reload</span>
-238:     <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">verbose</span> = <span class="ruby-identifier">verbos</span>
-239:   <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 221</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">initialize</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+    <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">args</span>[<span class="ruby-value">0</span>]
+    <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Hash</span>
+      <span class="ruby-identifier">params</span> = <span class="ruby-identifier">args</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">symbolize_keys</span>
+      <span class="ruby-identifier">paths</span>  = <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:paths</span>]
+      <span class="ruby-identifier">ovrlay</span> = <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:overlay</span>]
+      <span class="ruby-identifier">reload</span> = <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:reload</span>]
+      <span class="ruby-identifier">verbos</span> = <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:verbose</span>]      
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-identifier">paths</span>, <span class="ruby-identifier">ovrlay</span>, <span class="ruby-identifier">reload</span>, <span class="ruby-identifier">verbos</span> = <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">config_paths</span> = <span class="ruby-identifier">paths</span>
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">overlay</span> = <span class="ruby-identifier">ovrlay</span>
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">allow_reload</span> = <span class="ruby-identifier">reload</span>
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">verbose</span> = <span class="ruby-identifier">verbos</span>
+  <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -1053,78 +1048,78 @@ explicitly set to true.
             onclick="toggleCode('M000026-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000026-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 411</span>
-411:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">load_config_files</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">force</span>=<span class="ruby-keyword kw">false</span>)
-412:     <span class="ruby-identifier">name</span> = <span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-comment cmt"># if name.is_a?(Symbol)</span>
-413: 
-414:     <span class="ruby-comment cmt"># Return last config file hash list loaded,</span>
-415:     <span class="ruby-comment cmt"># if reload is disabled and files have already been loaded.</span>
-416:     <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@@cache_config_files</span>[<span class="ruby-identifier">name</span>] <span class="ruby-keyword kw">if</span> 
-417:       <span class="ruby-ivar">@@reload_disabled</span> <span class="ruby-operator">&amp;&amp;</span> 
-418:       <span class="ruby-ivar">@@cache_config_files</span>[<span class="ruby-identifier">name</span>]
-419: 
-420:     <span class="ruby-identifier">now</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
-421: 
-422:     <span class="ruby-comment cmt"># Get array of all the existing files file the config name.</span>
-423:     <span class="ruby-identifier">config_files</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">get_config_files</span>(<span class="ruby-identifier">name</span>)
-424: 
-425:     <span class="ruby-identifier">verbose_log</span> <span class="ruby-node">&quot;load_config_files(#{name.inspect})&quot;</span> 
-426:     
-427:     <span class="ruby-comment cmt"># Get all the data from all yaml files into as hashes</span>
-428:     <span class="ruby-identifier">hashes</span> = <span class="ruby-identifier">config_files</span>.<span class="ruby-identifier">collect</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
-429:       <span class="ruby-identifier">name</span>, <span class="ruby-identifier">name_x</span>, <span class="ruby-identifier">filename</span>, <span class="ruby-identifier">ext</span>, <span class="ruby-identifier">mtime</span> = <span class="ruby-operator">*</span><span class="ruby-identifier">f</span>
-430: 
-431:       <span class="ruby-comment cmt"># Get the cached file info the specific file, if </span>
-432:       <span class="ruby-comment cmt"># it's been loaded before.</span>
-433:       <span class="ruby-identifier">val</span>, <span class="ruby-identifier">last_mtime</span>, <span class="ruby-identifier">last_loaded</span> = <span class="ruby-ivar">@@cache</span>[<span class="ruby-identifier">filename</span>] 
-434: 
-435:       <span class="ruby-identifier">verbose_log</span> <span class="ruby-node">&quot;f = #{f.inspect}&quot;</span>,
-436:         <span class="ruby-node">&quot;cache #{name_x} filename = #{filename.inspect}&quot;</span>,
-437:         <span class="ruby-node">&quot;cache #{name_x} val = #{val.inspect}&quot;</span>,
-438:         <span class="ruby-node">&quot;cache #{name_x} last_mtime = #{last_mtime.inspect}&quot;</span>,
-439:         <span class="ruby-node">&quot;cache #{name_x} last_loaded = #{last_loaded.inspect}&quot;</span>
-440: 
-441:       <span class="ruby-comment cmt"># Load the file if its never been loaded or its been more than</span>
-442:       <span class="ruby-comment cmt"># so many minutes since last load attempt. (default: 5 minutes) </span>
-443:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">val</span>.<span class="ruby-identifier">blank?</span> <span class="ruby-operator">||</span> (<span class="ruby-identifier">now</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">last_loaded</span> <span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@@reload_interval</span>)
-444:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">force</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">val</span>.<span class="ruby-identifier">blank?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">mtime</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">last_mtime</span>
-445: 
-446:           <span class="ruby-identifier">verbose_log</span> <span class="ruby-node">&quot;mtime #{name.inspect} #{filename.inspect} &quot;</span> <span class="ruby-operator">+</span> 
-447:                       <span class="ruby-node">&quot;changed #{mtime != last_mtime} : #{mtime.inspect} #{last_mtime.inspect}&quot;</span>
-448:           
-449:           <span class="ruby-comment cmt"># Get contents from config file</span>
-450:           <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">filename</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
-451:             <span class="ruby-identifier">verbose_log</span> <span class="ruby-node">&quot;RConfig: loading #{filename.inspect}&quot;</span> 
-452:             <span class="ruby-identifier">val</span> = <span class="ruby-identifier">parse_file</span>(<span class="ruby-identifier">f</span>, <span class="ruby-identifier">ext</span>)              
-453:             <span class="ruby-identifier">val</span> = <span class="ruby-identifier">val</span>[<span class="ruby-identifier">name</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ext</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:xml</span> <span class="ruby-comment cmt"># xml document must have root tag matching the file name.</span>
-454:             <span class="ruby-identifier">verbose_log</span> <span class="ruby-node">&quot;RConfig: loaded #{filename.inspect} =&gt; #{val.inspect}&quot;</span> 
-455:             (<span class="ruby-ivar">@@config_file_loaded</span> <span class="ruby-operator">||=</span> { })[<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">config_files</span>
-456:           <span class="ruby-keyword kw">end</span>
-457:             
-458:           <span class="ruby-comment cmt"># Save cached config file contents, and mtime.</span>
-459:           <span class="ruby-ivar">@@cache</span>[<span class="ruby-identifier">filename</span>] = [ <span class="ruby-identifier">val</span>, <span class="ruby-identifier">mtime</span>, <span class="ruby-identifier">now</span> ]
-460:           <span class="ruby-identifier">verbose_log</span> <span class="ruby-node">&quot;cache[#{filename.inspect}] = #{@@cache[filename].inspect}&quot;</span> 
-461: 
-462:           <span class="ruby-comment cmt"># Flush merged hash cache.</span>
-463:           <span class="ruby-ivar">@@cache_hash</span>[<span class="ruby-identifier">name</span>] = <span class="ruby-keyword kw">nil</span>
-464:                  
-465:           <span class="ruby-comment cmt"># Config files changed or disappeared.</span>
-466:           <span class="ruby-ivar">@@cache_files</span>[<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">config_files</span>
-467: 
-468:         <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt"># if val == nil || (now - last_loaded &gt; @@reload_interval)</span>
-469:       <span class="ruby-keyword kw">end</span>   <span class="ruby-comment cmt"># if force || val == nil || mtime != last_mtime</span>
-470: 
-471:       <span class="ruby-identifier">val</span>
-472:     <span class="ruby-keyword kw">end</span>
-473:     <span class="ruby-identifier">hashes</span>.<span class="ruby-identifier">compact!</span>
-474: 
-475:     <span class="ruby-identifier">verbose_log</span> <span class="ruby-node">&quot;load_config_files(#{name.inspect}) =&gt; #{hashes.inspect}&quot;</span>
-476: 
-477:     <span class="ruby-comment cmt"># Keep last loaded config files around in case @@reload_dsabled.</span>
-478:     <span class="ruby-ivar">@@cache_config_files</span>[<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">hashes</span> <span class="ruby-comment cmt">#unless hashes.empty?</span>
-479: 
-480:     <span class="ruby-identifier">hashes</span>
-481:   <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 408</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">load_config_files</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">force</span>=<span class="ruby-keyword kw">false</span>)
+    <span class="ruby-identifier">name</span> = <span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-comment cmt"># if name.is_a?(Symbol)</span>
+
+    <span class="ruby-comment cmt"># Return last config file hash list loaded,</span>
+    <span class="ruby-comment cmt"># if reload is disabled and files have already been loaded.</span>
+    <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@@cache_config_files</span>[<span class="ruby-identifier">name</span>] <span class="ruby-keyword kw">if</span> 
+      <span class="ruby-ivar">@@reload_disabled</span> <span class="ruby-operator">&amp;&amp;</span> 
+      <span class="ruby-ivar">@@cache_config_files</span>[<span class="ruby-identifier">name</span>]
+
+    <span class="ruby-identifier">now</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
+
+    <span class="ruby-comment cmt"># Get array of all the existing files file the config name.</span>
+    <span class="ruby-identifier">config_files</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">get_config_files</span>(<span class="ruby-identifier">name</span>)
+
+    <span class="ruby-identifier">verbose_log</span> <span class="ruby-node">&quot;load_config_files(#{name.inspect})&quot;</span> 
+    
+    <span class="ruby-comment cmt"># Get all the data from all yaml files into as hashes</span>
+    <span class="ruby-identifier">hashes</span> = <span class="ruby-identifier">config_files</span>.<span class="ruby-identifier">collect</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">name</span>, <span class="ruby-identifier">name_x</span>, <span class="ruby-identifier">filename</span>, <span class="ruby-identifier">ext</span>, <span class="ruby-identifier">mtime</span> = <span class="ruby-operator">*</span><span class="ruby-identifier">f</span>
+
+      <span class="ruby-comment cmt"># Get the cached file info the specific file, if </span>
+      <span class="ruby-comment cmt"># it's been loaded before.</span>
+      <span class="ruby-identifier">val</span>, <span class="ruby-identifier">last_mtime</span>, <span class="ruby-identifier">last_loaded</span> = <span class="ruby-ivar">@@cache</span>[<span class="ruby-identifier">filename</span>] 
+
+      <span class="ruby-identifier">verbose_log</span> <span class="ruby-node">&quot;f = #{f.inspect}&quot;</span>,
+        <span class="ruby-node">&quot;cache #{name_x} filename = #{filename.inspect}&quot;</span>,
+        <span class="ruby-node">&quot;cache #{name_x} val = #{val.inspect}&quot;</span>,
+        <span class="ruby-node">&quot;cache #{name_x} last_mtime = #{last_mtime.inspect}&quot;</span>,
+        <span class="ruby-node">&quot;cache #{name_x} last_loaded = #{last_loaded.inspect}&quot;</span>
+
+      <span class="ruby-comment cmt"># Load the file if its never been loaded or its been more than</span>
+      <span class="ruby-comment cmt"># so many minutes since last load attempt. (default: 5 minutes) </span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">val</span>.<span class="ruby-identifier">blank?</span> <span class="ruby-operator">||</span> (<span class="ruby-identifier">now</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">last_loaded</span> <span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@@reload_interval</span>)
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">force</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">val</span>.<span class="ruby-identifier">blank?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">mtime</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">last_mtime</span>
+
+          <span class="ruby-identifier">verbose_log</span> <span class="ruby-node">&quot;mtime #{name.inspect} #{filename.inspect} &quot;</span> <span class="ruby-operator">+</span> 
+                      <span class="ruby-node">&quot;changed #{mtime != last_mtime} : #{mtime.inspect} #{last_mtime.inspect}&quot;</span>
+          
+          <span class="ruby-comment cmt"># Get contents from config file</span>
+          <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">filename</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+            <span class="ruby-identifier">verbose_log</span> <span class="ruby-node">&quot;RConfig: loading #{filename.inspect}&quot;</span> 
+            <span class="ruby-identifier">val</span> = <span class="ruby-identifier">parse_file</span>(<span class="ruby-identifier">f</span>, <span class="ruby-identifier">ext</span>)              
+            <span class="ruby-identifier">val</span> = <span class="ruby-identifier">val</span>[<span class="ruby-identifier">name</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ext</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:xml</span> <span class="ruby-comment cmt"># xml document must have root tag matching the file name.</span>
+            <span class="ruby-identifier">verbose_log</span> <span class="ruby-node">&quot;RConfig: loaded #{filename.inspect} =&gt; #{val.inspect}&quot;</span> 
+            (<span class="ruby-ivar">@@config_file_loaded</span> <span class="ruby-operator">||=</span> { })[<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">config_files</span>
+          <span class="ruby-keyword kw">end</span>
+            
+          <span class="ruby-comment cmt"># Save cached config file contents, and mtime.</span>
+          <span class="ruby-ivar">@@cache</span>[<span class="ruby-identifier">filename</span>] = [ <span class="ruby-identifier">val</span>, <span class="ruby-identifier">mtime</span>, <span class="ruby-identifier">now</span> ]
+          <span class="ruby-identifier">verbose_log</span> <span class="ruby-node">&quot;cache[#{filename.inspect}] = #{@@cache[filename].inspect}&quot;</span> 
+
+          <span class="ruby-comment cmt"># Flush merged hash cache.</span>
+          <span class="ruby-ivar">@@cache_hash</span>[<span class="ruby-identifier">name</span>] = <span class="ruby-keyword kw">nil</span>
+                 
+          <span class="ruby-comment cmt"># Config files changed or disappeared.</span>
+          <span class="ruby-ivar">@@cache_files</span>[<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">config_files</span>
+
+        <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt"># if val == nil || (now - last_loaded &gt; @@reload_interval)</span>
+      <span class="ruby-keyword kw">end</span>   <span class="ruby-comment cmt"># if force || val == nil || mtime != last_mtime</span>
+
+      <span class="ruby-identifier">val</span>
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-identifier">hashes</span>.<span class="ruby-identifier">compact!</span>
+
+    <span class="ruby-identifier">verbose_log</span> <span class="ruby-node">&quot;load_config_files(#{name.inspect}) =&gt; #{hashes.inspect}&quot;</span>
+
+    <span class="ruby-comment cmt"># Keep last loaded config files around in case @@reload_dsabled.</span>
+    <span class="ruby-ivar">@@cache_config_files</span>[<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">hashes</span> <span class="ruby-comment cmt">#unless hashes.empty?</span>
+
+    <span class="ruby-identifier">hashes</span>
+  <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -1148,31 +1143,31 @@ Arrays are also traversed and frozen.
             onclick="toggleCode('M000037-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000037-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 673</span>
-673:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">make_indifferent</span>(<span class="ruby-identifier">x</span>)
-674:     <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">x</span>
-675:     <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Hash</span>
-676:       <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">x</span>.<span class="ruby-identifier">frozen?</span>
-677:         <span class="ruby-identifier">x</span>.<span class="ruby-identifier">each_pair</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span> <span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span> <span class="ruby-operator">|</span>
-678:           <span class="ruby-identifier">x</span>[<span class="ruby-identifier">k</span>] = <span class="ruby-identifier">make_indifferent</span>(<span class="ruby-identifier">v</span>)
-679:         <span class="ruby-keyword kw">end</span>
-680:         <span class="ruby-identifier">x</span> = <span class="ruby-constant">ConfigHash</span>.<span class="ruby-identifier">new</span>.<span class="ruby-identifier">merge!</span>(<span class="ruby-identifier">x</span>).<span class="ruby-identifier">freeze</span>
-681:       <span class="ruby-keyword kw">end</span>
-682:       <span class="ruby-identifier">verbose_log</span> <span class="ruby-node">&quot;make_indefferent: x = #{x.inspect}:#{x.class}&quot;</span>
-683:     <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Array</span>
-684:       <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">x</span>.<span class="ruby-identifier">frozen?</span>
-685:         <span class="ruby-identifier">x</span>.<span class="ruby-identifier">collect!</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span> <span class="ruby-identifier">v</span> <span class="ruby-operator">|</span>
-686:           <span class="ruby-identifier">make_indifferent</span>(<span class="ruby-identifier">v</span>)
-687:         <span class="ruby-keyword kw">end</span>
-688:         <span class="ruby-identifier">x</span>.<span class="ruby-identifier">freeze</span>
-689:       <span class="ruby-keyword kw">end</span>
-690:     <span class="ruby-comment cmt"># Freeze Strings.</span>
-691:     <span class="ruby-keyword kw">when</span> <span class="ruby-constant">String</span>
-692:       <span class="ruby-identifier">x</span>.<span class="ruby-identifier">freeze</span>
-693:     <span class="ruby-keyword kw">end</span>
-694: 
-695:     <span class="ruby-identifier">x</span>
-696:   <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 672</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">make_indifferent</span>(<span class="ruby-identifier">x</span>)
+    <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">x</span>
+    <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Hash</span>
+      <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">x</span>.<span class="ruby-identifier">frozen?</span>
+        <span class="ruby-identifier">x</span>.<span class="ruby-identifier">each_pair</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span> <span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span> <span class="ruby-operator">|</span>
+          <span class="ruby-identifier">x</span>[<span class="ruby-identifier">k</span>] = <span class="ruby-identifier">make_indifferent</span>(<span class="ruby-identifier">v</span>)
+        <span class="ruby-keyword kw">end</span>
+        <span class="ruby-identifier">x</span> = <span class="ruby-constant">ConfigHash</span>.<span class="ruby-identifier">new</span>.<span class="ruby-identifier">merge!</span>(<span class="ruby-identifier">x</span>).<span class="ruby-identifier">freeze</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-identifier">verbose_log</span> <span class="ruby-node">&quot;make_indefferent: x = #{x.inspect}:#{x.class}&quot;</span>
+    <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Array</span>
+      <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">x</span>.<span class="ruby-identifier">frozen?</span>
+        <span class="ruby-identifier">x</span>.<span class="ruby-identifier">collect!</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span> <span class="ruby-identifier">v</span> <span class="ruby-operator">|</span>
+          <span class="ruby-identifier">make_indifferent</span>(<span class="ruby-identifier">v</span>)
+        <span class="ruby-keyword kw">end</span>
+        <span class="ruby-identifier">x</span>.<span class="ruby-identifier">freeze</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># Freeze Strings.</span>
+    <span class="ruby-keyword kw">when</span> <span class="ruby-constant">String</span>
+      <span class="ruby-identifier">x</span>.<span class="ruby-identifier">freeze</span>
+    <span class="ruby-keyword kw">end</span>
+
+    <span class="ruby-identifier">x</span>
+  <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -1195,10 +1190,10 @@ Returns a merge of hashes.
             onclick="toggleCode('M000036-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000036-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 664</span>
-664:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">merge_hashes</span>(<span class="ruby-identifier">hashes</span>)
-665:     <span class="ruby-identifier">hashes</span>.<span class="ruby-identifier">inject</span>({ }) { <span class="ruby-operator">|</span> <span class="ruby-identifier">n</span>, <span class="ruby-identifier">h</span> <span class="ruby-operator">|</span> <span class="ruby-identifier">n</span>.<span class="ruby-identifier">weave</span>(<span class="ruby-identifier">h</span>, <span class="ruby-keyword kw">false</span>) }
-666:   <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 663</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">merge_hashes</span>(<span class="ruby-identifier">hashes</span>)
+    <span class="ruby-identifier">hashes</span>.<span class="ruby-identifier">inject</span>({ }) { <span class="ruby-operator">|</span> <span class="ruby-identifier">n</span>, <span class="ruby-identifier">h</span> <span class="ruby-operator">|</span> <span class="ruby-identifier">n</span>.<span class="ruby-identifier">weave</span>(<span class="ruby-identifier">h</span>, <span class="ruby-keyword kw">false</span>) }
+  <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -1228,12 +1223,12 @@ Example:
             onclick="toggleCode('M000043-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000043-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 806</span>
-806:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">method</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
-807:     <span class="ruby-identifier">value</span> = <span class="ruby-identifier">with_file</span>(<span class="ruby-identifier">method</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
-808:     <span class="ruby-identifier">verbose_log</span> <span class="ruby-node">&quot;#{self}.method_missing(#{method.inspect}, #{args.inspect}) =&gt; #{value.inspect}&quot;</span>
-809:     <span class="ruby-identifier">value</span>
-810:   <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 805</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">method</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+    <span class="ruby-identifier">value</span> = <span class="ruby-identifier">with_file</span>(<span class="ruby-identifier">method</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+    <span class="ruby-identifier">verbose_log</span> <span class="ruby-node">&quot;#{self}.method_missing(#{method.inspect}, #{args.inspect}) =&gt; #{value.inspect}&quot;</span>
+    <span class="ruby-identifier">value</span>
+  <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -1272,20 +1267,20 @@ Example:
             onclick="toggleCode('M000032-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000032-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 590</span>
-590:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">on_load</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">blk</span>)
-591:     <span class="ruby-identifier">args</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">:ANY</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">empty?</span>
-592:     <span class="ruby-identifier">proc</span> = <span class="ruby-identifier">blk</span>.<span class="ruby-identifier">to_proc</span>
-593: 
-594:     <span class="ruby-comment cmt"># Call proc on registration.</span>
-595:     <span class="ruby-identifier">proc</span>.<span class="ruby-identifier">call</span>()
-596: 
-597:     <span class="ruby-comment cmt"># Register callback proc.</span>
-598:     <span class="ruby-identifier">args</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">|</span>
-599:       <span class="ruby-identifier">name</span> = <span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_s</span>
-600:       (<span class="ruby-ivar">@@on_load</span>[<span class="ruby-identifier">name</span>] <span class="ruby-operator">||=</span> [ ]) <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">proc</span>
-601:     <span class="ruby-keyword kw">end</span>
-602:   <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 587</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">on_load</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">blk</span>)
+    <span class="ruby-identifier">args</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">:ANY</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">empty?</span>
+    <span class="ruby-identifier">proc</span> = <span class="ruby-identifier">blk</span>.<span class="ruby-identifier">to_proc</span>
+
+    <span class="ruby-comment cmt"># Call proc on registration.</span>
+    <span class="ruby-identifier">proc</span>.<span class="ruby-identifier">call</span>()
+
+    <span class="ruby-comment cmt"># Register callback proc.</span>
+    <span class="ruby-identifier">args</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">|</span>
+      <span class="ruby-identifier">name</span> = <span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_s</span>
+      (<span class="ruby-ivar">@@on_load</span>[<span class="ruby-identifier">name</span>] <span class="ruby-operator">||=</span> [ ]) <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">proc</span>
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -1314,10 +1309,10 @@ Defaults from ENV[&#8216;CONFIG_OVERLAY&#8217;].
             onclick="toggleCode('M000023-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000023-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 351</span>
-351:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">overlay</span>
-352:     <span class="ruby-ivar">@@overlay</span> <span class="ruby-operator">||=</span> (<span class="ruby-identifier">x</span> = <span class="ruby-constant">ENV</span>[<span class="ruby-value str">'CONFIG_OVERLAY'</span>]) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">x</span>.<span class="ruby-identifier">dup</span>.<span class="ruby-identifier">freeze</span>
-353:   <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 348</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">overlay</span>
+    <span class="ruby-ivar">@@overlay</span> <span class="ruby-operator">||=</span> (<span class="ruby-identifier">x</span> = <span class="ruby-constant">ENV</span>[<span class="ruby-value str">'CONFIG_OVERLAY'</span>]) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">x</span>.<span class="ruby-identifier">dup</span>.<span class="ruby-identifier">freeze</span>
+  <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -1337,11 +1332,11 @@ Defaults from ENV[&#8216;CONFIG_OVERLAY&#8217;].
             onclick="toggleCode('M000024-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000024-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 355</span>
-355:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">overlay=</span>(<span class="ruby-identifier">x</span>)
-356:     <span class="ruby-identifier">flush_cache</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@@overlay</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">x</span>
-357:     <span class="ruby-ivar">@@overlay</span> = <span class="ruby-identifier">x</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">x</span>.<span class="ruby-identifier">dup</span>.<span class="ruby-identifier">freeze</span>
-358:   <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 352</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">overlay=</span>(<span class="ruby-identifier">x</span>)
+    <span class="ruby-identifier">flush_cache</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@@overlay</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">x</span>
+    <span class="ruby-ivar">@@overlay</span> = <span class="ruby-identifier">x</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">x</span>.<span class="ruby-identifier">dup</span>.<span class="ruby-identifier">freeze</span>
+  <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -1364,21 +1359,21 @@ Parses file based on file type.
             onclick="toggleCode('M000027-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000027-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 486</span>
-486:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">parse_file</span>(<span class="ruby-identifier">conf_file</span>, <span class="ruby-identifier">ext</span>)
-487:     <span class="ruby-identifier">hash</span> = <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">ext</span>
-488:     <span class="ruby-keyword kw">when</span> <span class="ruby-operator">*</span><span class="ruby-constant">YML_FILE_TYPES</span>
-489:       <span class="ruby-constant">YAML</span><span class="ruby-operator">::</span><span class="ruby-identifier">load</span>(<span class="ruby-identifier">conf_file</span>)
-490:     <span class="ruby-keyword kw">when</span> <span class="ruby-operator">*</span><span class="ruby-constant">XML_FILE_TYPES</span>
-491:       <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">from_xml</span>(<span class="ruby-identifier">conf_file</span>)
-492:     <span class="ruby-keyword kw">when</span> <span class="ruby-operator">*</span><span class="ruby-constant">CNF_FILE_TYPES</span>
-493:       <span class="ruby-constant">PropertiesFileParser</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">conf_file</span>)
-494:     <span class="ruby-keyword kw">else</span>
-495:       <span class="ruby-comment cmt">#TODO: Raise real error</span>
-496:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">ConfigError</span>, <span class="ruby-node">&quot;Unknown File type:#{ext}&quot;</span>
-497:     <span class="ruby-keyword kw">end</span>
-498:     <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">freeze</span>
-499:   <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 483</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">parse_file</span>(<span class="ruby-identifier">conf_file</span>, <span class="ruby-identifier">ext</span>)
+    <span class="ruby-identifier">hash</span> = <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">ext</span>
+    <span class="ruby-keyword kw">when</span> <span class="ruby-operator">*</span><span class="ruby-constant">YML_FILE_TYPES</span>
+      <span class="ruby-constant">YAML</span><span class="ruby-operator">::</span><span class="ruby-identifier">load</span>(<span class="ruby-identifier">conf_file</span>)
+    <span class="ruby-keyword kw">when</span> <span class="ruby-operator">*</span><span class="ruby-constant">XML_FILE_TYPES</span>
+      <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">from_xml</span>(<span class="ruby-identifier">conf_file</span>)
+    <span class="ruby-keyword kw">when</span> <span class="ruby-operator">*</span><span class="ruby-constant">CNF_FILE_TYPES</span>
+      <span class="ruby-constant">PropertiesFileParser</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">conf_file</span>)
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-comment cmt">#TODO: Raise real error</span>
+      <span class="ruby-identifier">raise</span> <span class="ruby-constant">ConfigError</span>, <span class="ruby-node">&quot;Unknown File type:#{ext}&quot;</span>
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">freeze</span>
+  <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -1404,13 +1399,13 @@ minimized or completely avoided if possible.
             onclick="toggleCode('M000017-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000017-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 212</span>
-212:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">reload</span>(<span class="ruby-identifier">force</span> = <span class="ruby-keyword kw">false</span>)
-213:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">force</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">reload?</span>
-214:       <span class="ruby-identifier">flush_cache</span>
-215:     <span class="ruby-keyword kw">end</span>
-216:     <span class="ruby-keyword kw">nil</span>
-217:   <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 209</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">reload</span>(<span class="ruby-identifier">force</span> = <span class="ruby-keyword kw">false</span>)
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">force</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">reload?</span>
+      <span class="ruby-identifier">flush_cache</span>
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">nil</span>
+  <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -1434,10 +1429,10 @@ should be executed.
             onclick="toggleCode('M000015-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000015-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 193</span>
-193:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">reload?</span>
-194:     <span class="ruby-operator">!</span><span class="ruby-ivar">@@reload_disabled</span>
-195:   <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 190</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">reload?</span>
+    <span class="ruby-operator">!</span><span class="ruby-ivar">@@reload_disabled</span>
+  <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -1461,10 +1456,10 @@ Sets the number of seconds between reloading of config files and automatic
             onclick="toggleCode('M000016-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000016-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 203</span>
-203:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">reload_interval=</span>(<span class="ruby-identifier">x</span>)
-204:     <span class="ruby-ivar">@@reload_interval</span> = (<span class="ruby-identifier">x</span> <span class="ruby-operator">||</span> <span class="ruby-value">300</span>)
-205:   <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 200</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">reload_interval=</span>(<span class="ruby-identifier">x</span>)
+    <span class="ruby-ivar">@@reload_interval</span> = (<span class="ruby-identifier">x</span> <span class="ruby-operator">||</span> <span class="ruby-value">300</span>)
+  <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -1490,21 +1485,21 @@ once.
             onclick="toggleCode('M000020-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000020-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 281</span>
-281:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">set_config_path</span> <span class="ruby-identifier">path</span>
-282:     <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@@reload_disabled</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">config_paths_set?</span>
-283:     <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">path</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">String</span>)      <span class="ruby-comment cmt"># only allow string argument</span>
-284:     <span class="ruby-identifier">path_sep</span> = (<span class="ruby-identifier">path</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/;/</span>) <span class="ruby-operator">?</span> <span class="ruby-value str">';'</span> <span class="ruby-operator">:</span> <span class="ruby-value str">':'</span>  <span class="ruby-comment cmt"># if string contains multiple paths</span>
-285:     <span class="ruby-identifier">path</span> = <span class="ruby-identifier">path</span>.<span class="ruby-identifier">split</span>(<span class="ruby-node">/#{path_sep}+/</span>)[<span class="ruby-value">0</span>]  <span class="ruby-comment cmt"># only accept first one.</span>
-286:    
-287:     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@@config_paths</span>.<span class="ruby-identifier">blank?</span> 
-288:       <span class="ruby-identifier">set_config_paths</span>(<span class="ruby-identifier">path</span>)
-289:     <span class="ruby-keyword kw">else</span> 
-290:       <span class="ruby-identifier">config_paths</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">path</span> <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">path</span>)
-291:       <span class="ruby-identifier">reload</span>
-292:       <span class="ruby-ivar">@@config_paths</span>
-293:     <span class="ruby-keyword kw">end</span>    
-294:   <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 278</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">set_config_path</span> <span class="ruby-identifier">path</span>
+    <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@@reload_disabled</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">config_paths_set?</span>
+    <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">path</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">String</span>)      <span class="ruby-comment cmt"># only allow string argument</span>
+    <span class="ruby-identifier">path_sep</span> = (<span class="ruby-identifier">path</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/;/</span>) <span class="ruby-operator">?</span> <span class="ruby-value str">';'</span> <span class="ruby-operator">:</span> <span class="ruby-value str">':'</span>  <span class="ruby-comment cmt"># if string contains multiple paths</span>
+    <span class="ruby-identifier">path</span> = <span class="ruby-identifier">path</span>.<span class="ruby-identifier">split</span>(<span class="ruby-node">/#{path_sep}+/</span>)[<span class="ruby-value">0</span>]  <span class="ruby-comment cmt"># only accept first one.</span>
+   
+    <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@@config_paths</span>.<span class="ruby-identifier">blank?</span> 
+      <span class="ruby-identifier">set_config_paths</span>(<span class="ruby-identifier">path</span>)
+    <span class="ruby-keyword kw">else</span> 
+      <span class="ruby-identifier">config_paths</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">path</span> <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">path</span>)
+      <span class="ruby-identifier">reload</span>
+      <span class="ruby-ivar">@@config_paths</span>
+    <span class="ruby-keyword kw">end</span>    
+  <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -1536,41 +1531,41 @@ locale.
             onclick="toggleCode('M000025-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000025-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 369</span>
-369:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">suffixes</span>(<span class="ruby-identifier">name</span>)
-370:     <span class="ruby-identifier">name</span> = <span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_s</span>
-371:     <span class="ruby-ivar">@@suffixes</span>[<span class="ruby-identifier">name</span>] <span class="ruby-operator">||=</span> 
-372:       <span class="ruby-keyword kw">begin</span>
-373:         <span class="ruby-identifier">ol</span> = <span class="ruby-identifier">overlay</span>
-374:         <span class="ruby-identifier">name_x</span> = <span class="ruby-identifier">name</span>.<span class="ruby-identifier">dup</span>
-375:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">name_x</span>.<span class="ruby-identifier">sub!</span>(<span class="ruby-regexp re">/_([A-Z]+)$/</span>, <span class="ruby-value str">''</span>)
-376:           <span class="ruby-identifier">ol</span> = <span class="ruby-identifier">$1</span>
-377:         <span class="ruby-keyword kw">end</span>
-378:         <span class="ruby-identifier">name_x</span>.<span class="ruby-identifier">freeze</span>
-379:         <span class="ruby-identifier">result</span> = <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ol</span>
-380:           <span class="ruby-identifier">ol_</span> = <span class="ruby-identifier">ol</span>.<span class="ruby-identifier">upcase</span>
-381:           <span class="ruby-identifier">ol</span> = <span class="ruby-identifier">ol</span>.<span class="ruby-identifier">downcase</span>
-382:           <span class="ruby-identifier">x</span> = [ ]
-383:           <span class="ruby-constant">SUFFIXES</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span> <span class="ruby-identifier">suffix</span> <span class="ruby-operator">|</span>
-384:             <span class="ruby-comment cmt"># Standard, no overlay:</span>
-385:             <span class="ruby-comment cmt"># e.g.: database_&lt;suffix&gt;.yml</span>
-386:             <span class="ruby-identifier">x</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">suffix</span>
-387: 
-388:             <span class="ruby-comment cmt"># Overlay:</span>
-389:             <span class="ruby-comment cmt"># e.g.: database_(US|GB)_&lt;suffix&gt;.yml</span>
-390:             <span class="ruby-identifier">x</span> <span class="ruby-operator">&lt;&lt;</span> [ <span class="ruby-identifier">ol_</span>, <span class="ruby-identifier">suffix</span> ]
-391:           <span class="ruby-keyword kw">end</span>
-392:           [ <span class="ruby-identifier">name_x</span>, <span class="ruby-identifier">x</span>.<span class="ruby-identifier">freeze</span> ]
-393:         <span class="ruby-keyword kw">else</span>
-394:           [ <span class="ruby-identifier">name</span>.<span class="ruby-identifier">dup</span>.<span class="ruby-identifier">freeze</span>, <span class="ruby-constant">SUFFIXES</span>.<span class="ruby-identifier">freeze</span> ]
-395:         <span class="ruby-keyword kw">end</span>
-396:         <span class="ruby-identifier">result</span>.<span class="ruby-identifier">freeze</span>
-397: 
-398:         <span class="ruby-identifier">verbose_log</span> <span class="ruby-node">&quot;suffixes(#{name}) =&gt; #{result.inspect}&quot;</span>
-399: 
-400:         <span class="ruby-identifier">result</span>
-401:       <span class="ruby-keyword kw">end</span>
-402:   <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 366</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">suffixes</span>(<span class="ruby-identifier">name</span>)
+    <span class="ruby-identifier">name</span> = <span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_s</span>
+    <span class="ruby-ivar">@@suffixes</span>[<span class="ruby-identifier">name</span>] <span class="ruby-operator">||=</span> 
+      <span class="ruby-keyword kw">begin</span>
+        <span class="ruby-identifier">ol</span> = <span class="ruby-identifier">overlay</span>
+        <span class="ruby-identifier">name_x</span> = <span class="ruby-identifier">name</span>.<span class="ruby-identifier">dup</span>
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">name_x</span>.<span class="ruby-identifier">sub!</span>(<span class="ruby-regexp re">/_([A-Z]+)$/</span>, <span class="ruby-value str">''</span>)
+          <span class="ruby-identifier">ol</span> = <span class="ruby-identifier">$1</span>
+        <span class="ruby-keyword kw">end</span>
+        <span class="ruby-identifier">name_x</span>.<span class="ruby-identifier">freeze</span>
+        <span class="ruby-identifier">result</span> = <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ol</span>
+          <span class="ruby-identifier">ol_</span> = <span class="ruby-identifier">ol</span>.<span class="ruby-identifier">upcase</span>
+          <span class="ruby-identifier">ol</span> = <span class="ruby-identifier">ol</span>.<span class="ruby-identifier">downcase</span>
+          <span class="ruby-identifier">x</span> = [ ]
+          <span class="ruby-constant">SUFFIXES</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span> <span class="ruby-identifier">suffix</span> <span class="ruby-operator">|</span>
+            <span class="ruby-comment cmt"># Standard, no overlay:</span>
+            <span class="ruby-comment cmt"># e.g.: database_&lt;suffix&gt;.yml</span>
+            <span class="ruby-identifier">x</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">suffix</span>
+
+            <span class="ruby-comment cmt"># Overlay:</span>
+            <span class="ruby-comment cmt"># e.g.: database_(US|GB)_&lt;suffix&gt;.yml</span>
+            <span class="ruby-identifier">x</span> <span class="ruby-operator">&lt;&lt;</span> [ <span class="ruby-identifier">ol_</span>, <span class="ruby-identifier">suffix</span> ]
+          <span class="ruby-keyword kw">end</span>
+          [ <span class="ruby-identifier">name_x</span>, <span class="ruby-identifier">x</span>.<span class="ruby-identifier">freeze</span> ]
+        <span class="ruby-keyword kw">else</span>
+          [ <span class="ruby-identifier">name</span>.<span class="ruby-identifier">dup</span>.<span class="ruby-identifier">freeze</span>, <span class="ruby-constant">SUFFIXES</span>.<span class="ruby-identifier">freeze</span> ]
+        <span class="ruby-keyword kw">end</span>
+        <span class="ruby-identifier">result</span>.<span class="ruby-identifier">freeze</span>
+
+        <span class="ruby-identifier">verbose_log</span> <span class="ruby-node">&quot;suffixes(#{name}) =&gt; #{result.inspect}&quot;</span>
+
+        <span class="ruby-identifier">result</span>
+      <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -1594,10 +1589,10 @@ run-time information.
             onclick="toggleCode('M000011-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000011-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 131</span>
-131:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">verbose=</span>(<span class="ruby-identifier">x</span>)
-132:     <span class="ruby-ivar">@@verbose</span> = <span class="ruby-identifier">x</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-value">? </span><span class="ruby-keyword kw">false</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">x</span>;
-133:   <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 128</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">verbose=</span>(<span class="ruby-identifier">x</span>)
+    <span class="ruby-ivar">@@verbose</span> = <span class="ruby-identifier">x</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-value">? </span><span class="ruby-keyword kw">false</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">x</span>;
+  <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -1620,22 +1615,22 @@ Get the value specified by the args, in the file specified by th name
             onclick="toggleCode('M000039-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000039-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 734</span>
-734:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">with_file</span>(<span class="ruby-identifier">name</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
-735:     <span class="ruby-comment cmt"># verbose_log &quot;with_file(#{name.inspect}, #{args.inspect})&quot;; result = </span>
-736:     <span class="ruby-identifier">args</span>.<span class="ruby-identifier">inject</span>(<span class="ruby-identifier">get_config_file</span>(<span class="ruby-identifier">name</span>)) { <span class="ruby-operator">|</span> <span class="ruby-identifier">v</span>, <span class="ruby-identifier">i</span> <span class="ruby-operator">|</span> 
-737:       <span class="ruby-comment cmt"># verbose_log &quot;v = #{v.inspect}, i = #{i.inspect}&quot;</span>
-738:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">v</span>
-739:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Hash</span>
-740:         <span class="ruby-identifier">v</span>[<span class="ruby-identifier">i</span>.<span class="ruby-identifier">to_s</span>]
-741:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Array</span>
-742:         <span class="ruby-identifier">i</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Integer</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">v</span>[<span class="ruby-identifier">i</span>] <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
-743:       <span class="ruby-keyword kw">else</span>
-744:         <span class="ruby-keyword kw">nil</span>
-745:       <span class="ruby-keyword kw">end</span>
-746:     }
-747:     <span class="ruby-comment cmt"># verbose_log &quot;with_file(#{name.inspect}, #{args.inspect}) =&gt; #{result.inspect}&quot;; result</span>
-748:   <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 733</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">with_file</span>(<span class="ruby-identifier">name</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+    <span class="ruby-comment cmt"># verbose_log &quot;with_file(#{name.inspect}, #{args.inspect})&quot;; result = </span>
+    <span class="ruby-identifier">args</span>.<span class="ruby-identifier">inject</span>(<span class="ruby-identifier">get_config_file</span>(<span class="ruby-identifier">name</span>)) { <span class="ruby-operator">|</span> <span class="ruby-identifier">v</span>, <span class="ruby-identifier">i</span> <span class="ruby-operator">|</span> 
+      <span class="ruby-comment cmt"># verbose_log &quot;v = #{v.inspect}, i = #{i.inspect}&quot;</span>
+      <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">v</span>
+      <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Hash</span>
+        <span class="ruby-identifier">v</span>[<span class="ruby-identifier">i</span>.<span class="ruby-identifier">to_s</span>]
+      <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Array</span>
+        <span class="ruby-identifier">i</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Integer</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">v</span>[<span class="ruby-identifier">i</span>] <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-keyword kw">nil</span>
+      <span class="ruby-keyword kw">end</span>
+    }
+    <span class="ruby-comment cmt"># verbose_log &quot;with_file(#{name.inspect}, #{args.inspect}) =&gt; #{result.inspect}&quot;; result</span>
+  <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -1661,10 +1656,10 @@ directory.
             onclick="toggleCode('M000047-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000047-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 862</span>
-862:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">filename_for_name</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">dir</span> = <span class="ruby-identifier">config_paths</span>[<span class="ruby-value">0</span>], <span class="ruby-identifier">ext</span> = <span class="ruby-identifier">:yml</span>)
-863:     <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">dir</span>, <span class="ruby-node">&quot;#{name}.#{ext}&quot;</span>)
-864:   <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 861</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">filename_for_name</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">dir</span> = <span class="ruby-identifier">config_paths</span>[<span class="ruby-value">0</span>], <span class="ruby-identifier">ext</span> = <span class="ruby-identifier">:yml</span>)
+    <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">dir</span>, <span class="ruby-node">&quot;#{name}.#{ext}&quot;</span>)
+  <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -1688,15 +1683,15 @@ if possible.
             onclick="toggleCode('M000046-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000046-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 850</span>
-850:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">flush_cache</span>
-851:     <span class="ruby-ivar">@@suffixes</span> = { }
-852:     <span class="ruby-ivar">@@cache</span> = { } 
-853:     <span class="ruby-ivar">@@cache_files</span> = { } 
-854:     <span class="ruby-ivar">@@cache_hash</span> = { }
-855:     <span class="ruby-ivar">@@last_auto_check</span> = { }
-856:     <span class="ruby-keyword kw">self</span>
-857:   <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 849</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">flush_cache</span>
+    <span class="ruby-ivar">@@suffixes</span> = { }
+    <span class="ruby-ivar">@@cache</span> = { } 
+    <span class="ruby-ivar">@@cache_files</span> = { } 
+    <span class="ruby-ivar">@@cache_hash</span> = { }
+    <span class="ruby-ivar">@@last_auto_check</span> = { }
+    <span class="ruby-keyword kw">self</span>
+  <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -1719,10 +1714,10 @@ Helper method for logging verbose messages.
             onclick="toggleCode('M000048-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000048-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 868</span>
-868:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">verbose_log</span> <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>
-869:     <span class="ruby-identifier">$stderr</span>.<span class="ruby-identifier">puts</span>(<span class="ruby-identifier">args</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot;\n&quot;</span>)) <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@@verbose</span>
-870:   <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 867</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">verbose_log</span> <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>
+    <span class="ruby-identifier">$stderr</span>.<span class="ruby-identifier">puts</span>(<span class="ruby-identifier">args</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot;\n&quot;</span>)) <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@@verbose</span>
+  <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -1759,10 +1754,10 @@ Example:
             onclick="toggleCode('M000045-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000045-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 841</span>
-841:   <span class="ruby-keyword kw">def</span> <span class="ruby-operator">[]</span>(<span class="ruby-identifier">key</span>)
-842:     <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>[<span class="ruby-identifier">key</span>]
-843:   <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 840</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-operator">[]</span>(<span class="ruby-identifier">key</span>)
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>[<span class="ruby-identifier">key</span>]
+  <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -1790,10 +1785,10 @@ Example:
             onclick="toggleCode('M000044-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000044-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 825</span>
-825:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">method</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
-826:     <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">method</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
-827:   <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/rconfig/rconfig.rb, line 824</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">method</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">method</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+  <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

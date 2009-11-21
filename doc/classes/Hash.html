@@ -140,86 +140,86 @@ Weaves the contents of two hashes producing a new hash.
             onclick="toggleCode('M000009-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000009-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/rconfig/core_ext/hash.rb, line 15</span>
-15:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">weave</span>(<span class="ruby-identifier">other_hash</span>, <span class="ruby-identifier">dont_clobber</span> = <span class="ruby-keyword kw">true</span>)
-16:     <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">self</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">other_hash</span>
-17:     <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">other_hash</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Hash</span>)
-18:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;RConfig: (Hash#weave) expected &lt;Hash&gt;, but was &lt;#{other_hash.class}&gt;&quot;</span>
-19:     <span class="ruby-keyword kw">end</span>
-20: 
-21:     <span class="ruby-identifier">self_dup</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">dup</span> <span class="ruby-comment cmt"># self.clone does not remove freeze!</span>
-22: 
-23:     <span class="ruby-identifier">other_hash</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">other_node</span><span class="ruby-operator">|</span>
-24: 
-25:       <span class="ruby-identifier">self_dup</span>[<span class="ruby-identifier">key</span>] =
-26: 
-27:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">self_node</span> = <span class="ruby-identifier">self_dup</span>[<span class="ruby-identifier">key</span>]
-28: 
-29:         <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">self_node</span>
-30:         <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Hash</span>
-31: 
-32:           <span class="ruby-comment cmt"># hash1, hash2 =&gt; hash3 (recursive +)</span>
-33:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">other_node</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>)
-34: 
-35:             <span class="ruby-identifier">self_node</span>.<span class="ruby-identifier">weave</span>(<span class="ruby-identifier">other_node</span>, <span class="ruby-identifier">dont_clobber</span>)
-36: 
-37:           <span class="ruby-comment cmt"># hash, array =&gt; error (Can't weave'em, must clobber.)</span>
-38:           <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">other_node</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">dont_clobber</span>
-39: 
-40:             <span class="ruby-identifier">raise</span>(<span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;RConfig: (Hash#weave) Can't weave Hash and Array&quot;</span>)
-41: 
-42:           <span class="ruby-comment cmt"># hash, array =&gt; hash[key] = array</span>
-43:           <span class="ruby-comment cmt"># hash, value =&gt; hash[key] = value</span>
-44:           <span class="ruby-keyword kw">else</span>
-45:             <span class="ruby-identifier">other_node</span>
-46:           <span class="ruby-keyword kw">end</span>
-47: 
-48:         <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Array</span>
-49: 
-50:           <span class="ruby-comment cmt"># array, hash =&gt; array &lt;&lt; hash</span>
-51:           <span class="ruby-comment cmt"># array1, array2 =&gt; array1 + array2</span>
-52:           <span class="ruby-comment cmt"># array, value =&gt; array &lt;&lt; value</span>
-53:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">dont_clobber</span>
-54:             <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">other_node</span>
-55:             <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Hash</span>
-56:               <span class="ruby-identifier">self_node</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">other_node</span>
-57:             <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Array</span>
-58:               <span class="ruby-identifier">self_node</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">other_node</span>
-59:             <span class="ruby-keyword kw">else</span>
-60:               <span class="ruby-identifier">self_node</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">other_node</span>
-61:             <span class="ruby-keyword kw">end</span>
-62: 
-63:           <span class="ruby-comment cmt"># array, hash =&gt; hash</span>
-64:           <span class="ruby-comment cmt"># array1, array2 =&gt; array2</span>
-65:           <span class="ruby-comment cmt"># array, value =&gt; value</span>
-66:           <span class="ruby-keyword kw">else</span>
-67:             <span class="ruby-identifier">other_node</span>
-68:           <span class="ruby-keyword kw">end</span>
-69: 
-70:       <span class="ruby-keyword kw">else</span>
-71: 
-72:         <span class="ruby-comment cmt"># value, array =&gt; array.unshift(value)</span>
-73:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">other_node</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">dont_clobber</span>
-74:           <span class="ruby-identifier">other_node</span>.<span class="ruby-identifier">unshift</span>(<span class="ruby-identifier">self_node</span>)
-75: 
-76:         <span class="ruby-comment cmt"># value1, value2 =&gt; value2</span>
-77:         <span class="ruby-keyword kw">else</span>
-78:           <span class="ruby-identifier">other_node</span>
-79:         <span class="ruby-keyword kw">end</span>
-80:               
-81:       <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt"># case self_node</span>
-82: 
-83:       <span class="ruby-comment cmt"># Target hash didn't have a node matching the key, </span>
-84:       <span class="ruby-comment cmt"># so just add it from the source hash.</span>
-85:       <span class="ruby-comment cmt"># !self_dup.has_key?(key) =&gt; self_dup.add(key, other_node)</span>
-86:       <span class="ruby-keyword kw">else</span>
-87:         <span class="ruby-identifier">other_node</span>
-88:       <span class="ruby-keyword kw">end</span>
-89: 
-90:     } <span class="ruby-comment cmt"># other_hash.each</span>
-91: 
-92:     <span class="ruby-identifier">self_dup</span> <span class="ruby-comment cmt"># return new weaved hash</span>
-93:   <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/rconfig/core_ext/hash.rb, line 15</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">weave</span>(<span class="ruby-identifier">other_hash</span>, <span class="ruby-identifier">dont_clobber</span> = <span class="ruby-keyword kw">true</span>)
+    <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">self</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">other_hash</span>
+    <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">other_hash</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Hash</span>)
+      <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;RConfig: (Hash#weave) expected &lt;Hash&gt;, but was &lt;#{other_hash.class}&gt;&quot;</span>
+    <span class="ruby-keyword kw">end</span>
+
+    <span class="ruby-identifier">self_dup</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">dup</span> <span class="ruby-comment cmt"># self.clone does not remove freeze!</span>
+
+    <span class="ruby-identifier">other_hash</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">other_node</span><span class="ruby-operator">|</span>
+
+      <span class="ruby-identifier">self_dup</span>[<span class="ruby-identifier">key</span>] =
+
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">self_node</span> = <span class="ruby-identifier">self_dup</span>[<span class="ruby-identifier">key</span>]
+
+        <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">self_node</span>
+        <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Hash</span>
+
+          <span class="ruby-comment cmt"># hash1, hash2 =&gt; hash3 (recursive +)</span>
+          <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">other_node</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>)
+
+            <span class="ruby-identifier">self_node</span>.<span class="ruby-identifier">weave</span>(<span class="ruby-identifier">other_node</span>, <span class="ruby-identifier">dont_clobber</span>)
+
+          <span class="ruby-comment cmt"># hash, array =&gt; error (Can't weave'em, must clobber.)</span>
+          <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">other_node</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">dont_clobber</span>
+
+            <span class="ruby-identifier">raise</span>(<span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;RConfig: (Hash#weave) Can't weave Hash and Array&quot;</span>)
+
+          <span class="ruby-comment cmt"># hash, array =&gt; hash[key] = array</span>
+          <span class="ruby-comment cmt"># hash, value =&gt; hash[key] = value</span>
+          <span class="ruby-keyword kw">else</span>
+            <span class="ruby-identifier">other_node</span>
+          <span class="ruby-keyword kw">end</span>
+
+        <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Array</span>
+
+          <span class="ruby-comment cmt"># array, hash =&gt; array &lt;&lt; hash</span>
+          <span class="ruby-comment cmt"># array1, array2 =&gt; array1 + array2</span>
+          <span class="ruby-comment cmt"># array, value =&gt; array &lt;&lt; value</span>
+          <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">dont_clobber</span>
+            <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">other_node</span>
+            <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Hash</span>
+              <span class="ruby-identifier">self_node</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">other_node</span>
+            <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Array</span>
+              <span class="ruby-identifier">self_node</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">other_node</span>
+            <span class="ruby-keyword kw">else</span>
+              <span class="ruby-identifier">self_node</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">other_node</span>
+            <span class="ruby-keyword kw">end</span>
+
+          <span class="ruby-comment cmt"># array, hash =&gt; hash</span>
+          <span class="ruby-comment cmt"># array1, array2 =&gt; array2</span>
+          <span class="ruby-comment cmt"># array, value =&gt; value</span>
+          <span class="ruby-keyword kw">else</span>
+            <span class="ruby-identifier">other_node</span>
+          <span class="ruby-keyword kw">end</span>
+
+      <span class="ruby-keyword kw">else</span>
+
+        <span class="ruby-comment cmt"># value, array =&gt; array.unshift(value)</span>
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">other_node</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">dont_clobber</span>
+          <span class="ruby-identifier">other_node</span>.<span class="ruby-identifier">unshift</span>(<span class="ruby-identifier">self_node</span>)
+
+        <span class="ruby-comment cmt"># value1, value2 =&gt; value2</span>
+        <span class="ruby-keyword kw">else</span>
+          <span class="ruby-identifier">other_node</span>
+        <span class="ruby-keyword kw">end</span>
+              
+      <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt"># case self_node</span>
+
+      <span class="ruby-comment cmt"># Target hash didn't have a node matching the key, </span>
+      <span class="ruby-comment cmt"># so just add it from the source hash.</span>
+      <span class="ruby-comment cmt"># !self_dup.has_key?(key) =&gt; self_dup.add(key, other_node)</span>
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-identifier">other_node</span>
+      <span class="ruby-keyword kw">end</span>
+
+    } <span class="ruby-comment cmt"># other_hash.each</span>
+
+    <span class="ruby-identifier">self_dup</span> <span class="ruby-comment cmt"># return new weaved hash</span>
+  <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -243,11 +243,11 @@ hash to itself, rather than create a new hash.
             onclick="toggleCode('M000010-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000010-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/rconfig/core_ext/hash.rb, line 98</span>
- 98:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">weave!</span>(<span class="ruby-identifier">other_hash</span>, <span class="ruby-identifier">dont_clobber</span> = <span class="ruby-keyword kw">true</span>)
- 99:     <span class="ruby-identifier">weaved_hash</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">weave</span>(<span class="ruby-identifier">other_hash</span>, <span class="ruby-identifier">dont_clobber</span>)
-100:     <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">merge!</span>(<span class="ruby-identifier">weaved_hash</span>)
-101:   <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/rconfig/core_ext/hash.rb, line 98</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">weave!</span>(<span class="ruby-identifier">other_hash</span>, <span class="ruby-identifier">dont_clobber</span> = <span class="ruby-keyword kw">true</span>)
+    <span class="ruby-identifier">weaved_hash</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">weave</span>(<span class="ruby-identifier">other_hash</span>, <span class="ruby-identifier">dont_clobber</span>)
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">merge!</span>(<span class="ruby-identifier">weaved_hash</span>)
+  <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

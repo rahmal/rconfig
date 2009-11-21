@@ -145,11 +145,11 @@ doing this?
             onclick="toggleCode('M000005-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000005-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/rconfig/config_hash.rb, line 62</span>
-62:     <span class="ruby-keyword kw">def</span> <span class="ruby-operator">[]</span>(<span class="ruby-identifier">key</span>)
-63:       <span class="ruby-identifier">key</span> = <span class="ruby-identifier">key</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">key</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Symbol</span>)
-64:       <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">key</span>)
-65:     <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/rconfig/config_hash.rb, line 62</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-operator">[]</span>(<span class="ruby-identifier">key</span>)
+      <span class="ruby-identifier">key</span> = <span class="ruby-identifier">key</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">key</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Symbol</span>)
+      <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">key</span>)
+    <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -173,11 +173,11 @@ for <a href="Hash.html">Hash</a> values.
             onclick="toggleCode('M000008-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000008-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/rconfig/config_hash.rb, line 100</span>
-100:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">convert_value</span>(<span class="ruby-identifier">value</span>)
-101:     <span class="ruby-comment cmt"># STDERR.puts &quot;convert_value(#{value.inspect}:#{value.class})&quot;</span>
-102:     <span class="ruby-identifier">value</span>.<span class="ruby-identifier">class</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Hash</span> <span class="ruby-value">? </span><span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">value</span>).<span class="ruby-identifier">freeze</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">value</span>
-103:   <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/rconfig/config_hash.rb, line 100</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">convert_value</span>(<span class="ruby-identifier">value</span>)
+    <span class="ruby-comment cmt"># STDERR.puts &quot;convert_value(#{value.inspect}:#{value.class})&quot;</span>
+    <span class="ruby-identifier">value</span>.<span class="ruby-identifier">class</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Hash</span> <span class="ruby-value">? </span><span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">value</span>).<span class="ruby-identifier">freeze</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">value</span>
+  <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -197,11 +197,11 @@ for <a href="Hash.html">Hash</a> values.
             onclick="toggleCode('M000006-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000006-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/rconfig/config_hash.rb, line 74</span>
-74:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">default</span>(<span class="ruby-identifier">key</span> = <span class="ruby-ivar">@@no_key</span>)
-75:     <span class="ruby-identifier">key</span> = <span class="ruby-identifier">key</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">key</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Symbol</span>)
-76:     <span class="ruby-identifier">key</span> <span class="ruby-operator">==</span> <span class="ruby-ivar">@@no_key</span> <span class="ruby-operator">?</span> <span class="ruby-keyword kw">self</span>[<span class="ruby-value str">'default'</span>] <span class="ruby-operator">:</span> <span class="ruby-identifier">default_Hash</span>(<span class="ruby-identifier">key</span> <span class="ruby-operator">==</span> <span class="ruby-ivar">@@no_key</span> <span class="ruby-operator">?</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">key</span>)
-77:   <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/rconfig/config_hash.rb, line 74</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">default</span>(<span class="ruby-identifier">key</span> = <span class="ruby-ivar">@@no_key</span>)
+    <span class="ruby-identifier">key</span> = <span class="ruby-identifier">key</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">key</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Symbol</span>)
+    <span class="ruby-identifier">key</span> <span class="ruby-operator">==</span> <span class="ruby-ivar">@@no_key</span> <span class="ruby-operator">?</span> <span class="ruby-keyword kw">self</span>[<span class="ruby-value str">'default'</span>] <span class="ruby-operator">:</span> <span class="ruby-identifier">default_Hash</span>(<span class="ruby-identifier">key</span> <span class="ruby-operator">==</span> <span class="ruby-ivar">@@no_key</span> <span class="ruby-operator">?</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">key</span>)
+  <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -224,10 +224,10 @@ HashWithIndifferentAccess#dup always returns HashWithIndifferentAccess!
             onclick="toggleCode('M000003-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000003-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/rconfig/config_hash.rb, line 12</span>
-12:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">dup</span>
-13:     <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">self</span>)
-14:   <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/rconfig/config_hash.rb, line 12</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">dup</span>
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">self</span>)
+  <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -277,25 +277,25 @@ also works inside the composite array keys.
             onclick="toggleCode('M000004-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000004-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/rconfig/config_hash.rb, line 41</span>
-41:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">method</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
-42:     <span class="ruby-identifier">method</span> = <span class="ruby-identifier">method</span>.<span class="ruby-identifier">to_s</span>
-43:     <span class="ruby-comment cmt"># STDERR.puts &quot;CHF#method_missing(#{method.inspect}, #{args.inspect}) on #{self.inspect}:#{self.class}&quot; if method == 'dup'</span>
-44:     <span class="ruby-identifier">value</span> = <span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">method</span>]
-45:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">size</span>
-46:         <span class="ruby-keyword kw">when</span> <span class="ruby-value">0</span><span class="ruby-operator">:</span>
-47:           <span class="ruby-comment cmt"># e.g.: RConfig.application.method</span>
-48:           ;
-49:         <span class="ruby-keyword kw">when</span> <span class="ruby-value">1</span><span class="ruby-operator">:</span>
-50:           <span class="ruby-comment cmt"># e.g.: RConfig.application.method(one_arg)</span>
-51:           <span class="ruby-identifier">value</span> = <span class="ruby-identifier">value</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">args</span>[<span class="ruby-value">0</span>])
-52:         <span class="ruby-keyword kw">else</span>
-53:           <span class="ruby-comment cmt"># e.g.: RConfig.application.method(arg_one, args_two, ...)</span>
-54:           <span class="ruby-identifier">value</span> = <span class="ruby-identifier">value</span>[<span class="ruby-identifier">args</span>]
-55:       <span class="ruby-keyword kw">end</span>
-56:       <span class="ruby-comment cmt"># value =  convert_value(value)</span>
-57:       <span class="ruby-identifier">value</span>
-58:     <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/rconfig/config_hash.rb, line 41</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">method</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+    <span class="ruby-identifier">method</span> = <span class="ruby-identifier">method</span>.<span class="ruby-identifier">to_s</span>
+    <span class="ruby-comment cmt"># STDERR.puts &quot;CHF#method_missing(#{method.inspect}, #{args.inspect}) on #{self.inspect}:#{self.class}&quot; if method == 'dup'</span>
+    <span class="ruby-identifier">value</span> = <span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">method</span>]
+      <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">size</span>
+        <span class="ruby-keyword kw">when</span> <span class="ruby-value">0</span><span class="ruby-operator">:</span>
+          <span class="ruby-comment cmt"># e.g.: RConfig.application.method</span>
+          ;
+        <span class="ruby-keyword kw">when</span> <span class="ruby-value">1</span><span class="ruby-operator">:</span>
+          <span class="ruby-comment cmt"># e.g.: RConfig.application.method(one_arg)</span>
+          <span class="ruby-identifier">value</span> = <span class="ruby-identifier">value</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">args</span>[<span class="ruby-value">0</span>])
+        <span class="ruby-keyword kw">else</span>
+          <span class="ruby-comment cmt"># e.g.: RConfig.application.method(arg_one, args_two, ...)</span>
+          <span class="ruby-identifier">value</span> = <span class="ruby-identifier">value</span>[<span class="ruby-identifier">args</span>]
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-comment cmt"># value =  convert_value(value)</span>
+      <span class="ruby-identifier">value</span>
+    <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -330,11 +330,11 @@ protocols!!!!
             onclick="toggleCode('M000007-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000007-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/rconfig/config_hash.rb, line 92</span>
-92:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">update</span>(<span class="ruby-identifier">hash</span>)
-93:     <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">hash</span>)
-94:     <span class="ruby-keyword kw">self</span>
-95:   <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/rconfig/config_hash.rb, line 92</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">update</span>(<span class="ruby-identifier">hash</span>)
+    <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">hash</span>)
+    <span class="ruby-keyword kw">self</span>
+  <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

@@ -1,4 +1,8 @@
-0.3.1
+0.3.2
+=====
+* Fixed bug in 0.3.1 causing stackrace
+
+0.3.1 (bug - DO NOT USE)
 =====
 * Added rake scripts
 * Finished gemspec

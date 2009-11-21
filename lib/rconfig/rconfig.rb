@@ -71,9 +71,6 @@ require 'rconfig/exceptions'
 class RConfig
   include Singleton 
 
-  VERSION = File.read('VERSION').strip!.freeze
-
-  EMPTY_ARRAY = [].freeze unless defined? EMPTY_ARRAY
 
   # ENV TIER i.e. (development, integration, staging, or production)
   # Defaults to RAILS_ENV if running in Rails, otherwise, it checks
@@ -601,6 +598,8 @@ class RConfig
     end
   end
 
+
+  EMPTY_ARRAY = [].freeze unless defined? EMPTY_ARRAY
 
   # Executes all of the reload callbacks registered to the specified config name, 
   # and all of the callbacks registered to run on any config, as specified by the
