@@ -28,3 +28,4 @@ test/test_files/test_development.yml
 test/test_files/test_local.yml
 test/test_files/test_production.yml
 test/test_files/test.yml
+VERSION

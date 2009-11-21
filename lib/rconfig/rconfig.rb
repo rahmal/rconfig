@@ -8,8 +8,6 @@ require 'rconfig/core_ext'
 require 'rconfig/exceptions'
 
 ##
-#++
-#=RConfig
 #
 # Copyright (c) 2009 Rahmal Conda <rahmal@gmail.com>
 # -------------------------------------------------------------------

@@ -1,3 +1,9 @@
+0.3.1
+=====
+* Added rake scripts
+* Finished gemspec
+* Created rdocs
+* Built gem file
 
 0.3
 =====

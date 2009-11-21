@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: PropertiesFileParser</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">PropertiesFileParser</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../files/lib/rconfig/properties_file_parser_rb.html">
+                lib/rconfig/properties_file_parser.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                Object
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+++
+</p>
+<pre>
+ Copyright (c) 2009 Rahmal Conda &lt;rahmal@gmail.com&gt;
+
+ This class parses key/value based properties files used for configuration.
+ It is used by rconfig to import configuration files of the aforementioned
+ format. Unlike yaml, and xml files it can only support two levels. First,
+ it can have root level properties.
+
+ Example:
+            server_url=host.domain.com
+            server_port=8080
+
+ Secondly, it can have properties grouped into catagories. The group names
+ must be specified within brackets like [ ... ]
+
+ Example:
+            [server]
+            url=host.domain.com
+            port=8080
+</pre>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000001">parse</a>&nbsp;&nbsp;
+      <a href="#M000002">validate</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+    <div id="includes">
+      <h3 class="section-bar">Included Modules</h3>
+
+      <div id="includes-list">
+        <span class="include-name">Singleton</span>
+      </div>
+    </div>
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000001" class="method-detail">
+        <a name="M000001"></a>
+
+        <div class="method-heading">
+          <a href="#M000001" class="method-signature">
+          <span class="method-name">parse</span><span class="method-args">(config_file)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Parse config file and import data into hash to be stored in config.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000001-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000001-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/rconfig/properties_file_parser.rb, line 29</span>
+29:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">parse</span> <span class="ruby-identifier">config_file</span>
+30:     <span class="ruby-identifier">validate</span>(<span class="ruby-identifier">config_file</span>)
+31: 
+32:     <span class="ruby-identifier">config</span> = {}
+33: 
+34:     <span class="ruby-comment cmt"># The config is top down.. anything after a [group] gets added as part</span>
+35:     <span class="ruby-comment cmt"># of that group until a new [group] is found.  </span>
+36:     <span class="ruby-identifier">group</span> = <span class="ruby-keyword kw">nil</span>
+37:     <span class="ruby-identifier">config_file</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span>     <span class="ruby-comment cmt"># for each line in the config file</span>
+38:       <span class="ruby-identifier">line</span>.<span class="ruby-identifier">strip!</span>
+39:       <span class="ruby-keyword kw">unless</span> (<span class="ruby-regexp re">/^\#/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">line</span>))   <span class="ruby-comment cmt"># skip comments (lines that state with '#')</span>
+40:         <span class="ruby-keyword kw">if</span>(<span class="ruby-regexp re">/\s*=\s*/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">line</span>))  <span class="ruby-comment cmt"># if this line is a config property</span>
+41:           <span class="ruby-identifier">key</span>, <span class="ruby-identifier">val</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp re">/\s*=\s*/</span>, <span class="ruby-value">2</span>)  <span class="ruby-comment cmt"># parse key and value from line</span>
+42:           <span class="ruby-identifier">key</span> = <span class="ruby-identifier">key</span>.<span class="ruby-identifier">chomp</span>.<span class="ruby-identifier">strip</span>
+43:           <span class="ruby-identifier">val</span> = <span class="ruby-identifier">val</span>.<span class="ruby-identifier">chomp</span>.<span class="ruby-identifier">strip</span>
+44:           <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">val</span>)
+45:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">val</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^['&quot;](.*)['&quot;]$/</span>  <span class="ruby-comment cmt"># if the value is in quotes</span>
+46:               <span class="ruby-identifier">value</span> = <span class="ruby-identifier">$1</span>                <span class="ruby-comment cmt"># strip out value from quotes</span>
+47:             <span class="ruby-keyword kw">else</span>
+48:               <span class="ruby-identifier">value</span> = <span class="ruby-identifier">val</span>               <span class="ruby-comment cmt"># otherwise, leave as-is</span>
+49:             <span class="ruby-keyword kw">end</span>
+50:           <span class="ruby-keyword kw">else</span>
+51:             <span class="ruby-identifier">value</span> = <span class="ruby-value str">''</span>                  <span class="ruby-comment cmt"># if value was nil, set it to empty string</span>
+52:           <span class="ruby-keyword kw">end</span> 
+53: 
+54:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">group</span>                      <span class="ruby-comment cmt"># if this property is part of a group</span>
+55:             <span class="ruby-identifier">config</span>[<span class="ruby-identifier">group</span>][<span class="ruby-identifier">key</span>] = <span class="ruby-identifier">value</span>  <span class="ruby-comment cmt"># then add it to the group</span>
+56:           <span class="ruby-keyword kw">else</span>                   
+57:             <span class="ruby-identifier">config</span>[<span class="ruby-identifier">key</span>] = <span class="ruby-identifier">value</span>         <span class="ruby-comment cmt"># otherwise, add it to top-level config</span>
+58:           <span class="ruby-keyword kw">end</span>
+59:          
+60:         <span class="ruby-comment cmt"># Group lines are parsed into arrays: %w('[', 'group', ']')</span>
+61:         <span class="ruby-keyword kw">elsif</span>(<span class="ruby-regexp re">/^\[(.+)\]$/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">line</span>).<span class="ruby-identifier">to_a</span> <span class="ruby-operator">!=</span> [])  <span class="ruby-comment cmt"># if this line is a config group</span>
+62:           <span class="ruby-identifier">group</span> = <span class="ruby-regexp re">/^\[(.+)\]$/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">line</span>).<span class="ruby-identifier">to_a</span>[<span class="ruby-value">1</span>]  <span class="ruby-comment cmt"># parse the group name from line</span>
+63:           <span class="ruby-identifier">config</span>[<span class="ruby-identifier">group</span>] <span class="ruby-operator">||=</span> {}                      <span class="ruby-comment cmt"># add group to top-level config</span>
+64:         <span class="ruby-keyword kw">end</span>
+65:       <span class="ruby-keyword kw">end</span>
+66:     <span class="ruby-keyword kw">end</span> 
+67:     <span class="ruby-identifier">config</span>  <span class="ruby-comment cmt"># return config hash</span>
+68:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000002" class="method-detail">
+        <a name="M000002"></a>
+
+        <div class="method-heading">
+          <a href="#M000002" class="method-signature">
+          <span class="method-name">validate</span><span class="method-args">(config_file)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Validate the config file. Check that the file exists and that it&#8216;s
+readable. TODO: Create real error.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000002-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000002-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/rconfig/properties_file_parser.rb, line 74</span>
+74:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">validate</span> <span class="ruby-identifier">config_file</span>
+75:     <span class="ruby-identifier">raise</span> <span class="ruby-value str">'Invalid config file name.'</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">config_file</span>
+76:     <span class="ruby-identifier">raise</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">ENOENT</span>, <span class="ruby-node">&quot;#{config_file} does not exist&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">config_file</span>.<span class="ruby-identifier">path</span>)
+77:     <span class="ruby-identifier">raise</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">EACCES</span>, <span class="ruby-node">&quot;#{config_file} is not readable&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">readable?</span>(<span class="ruby-identifier">config_file</span>.<span class="ruby-identifier">path</span>)
+78:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>
