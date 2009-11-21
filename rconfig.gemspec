@@ -2,7 +2,7 @@ require 'rake'
 
 Gem::Specification.new do |s|
   s.name = "rconfig"
-  s.version = "0.3"
+  s.version = File.read('VERSION').strip
   s.date = "2009-11-20"
   s.rubyforge_project = "rconda-rconfig"
 
