@@ -1,5 +1,4 @@
-
-#++
+##
 # Copyright (c) 2009 Rahmal Conda <rahmal@gmail.com>
 #
 # This class parses key/value based properties files used for configuration.
@@ -19,10 +18,10 @@
 #            url=host.domain.com
 #            port=8080
 #
-#--
+#
 class PropertiesFileParser
   include Singleton # Don't instantiate this class
- 
+
   ##
   # Parse config file and import data into hash to be stored in config.
   #

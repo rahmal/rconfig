@@ -1,5 +1,4 @@
-
-#++
+##
 # source: http://rubyforge.org/projects/facets/
 # version: 1.7.46
 # license: Ruby License
@@ -7,7 +6,7 @@
 # BUG: weave is destructive to values in the source hash that are arrays!
 #      (this is acceptable for RConfig's use as the basis for weave!)
 #
-#--
+#
 class Hash
 
   ##
@@ -77,7 +76,7 @@ class Hash
         else
           other_node
         end
-              
+
       end # case self_node
 
       # Target hash didn't have a node matching the key, 

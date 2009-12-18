@@ -1,3 +1,9 @@
+0.3.3
+=====
+* Extend object to add short-hand access to config.
+* Renamed core rconfig file to config core.
+*
+
 0.3.2
 =====
 * Fixed bug in 0.3.1 causing stackrace

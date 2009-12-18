@@ -29,10 +29,11 @@ require 'active_support/core_ext'
 require 'active_support/core_ext/hash/conversions'
 require 'active_support/core_ext/hash/indifferent_access'
 
-require 'rconfig/core_ext'
+require 'rconfig/core_ext/hash'
+require 'rconfig/core_ext/object'
+require 'rconfig/config_core'
 require 'rconfig/config_hash'
 require 'rconfig/properties_file_parser'
-require 'rconfig/rconfig'
 
 # Create global reference to RConfig instance
 $config = RConfig.instance

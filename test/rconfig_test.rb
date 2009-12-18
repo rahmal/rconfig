@@ -1,13 +1,12 @@
 #!/usr/bin/env ruby
 
-root_dir = File.dirname(__FILE__)
-conf_dir = File.expand_path(File.dirname(__FILE__))
+root_dir = conf_dir = File.expand_path(File.dirname(__FILE__))
 
 $LOAD_PATH << File.join(root_dir,"..","lib")
 
 # Test environment:
 ENV['TIER'] = 'development'
-ENV['CONFIG_PATH'] = conf_dir + "/test_files/"
+ENV['CONFIG_PATH'] = File.join(conf_dir, 'config_files')
 ENV.delete('CONFIG_OVERLAY') # Avoid unintended magic.
 
 # Test dependencies:

@@ -1,11 +1,11 @@
-#++
+##
 # Copyright (c) 2009 Rahmal Conda <rahmal@gmail.com>
 #
 # ConfigHash is a special class, derived from HashWithIndifferentAccess.
 # It was specifically created for handling config data or creating mock 
 # objects from yaml files. It provides a dotted notation for accessing 
 # embedded hash values, similar to the way one might traverse a object tree.
-#--
+#
 class ConfigHash < HashWithIndifferentAccess
 
   # HashWithIndifferentAccess#dup always returns HashWithIndifferentAccess!
@@ -26,7 +26,7 @@ class ConfigHash < HashWithIndifferentAccess
   #     :address: info_not_available
   #     ? [name, employer]
   #     : not_verified
-  # 
+  #
   # Allows the following calls:
   # foo.customer.id                 => 12345678
   # foo.customer.verified.phone     => verified
@@ -56,8 +56,8 @@ class ConfigHash < HashWithIndifferentAccess
       # value =  convert_value(value)
       value
     end
-    
-    ## 
+
+    ##
     # Why the &*#^@*^&$ isn't HashWithIndifferentAccess actually doing this?
     def [](key)
       key = key.to_s if key.kind_of?(Symbol)
@@ -75,14 +75,14 @@ class ConfigHash < HashWithIndifferentAccess
     key = key.to_s if key.is_a?(Symbol)
     key == @@no_key ? self['default'] : default_Hash(key == @@no_key ? nil : key)
   end
-    
-  ## 
+
+  ##
   # HashWithIndifferentAccess#update is broken!
   # Hash#update returns self,
   # BUT,
   # HashWithIndifferentAccess#update does not!
   #
-  #   { :a => 1 }.update({ :b => 2, :c => 3 }) 
+  #   { :a => 1 }.update({ :b => 2, :c => 3 })
   #   => { :a => 1, :b => 2, :c => 3 }
   #
   #   HashWithIndifferentAccess.new({ :a => 1 }).update({ :b => 2, :c => 3 })
@@ -94,7 +94,7 @@ class ConfigHash < HashWithIndifferentAccess
     self
   end
 
-  ## 
+  ##
   # Override WithIndifferentAccess#convert_value
   # return instances of this class for Hash values.
   def convert_value(value)

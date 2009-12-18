@@ -51,7 +51,7 @@ require 'rconfig/exceptions'
 #   server:
 #     address: host.domain.com
 #     port: 81
-#   ...
+#  ...
 #
 #  application.properties =>
 #    debug_level = verbose
@@ -67,7 +67,7 @@ require 'rconfig/exceptions'
 #  RConfig[:lang] => 'en'
 #  ...
 #
-#--
+#
 class RConfig
   include Singleton 
 
