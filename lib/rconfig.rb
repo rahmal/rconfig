@@ -23,6 +23,8 @@
 
 $:.unshift File.dirname(__FILE__)
 
+require 'socket'
+require 'yaml'
 require 'rubygems'
 require 'active_support'
 require 'active_support/core_ext'
@@ -31,9 +33,11 @@ require 'active_support/core_ext/hash/indifferent_access'
 
 require 'rconfig/core_ext/hash'
 require 'rconfig/core_ext/object'
-require 'rconfig/config_core'
 require 'rconfig/config_hash'
 require 'rconfig/properties_file_parser'
+require 'rconfig/constants'
+require 'rconfig/class_variables'
+require 'rconfig/rconfig'
 
 # Create global reference to RConfig instance
 $config = RConfig.instance

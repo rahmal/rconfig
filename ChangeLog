@@ -1,8 +1,9 @@
 0.3.3
 =====
 * Extend object to add short-hand access to config.
-* Renamed core rconfig file to config core.
-*
+* Moved constants, and class variables to separate modules to decrease core class size.
+* Fixed a syntax error in when clause of config_hash.rb for ruby 1.9.1 - From dvyjones/rconfig (github).
+* Fixed raise on allow_reload method.
 
 0.3.2
 =====
@@ -29,8 +30,6 @@
 * Added support for setting config path(s) programmtically.
 * Added support for using multiple file types at once.
 * Cleaned up STDERR statements.
-
-
 
 0.1
 =====
