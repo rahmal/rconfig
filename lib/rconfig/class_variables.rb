@@ -7,7 +7,7 @@ module ClassVariables
   # @@suffixes['name'] vs @@suffix['name_GB']
   @@suffixes = {}
 
-   @@overlay = ENV['CONFIG_OVERLAY'] || ""
+   @@overlay = ENV['CONFIG_OVERLAY']
 
   # Hash of yaml file names and their respective contents,
   # last modified time, and the last time it was loaded.
@@ -55,6 +55,6 @@ module ClassVariables
   # errors and application run-time information. It
   # defaults to environment debug level setting, or
   # false if the env variable is not set.
-  @@verbose = (ENV['DEBUG_LEVEL'] == 'verbose')
+  @@verbose = ((ENV['LOG_LEVEL'] || ENV['DEBUG_LEVEL']).to_s.downcase == 'verbose')
 
 end

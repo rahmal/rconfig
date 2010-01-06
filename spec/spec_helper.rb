@@ -1,13 +1,15 @@
 
-root_dir = File.expand_path(File.dirname(__FILE__))
-conf_dir = File.join(root_dir, 'test', 'config_files')
+ROOT_DIR = File.expand_path(File.dirname(__FILE__))
+CONF_DIR = File.join(ROOT_DIR, 'test', 'config_files')
 
+# Set test config environment
 ENV['TIER'] = 'development'
-ENV['CONFIG_PATH'] = conf_dir
+ENV['CONFIG_PATH'] = CONF_DIR
+ENV['LOG_LEVEL'] = 'verbose'
 
 # Loads the rconfig library
-$LOAD_PATH << File.join(root_dir,'..','lib')
+$LOAD_PATH << File.join(ROOT_DIR,'..','lib')
 
 # Requires supporting files in ./support/ and its subdirectories.
-Dir["#{root_dir}/support/**/*.rb"].each {|f| require f}
+#Dir["#{ROOT_DIR}/support/**/*.rb"].each {|f| require f}
 

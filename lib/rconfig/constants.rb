@@ -1,5 +1,11 @@
 module Constants
 
+  # Sets CONFIG_ROOT to RAILS_ROOT/config unless it has already
+  # been defined (i.e. in rails env, or calling ruby app).
+  unless defined? CONFIG_ROOT
+    CONFIG_ROOT = RAILS_ROOT + "/config" if defined? RAILS_ROOT
+  end
+
   # ENV TIER i.e. (development, integration, staging, or production)
   # Defaults to RAILS_ENV if running in Rails, otherwise, it checks
   # if ENV['TIER'] is present. If not, it assumes production.
@@ -42,7 +48,6 @@ module Constants
     HOSTNAME_SHORT, [HOSTNAME_SHORT, :config_local],
     HOSTNAME, [HOSTNAME, :config_local]
   ] unless defined? SUFFIXES
-
 
   # Used in place of undefined but expected arrays,
   # to prevent creating a bunch of unecesary arrays

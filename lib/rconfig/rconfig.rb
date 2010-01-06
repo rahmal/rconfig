@@ -58,7 +58,6 @@
 #  RConfig[:lang] => 'en'
 #  ...
 #
-#
 class RConfig
   include Singleton, Constants, ClassVariables
 
@@ -79,9 +78,9 @@ class RConfig
       paths, overlay, reload, verbose = *args
     end
     self.config_paths = paths
-    self.overlay = overlay
+    self.overlay      = overlay
     self.allow_reload = reload
-    self.verbose = verbose
+    self.verbose      = verbose
   end
   
 
@@ -129,8 +128,8 @@ class RConfig
     return if @@reload_disabled && config_paths_set?
     return unless path.is_a?(String)      # only allow string argument
     path_sep = (path =~ /;/) ? ';' : ':'  # if string contains multiple paths
-    path = path.split(/#{path_sep}+/)[0]  # only accept first one.
-   
+    path = path.split(/#{path_sep}+/)[0]  # only accept first one.    
+
     if @@config_paths.blank? 
       set_config_paths(path)
     else 
@@ -188,7 +187,7 @@ class RConfig
   # Indicates whether or not config_paths have been set.
   # Returns true if @@config_paths has at least one directory.
   def self.config_paths_set?
-    @@config_paths.present?
+    !@@config_paths.blank?
   end
 
 

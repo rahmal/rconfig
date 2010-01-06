@@ -1,12 +1,13 @@
 #!/usr/bin/env ruby
 
-root_dir = conf_dir = File.expand_path(File.dirname(__FILE__))
+ROOT_DIR = File.expand_path(File.dirname(__FILE__))
 
-$LOAD_PATH << File.join(root_dir,"..","lib")
+# Loads the rconfig library
+$LOAD_PATH << File.join(ROOT_DIR,"..","lib")
 
 # Test environment:
 ENV['TIER'] = 'development'
-ENV['CONFIG_PATH'] = File.join(conf_dir, 'config_files')
+ENV['CONFIG_PATH'] = File.join(ROOT_DIR, 'config_files')
 ENV.delete('CONFIG_OVERLAY') # Avoid unintended magic.
 
 # Test dependencies:
@@ -21,15 +22,20 @@ class RConfigTest < Test::Unit::TestCase
 
 
   def setup
-    super
+
     begin
-      RConfig.verbose = nil # default
       RConfig.reload(true)
-      RConfig.reload_disabled = nil # default
+      RConfig.config_paths = "#{ROOT_DIR}/config_files"
+
+      RConfig.reload = true
+      RConfig.allow_reload = true  # default
       RConfig.reload_delay = nil # default
+      RConfig.verbose = false # default
     rescue => err
-      # NOTHING
+      STDERR.puts err.inspect
+      raise err
     end
+    super
   end
 
 
@@ -39,6 +45,12 @@ class RConfigTest < Test::Unit::TestCase
 
 
   def test_basic
+    RConfig.set_config_path = "#{ROOT_DIR}/config_files"
+    RConfig.verbose = true
+    RConfig.reload = true
+    RConfig.allow_reload = true
+    RConfig.reload_delay = nil # default
+    
     assert_equal true, RConfig.test.secure_login
   end
 
@@ -151,6 +163,8 @@ class RConfigTest < Test::Unit::TestCase
 
 
   def test_hash_merge
+    assert_kind_of Array, cf = RConfig.get_config_files("test").select{|x| x[3]}
+    STDERR.puts "cf = #{cf.inspect}"
     assert_equal "foo", RConfig.test.hash_1.foo
     assert_equal "baz", RConfig.test.hash_1.bar
     assert_equal "bok", RConfig.test.hash_1.bok
@@ -170,7 +184,7 @@ class RConfigTest < Test::Unit::TestCase
 
   def test_config_files
     assert_kind_of Array, cf = RConfig.get_config_files("test").select{|x| x[3]}
-    # STDERR.puts "cf = #{cf.inspect}"
+    #STDERR.puts "cf = #{cf.inspect}"
 
     if ENV['CONFIG_OVERLAY']
       assert_equal 3, cf.size
@@ -178,11 +192,12 @@ class RConfigTest < Test::Unit::TestCase
       assert_equal 2, cf.size
     end
 
-    assert_equal 4, cf[0].size
+    assert_equal 5, cf[0].size
     assert_equal "test", cf[0][0]
     assert_equal "test", cf[0][1]
+    assert_equal :yml, cf[0][3]
 
-    assert_equal 4, cf[1].size
+    assert_equal 5, cf[1].size
     if ENV['CONFIG_OVERLAY'] == 'gb'
       assert_equal "test_gb", cf[1][0]
       assert_equal "test_gb", cf[1][1]
@@ -300,6 +315,7 @@ class RConfigTest < Test::Unit::TestCase
     assert_equal 2, called_back
 
     # STDERR.puts "Not expecting config change."
+    RConfig.reload(true)
     assert_nil RConfig.check_config_changed
     assert_equal "foo", RConfig.test.hash_1.foo
     assert_equal 2, called_back
