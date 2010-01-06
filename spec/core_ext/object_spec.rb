@@ -1,10 +1,11 @@
-require File.join('..', 'spec_helper')
+
+require File.join(File.dirname(__FILE__), '..', 'spec_helper')
 
 describe Object do
 
   describe "#try" do
 
-    it "should return nil if method doesn't exist" do
+    it "should return nil if method doesn't exist" do      
       obj = Object.new
       lambda {obj.try(:bad_method)}.should_not raise_error
       obj.try(:bad_method).should be_nil
@@ -30,7 +31,6 @@ describe Object do
     end
 
     it "should class-specific config when matching config file exists" do
-      File.open("#{CONFIG_PATH}/my_class.yml", 'w') {|f| f.write("my_class_flag: true") }
       class MyClass; end
       my_class = MyClass.new
       lambda {my_class.config}.should_not raise_error

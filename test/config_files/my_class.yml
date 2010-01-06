@@ -1,0 +1,5 @@
+my_class_flag: true
+
+user:
+  name: johnny
+  group: daemons

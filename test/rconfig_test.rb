@@ -7,7 +7,6 @@ $LOAD_PATH << File.join(ROOT_DIR,"..","lib")
 
 # Test environment:
 ENV['TIER'] = 'development'
-ENV['CONFIG_PATH'] = File.join(ROOT_DIR, 'config_files')
 ENV.delete('CONFIG_OVERLAY') # Avoid unintended magic.
 
 # Test dependencies:
@@ -26,7 +25,6 @@ class RConfigTest < Test::Unit::TestCase
     begin
       RConfig.reload(true)
       RConfig.config_paths = "#{ROOT_DIR}/config_files"
-
       RConfig.reload = true
       RConfig.allow_reload = true  # default
       RConfig.reload_delay = nil # default

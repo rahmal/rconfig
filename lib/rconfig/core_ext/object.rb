@@ -35,8 +35,8 @@ class Object
   #       the class (RConfig).
   #
   def config
-    this_config = instnce_eval("$config.try(#{self.class.name.underscore})")
-    this_config || $config
+    this_config = $config.send(self.class.name.underscore.to_sym)    
+    this_config.blank? ? $config : this_config
   end
 
 end
