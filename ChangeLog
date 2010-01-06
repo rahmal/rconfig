@@ -4,6 +4,8 @@
 * Moved constants, and class variables to separate modules to decrease core class size.
 * Fixed a syntax error in when clause of config_hash.rb for ruby 1.9.1 - From dvyjones/rconfig (github).
 * Fixed raise on allow_reload method.
+* Fixed unit test, rconfig_test.rb.
+* Fixed minor typos, comments, and bugs.
 
 0.3.2
 =====
