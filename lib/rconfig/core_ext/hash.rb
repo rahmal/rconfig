@@ -11,7 +11,7 @@ class Hash
 
   ##
   # Weaves the contents of two hashes producing a new hash.
-  def weave(other_hash, dont_clobber = true)
+  def weave(other_hash, clobber = false)
     return self unless other_hash
     unless other_hash.kind_of?(Hash)
       raise ArgumentError, "RConfig: (Hash#weave) expected <Hash>, but was <#{other_hash.class}>"
@@ -31,10 +31,10 @@ class Hash
           # hash1, hash2 => hash3 (recursive +)
           if other_node.is_a?(Hash)
 
-            self_node.weave(other_node, dont_clobber)
+            self_node.weave(other_node, clobber)
 
           # hash, array => error (Can't weave'em, must clobber.)
-          elsif other_node.is_a?(Array) && dont_clobber
+          elsif other_node.is_a?(Array) && !clobber
 
             raise(ArgumentError, "RConfig: (Hash#weave) Can't weave Hash and Array")
 
@@ -49,7 +49,7 @@ class Hash
           # array, hash => array << hash
           # array1, array2 => array1 + array2
           # array, value => array << value
-          if dont_clobber
+          unless clobber
             case other_node
             when Hash
               self_node << other_node
@@ -69,7 +69,7 @@ class Hash
       else
 
         # value, array => array.unshift(value)
-        if other_node.is_a?(Array) && dont_clobber
+        if other_node.is_a?(Array) && !clobber
           other_node.unshift(self_node)
 
         # value1, value2 => value2
@@ -94,8 +94,8 @@ class Hash
   ##
   # Same as self.weave(other_hash, dont_clobber) except that it weaves other hash 
   # to itself, rather than create a new hash.
-  def weave!(other_hash, dont_clobber = true)
-    weaved_hash = self.weave(other_hash, dont_clobber)
+  def weave!(other_hash, clobber = false)
+    weaved_hash = self.weave(other_hash, clobber)
     self.merge!(weaved_hash)
   end
 

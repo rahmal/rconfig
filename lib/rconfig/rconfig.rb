@@ -474,7 +474,7 @@ class RConfig
   # Returns a merge of hashes.
   #
   def self.merge_hashes(hashes)
-    hashes.inject({ }) { | n, h | n.weave(h, false) }
+    hashes.inject({ }) { | n, h | n.weave(h, true) }
   end
 
 

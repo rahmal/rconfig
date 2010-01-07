@@ -6,6 +6,7 @@
 * Fixed raise on allow_reload method.
 * Fixed unit test, rconfig_test.rb.
 * Fixed minor typos, comments, and bugs.
+* Refactored Hash#weave signature; changed dont_clobber=true, to clobber=false (reads more intuitively).
 
 0.3.2
 =====
