@@ -23,18 +23,19 @@
 
 $:.unshift File.dirname(__FILE__)
 
-require 'socket'
-require 'yaml'
 require 'rubygems'
-require 'active_support'
-require 'active_support/core_ext'
-require 'active_support/core_ext/hash/conversions'
-require 'active_support/core_ext/hash/indifferent_access'
 
-require 'rconfig/core_ext/hash'
+autoload :Socket, 'socket'
+autoload :YAML, 'yaml'
+
+autoload :Hash, 'active_support/core_ext/hash/conversions'
+autoload :HashWithIndifferentAccess, 'active_support/core_ext/hash/indifferent_access'
+
+autoload :Hash, 'rconfig/core_ext/hash'
+autoload :ConfigHash, 'rconfig/config_hash'
+autoload :PropertiesFileParser, 'rconfig/properties_file_parser'
+
 require 'rconfig/core_ext/object'
-require 'rconfig/config_hash'
-require 'rconfig/properties_file_parser'
 require 'rconfig/exceptions'
 require 'rconfig/constants'
 require 'rconfig/class_variables'
