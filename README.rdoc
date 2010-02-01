@@ -52,11 +52,21 @@ The complete solution for Ruby Configuration Management. RConfig is a Ruby libra
 
 == ToDo
 
-* Fix tests; convert to RSpec and Cucumber
-* Complete Documentation
+1. Finish JSpecs for existing code (Yeah, I know. You’re supposed to right the JSpecs first.)
+2. Create re-factor goals based on Caliper metrics.
+3. Prep for cleaner, stabler release.
+
+
+== Feature Ideas
+
+* Support for git-like config/properties files (You know, with the namespaced header blocks.).
+* Support for Database-driven configuration.
+* Removing dependency on ActiveSupport (Pull in needed code.).
+* These are features I’m considering. E-mail me <rahmal@gmail.com> If you like to see a feature added or expedited.
+
 
 == Known Issues
-  
+
 * None
 
 == License
