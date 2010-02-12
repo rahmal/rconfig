@@ -80,16 +80,15 @@
 
     <div id="description">
       <p>
-++
+Copyright (c) 2009 Rahmal Conda &lt;rahmal@gmail.com&gt;
 </p>
-<pre>
- Copyright (c) 2009 Rahmal Conda &lt;rahmal@gmail.com&gt;
-
- ConfigHash is a special class, derived from HashWithIndifferentAccess.
- It was specifically created for handling config data or creating mock
- objects from yaml files. It provides a dotted notation for accessing
- embedded hash values, similar to the way one might traverse a object tree.
-</pre>
+<p>
+<a href="ConfigHash.html">ConfigHash</a> is a special class, derived from
+HashWithIndifferentAccess. It was specifically created for handling config
+data or creating mock objects from yaml files. It provides a dotted
+notation for accessing embedded hash values, similar to the way one might
+traverse a object tree.
+</p>
 
     </div>
 
@@ -100,12 +99,12 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000005">[]</a>&nbsp;&nbsp;
-      <a href="#M000008">convert_value</a>&nbsp;&nbsp;
-      <a href="#M000006">default</a>&nbsp;&nbsp;
-      <a href="#M000003">dup</a>&nbsp;&nbsp;
-      <a href="#M000004">method_missing</a>&nbsp;&nbsp;
-      <a href="#M000007">update</a>&nbsp;&nbsp;
+      <a href="#M000006">[]</a>&nbsp;&nbsp;
+      <a href="#M000009">convert_value</a>&nbsp;&nbsp;
+      <a href="#M000007">default</a>&nbsp;&nbsp;
+      <a href="#M000004">dup</a>&nbsp;&nbsp;
+      <a href="#M000005">method_missing</a>&nbsp;&nbsp;
+      <a href="#M000008">update</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -127,11 +126,11 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000005" class="method-detail">
-        <a name="M000005"></a>
+      <div id="method-M000006" class="method-detail">
+        <a name="M000006"></a>
 
         <div class="method-heading">
-          <a href="#M000005" class="method-signature">
+          <a href="#M000006" class="method-signature">
           <span class="method-name">[]</span><span class="method-args">(key)</span>
           </a>
         </div>
@@ -142,8 +141,8 @@ Why the &amp;*#^@*^&amp;$ isn&#8216;t HashWithIndifferentAccess actually
 doing this?
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000005-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000005-source">
+            onclick="toggleCode('M000006-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000006-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/rconfig/config_hash.rb, line 62</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-operator">[]</span>(<span class="ruby-identifier">key</span>)
@@ -155,11 +154,11 @@ doing this?
         </div>
       </div>
 
-      <div id="method-M000008" class="method-detail">
-        <a name="M000008"></a>
+      <div id="method-M000009" class="method-detail">
+        <a name="M000009"></a>
 
         <div class="method-heading">
-          <a href="#M000008" class="method-signature">
+          <a href="#M000009" class="method-signature">
           <span class="method-name">convert_value</span><span class="method-args">(value)</span>
           </a>
         </div>
@@ -170,8 +169,8 @@ Override WithIndifferentAccess#convert_value return instances of this class
 for <a href="Hash.html">Hash</a> values.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000008-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000008-source">
+            onclick="toggleCode('M000009-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000009-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/rconfig/config_hash.rb, line 100</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">convert_value</span>(<span class="ruby-identifier">value</span>)
@@ -183,19 +182,19 @@ for <a href="Hash.html">Hash</a> values.
         </div>
       </div>
 
-      <div id="method-M000006" class="method-detail">
-        <a name="M000006"></a>
+      <div id="method-M000007" class="method-detail">
+        <a name="M000007"></a>
 
         <div class="method-heading">
-          <a href="#M000006" class="method-signature">
+          <a href="#M000007" class="method-signature">
           <span class="method-name">default</span><span class="method-args">(key = @@no_key)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000006-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000006-source">
+            onclick="toggleCode('M000007-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000007-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/rconfig/config_hash.rb, line 74</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">default</span>(<span class="ruby-identifier">key</span> = <span class="ruby-ivar">@@no_key</span>)
@@ -207,11 +206,11 @@ for <a href="Hash.html">Hash</a> values.
         </div>
       </div>
 
-      <div id="method-M000003" class="method-detail">
-        <a name="M000003"></a>
+      <div id="method-M000004" class="method-detail">
+        <a name="M000004"></a>
 
         <div class="method-heading">
-          <a href="#M000003" class="method-signature">
+          <a href="#M000004" class="method-signature">
           <span class="method-name">dup</span><span class="method-args">()</span>
           </a>
         </div>
@@ -221,8 +220,8 @@ for <a href="Hash.html">Hash</a> values.
 HashWithIndifferentAccess#dup always returns HashWithIndifferentAccess!
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000003-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000003-source">
+            onclick="toggleCode('M000004-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000004-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/rconfig/config_hash.rb, line 12</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">dup</span>
@@ -233,11 +232,11 @@ HashWithIndifferentAccess#dup always returns HashWithIndifferentAccess!
         </div>
       </div>
 
-      <div id="method-M000004" class="method-detail">
-        <a name="M000004"></a>
+      <div id="method-M000005" class="method-detail">
+        <a name="M000005"></a>
 
         <div class="method-heading">
-          <a href="#M000004" class="method-signature">
+          <a href="#M000005" class="method-signature">
           <span class="method-name">method_missing</span><span class="method-args">(method, *args)</span>
           </a>
         </div>
@@ -274,8 +273,8 @@ be called with, define in the YAML file either a string or a symbol. This
 also works inside the composite array keys.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000004-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000004-source">
+            onclick="toggleCode('M000005-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000005-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/rconfig/config_hash.rb, line 41</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">method</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
@@ -283,10 +282,10 @@ also works inside the composite array keys.
     <span class="ruby-comment cmt"># STDERR.puts &quot;CHF#method_missing(#{method.inspect}, #{args.inspect}) on #{self.inspect}:#{self.class}&quot; if method == 'dup'</span>
     <span class="ruby-identifier">value</span> = <span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">method</span>]
       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">size</span>
-        <span class="ruby-keyword kw">when</span> <span class="ruby-value">0</span><span class="ruby-operator">:</span>
+        <span class="ruby-keyword kw">when</span> <span class="ruby-value">0</span>
           <span class="ruby-comment cmt"># e.g.: RConfig.application.method</span>
           ;
-        <span class="ruby-keyword kw">when</span> <span class="ruby-value">1</span><span class="ruby-operator">:</span>
+        <span class="ruby-keyword kw">when</span> <span class="ruby-value">1</span>
           <span class="ruby-comment cmt"># e.g.: RConfig.application.method(one_arg)</span>
           <span class="ruby-identifier">value</span> = <span class="ruby-identifier">value</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">args</span>[<span class="ruby-value">0</span>])
         <span class="ruby-keyword kw">else</span>
@@ -301,11 +300,11 @@ also works inside the composite array keys.
         </div>
       </div>
 
-      <div id="method-M000007" class="method-detail">
-        <a name="M000007"></a>
+      <div id="method-M000008" class="method-detail">
+        <a name="M000008"></a>
 
         <div class="method-heading">
-          <a href="#M000007" class="method-signature">
+          <a href="#M000008" class="method-signature">
           <span class="method-name">update</span><span class="method-args">(hash)</span>
           </a>
         </div>
@@ -327,8 +326,8 @@ Subclasses should <b>never</b> override methods and break their
 protocols!!!!
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000007-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000007-source">
+            onclick="toggleCode('M000008-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000008-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/rconfig/config_hash.rb, line 92</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">update</span>(<span class="ruby-identifier">hash</span>)

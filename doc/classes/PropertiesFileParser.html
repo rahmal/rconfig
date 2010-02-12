@@ -65,7 +65,9 @@
         <tr class="top-aligned-row">
             <td><strong>Parent:</strong></td>
             <td>
+                <a href="Object.html">
                 Object
+               </a>
             </td>
         </tr>
         </table>
@@ -80,27 +82,46 @@
 
     <div id="description">
       <p>
-++
+Copyright (c) 2009 Rahmal Conda &lt;rahmal@gmail.com&gt;
+</p>
+<p>
+This class parses key/value based properties files used for configuration.
+It is used by rconfig to import configuration files of the aforementioned
+format. Unlike yaml, and xml files it can only support three levels. First,
+it can have root level properties:
 </p>
 <pre>
- Copyright (c) 2009 Rahmal Conda &lt;rahmal@gmail.com&gt;
+           server_url=host.domain.com
+           server_port=8080
+</pre>
+<p>
+Secondly, it can have properties grouped into catagories. The group names
+must be specified within brackets like [ &#8230; ]
+</p>
+<pre>
+           [server]
+           url=host.domain.com
+           port=8080
+</pre>
+<p>
+Finally, groups can also be qualified with namespaces, similar to git
+config files. Group names are same as before, but with namespace in within
+the brackets like [ &lt;group&gt; &quot;&lt;name&gt;&quot; ]
+</p>
+<pre>
+           [host &quot;dev&quot;]
+           domain=dev.server.com
 
- This class parses key/value based properties files used for configuration.
- It is used by rconfig to import configuration files of the aforementioned
- format. Unlike yaml, and xml files it can only support two levels. First,
- it can have root level properties.
-
- Example:
-            server_url=host.domain.com
-            server_port=8080
-
- Secondly, it can have properties grouped into catagories. The group names
- must be specified within brackets like [ ... ]
-
- Example:
-            [server]
-            url=host.domain.com
-            port=8080
+           [host &quot;prod&quot;]
+           domain=www.server.com
+</pre>
+<p>
+These can be retrieved using dot-notation or variable to do it dynamically.
+</p>
+<pre>
+           RConfig.props.host.dev.domain
+                     - or -
+           RConfig.props.host[env].domain  (where env is 'dev' or 'prod')
 </pre>
 
     </div>
@@ -112,8 +133,7 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000001">parse</a>&nbsp;&nbsp;
-      <a href="#M000002">validate</a>&nbsp;&nbsp;
+      <a href="#M000003">parse</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -132,6 +152,39 @@
     <div id="section">
 
 
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">COMMENT</td>
+          <td>=</td>
+          <td class="context-item-value">/^\#/</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">KEYVAL</td>
+          <td>=</td>
+          <td class="context-item-value">/\s*=\s*/</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">QUOTES</td>
+          <td>=</td>
+          <td class="context-item-value">/^['&quot;](.*)['&quot;]$/</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">GROUP</td>
+          <td>=</td>
+          <td class="context-item-value">/^\[(.+)\]$/</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">NAMEGRP</td>
+          <td>=</td>
+          <td class="context-item-value">/^\[(.+) \&quot;(.+)\&quot;\]$/</td>
+        </tr>
+        </table>
+      </div>
+    </div>
 
 
 
@@ -142,11 +195,11 @@
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000001" class="method-detail">
-        <a name="M000001"></a>
+      <div id="method-M000003" class="method-detail">
+        <a name="M000003"></a>
 
         <div class="method-heading">
-          <a href="#M000001" class="method-signature">
+          <a href="#M000003" class="method-signature">
           <span class="method-name">parse</span><span class="method-args">(config_file)</span>
           </a>
         </div>
@@ -156,78 +209,58 @@
 Parse config file and import data into hash to be stored in config.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000001-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000001-source">
+            onclick="toggleCode('M000003-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000003-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/rconfig/properties_file_parser.rb, line 29</span>
+<span class="ruby-comment cmt"># File lib/rconfig/properties_file_parser.rb, line 47</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">parse</span> <span class="ruby-identifier">config_file</span>
-    <span class="ruby-identifier">validate</span>(<span class="ruby-identifier">config_file</span>)
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">'Invalid config file name.'</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">config_file</span>
 
     <span class="ruby-identifier">config</span> = {}
 
     <span class="ruby-comment cmt"># The config is top down.. anything after a [group] gets added as part</span>
     <span class="ruby-comment cmt"># of that group until a new [group] is found.  </span>
-    <span class="ruby-identifier">group</span> = <span class="ruby-keyword kw">nil</span>
-    <span class="ruby-identifier">config_file</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span>     <span class="ruby-comment cmt"># for each line in the config file</span>
+    <span class="ruby-identifier">group</span>, <span class="ruby-identifier">topgrp</span> = <span class="ruby-keyword kw">nil</span>
+    <span class="ruby-identifier">config_file</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span>              <span class="ruby-comment cmt"># for each line in the config file</span>
       <span class="ruby-identifier">line</span>.<span class="ruby-identifier">strip!</span>
-      <span class="ruby-keyword kw">unless</span> (<span class="ruby-regexp re">/^\#/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">line</span>))   <span class="ruby-comment cmt"># skip comments (lines that state with '#')</span>
-        <span class="ruby-keyword kw">if</span>(<span class="ruby-regexp re">/\s*=\s*/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">line</span>))  <span class="ruby-comment cmt"># if this line is a config property</span>
-          <span class="ruby-identifier">key</span>, <span class="ruby-identifier">val</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp re">/\s*=\s*/</span>, <span class="ruby-value">2</span>)  <span class="ruby-comment cmt"># parse key and value from line</span>
+      <span class="ruby-keyword kw">unless</span> (<span class="ruby-constant">COMMENT</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">line</span>))          <span class="ruby-comment cmt"># skip comments (lines that state with '#')</span>
+        <span class="ruby-keyword kw">if</span>(<span class="ruby-constant">KEYVAL</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">line</span>))              <span class="ruby-comment cmt"># if this line is a config property</span>
+          <span class="ruby-identifier">key</span>, <span class="ruby-identifier">val</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-constant">KEYVAL</span>, <span class="ruby-value">2</span>)  <span class="ruby-comment cmt"># parse key and value from line</span>
           <span class="ruby-identifier">key</span> = <span class="ruby-identifier">key</span>.<span class="ruby-identifier">chomp</span>.<span class="ruby-identifier">strip</span>
           <span class="ruby-identifier">val</span> = <span class="ruby-identifier">val</span>.<span class="ruby-identifier">chomp</span>.<span class="ruby-identifier">strip</span>
           <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">val</span>)
-            <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">val</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^['&quot;](.*)['&quot;]$/</span>  <span class="ruby-comment cmt"># if the value is in quotes</span>
-              <span class="ruby-identifier">value</span> = <span class="ruby-identifier">$1</span>                <span class="ruby-comment cmt"># strip out value from quotes</span>
+            <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">val</span> <span class="ruby-operator">=~</span> <span class="ruby-constant">QUOTES</span>                <span class="ruby-comment cmt"># if the value is in quotes</span>
+              <span class="ruby-identifier">value</span> = <span class="ruby-identifier">$1</span>                    <span class="ruby-comment cmt"># strip out value from quotes</span>
             <span class="ruby-keyword kw">else</span>
-              <span class="ruby-identifier">value</span> = <span class="ruby-identifier">val</span>               <span class="ruby-comment cmt"># otherwise, leave as-is</span>
+              <span class="ruby-identifier">value</span> = <span class="ruby-identifier">val</span>                   <span class="ruby-comment cmt"># otherwise, leave as-is</span>
             <span class="ruby-keyword kw">end</span>
           <span class="ruby-keyword kw">else</span>
-            <span class="ruby-identifier">value</span> = <span class="ruby-value str">''</span>                  <span class="ruby-comment cmt"># if value was nil, set it to empty string</span>
-          <span class="ruby-keyword kw">end</span> 
-
-          <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">group</span>                      <span class="ruby-comment cmt"># if this property is part of a group</span>
-            <span class="ruby-identifier">config</span>[<span class="ruby-identifier">group</span>][<span class="ruby-identifier">key</span>] = <span class="ruby-identifier">value</span>  <span class="ruby-comment cmt"># then add it to the group</span>
-          <span class="ruby-keyword kw">else</span>                   
-            <span class="ruby-identifier">config</span>[<span class="ruby-identifier">key</span>] = <span class="ruby-identifier">value</span>         <span class="ruby-comment cmt"># otherwise, add it to top-level config</span>
+            <span class="ruby-identifier">value</span> = <span class="ruby-value str">''</span>                      <span class="ruby-comment cmt"># if value was nil, set it to empty string</span>
           <span class="ruby-keyword kw">end</span>
-         
-        <span class="ruby-comment cmt"># Group lines are parsed into arrays: %w('[', 'group', ']')</span>
-        <span class="ruby-keyword kw">elsif</span>(<span class="ruby-regexp re">/^\[(.+)\]$/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">line</span>).<span class="ruby-identifier">to_a</span> <span class="ruby-operator">!=</span> [])  <span class="ruby-comment cmt"># if this line is a config group</span>
-          <span class="ruby-identifier">group</span> = <span class="ruby-regexp re">/^\[(.+)\]$/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">line</span>).<span class="ruby-identifier">to_a</span>[<span class="ruby-value">1</span>]  <span class="ruby-comment cmt"># parse the group name from line</span>
-          <span class="ruby-identifier">config</span>[<span class="ruby-identifier">group</span>] <span class="ruby-operator">||=</span> {}                      <span class="ruby-comment cmt"># add group to top-level config</span>
+
+          <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">topgrp</span>                         <span class="ruby-comment cmt"># If there was a top-level named group</span>
+            <span class="ruby-identifier">config</span>[<span class="ruby-identifier">topgrp</span>][<span class="ruby-identifier">group</span>][<span class="ruby-identifier">key</span>] =    <span class="ruby-comment cmt"># then there must be a group.</span>
+              <span class="ruby-identifier">value</span>                         <span class="ruby-comment cmt"># add the prop to the named group</span>
+          <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">group</span>                       <span class="ruby-comment cmt"># if this property is part of a group</span>
+            <span class="ruby-identifier">config</span>[<span class="ruby-identifier">group</span>][<span class="ruby-identifier">key</span>] = <span class="ruby-identifier">value</span>      <span class="ruby-comment cmt"># then add it to the group</span>
+          <span class="ruby-keyword kw">else</span>
+            <span class="ruby-identifier">config</span>[<span class="ruby-identifier">key</span>] = <span class="ruby-identifier">value</span>             <span class="ruby-comment cmt"># otherwise, add it to top-level config</span>
+          <span class="ruby-keyword kw">end</span>
+
+        <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">match</span> = <span class="ruby-constant">NAMEGRP</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">line</span>)   <span class="ruby-comment cmt"># This line is a named group (i.e. [env &quot;test&quot;], [env &quot;qa&quot;], [env &quot;production&quot;])</span>
+          <span class="ruby-identifier">topgrp</span>, <span class="ruby-identifier">group</span> = <span class="ruby-identifier">match</span>.<span class="ruby-identifier">to_a</span>[<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>] <span class="ruby-comment cmt"># There can be multiple groups within a single top-level group</span>
+          <span class="ruby-identifier">config</span>[<span class="ruby-identifier">topgrp</span>] <span class="ruby-operator">||=</span> {}             <span class="ruby-comment cmt"># add group to top-level group</span>
+          <span class="ruby-identifier">config</span>[<span class="ruby-identifier">topgrp</span>][<span class="ruby-identifier">group</span>] <span class="ruby-operator">||=</span> {}      <span class="ruby-comment cmt"># add name of group as subgroup (properties are added to subgroup)</span>
+
+        <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">match</span> = <span class="ruby-constant">GROUP</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">line</span>)     <span class="ruby-comment cmt"># if this line is a config group</span>
+          <span class="ruby-identifier">group</span> = <span class="ruby-identifier">match</span>.<span class="ruby-identifier">to_a</span>[<span class="ruby-value">1</span>]             <span class="ruby-comment cmt"># parse the group name from line</span>
+          <span class="ruby-identifier">topgrp</span> = <span class="ruby-keyword kw">nil</span>                      <span class="ruby-comment cmt"># we got a new group with no namespace, so reset topgrp</span>
+          <span class="ruby-identifier">config</span>[<span class="ruby-identifier">group</span>] <span class="ruby-operator">||=</span> {}              <span class="ruby-comment cmt"># add group to top-level config</span>
         <span class="ruby-keyword kw">end</span>
       <span class="ruby-keyword kw">end</span>
-    <span class="ruby-keyword kw">end</span> 
+    <span class="ruby-keyword kw">end</span>
+
     <span class="ruby-identifier">config</span>  <span class="ruby-comment cmt"># return config hash</span>
-  <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000002" class="method-detail">
-        <a name="M000002"></a>
-
-        <div class="method-heading">
-          <a href="#M000002" class="method-signature">
-          <span class="method-name">validate</span><span class="method-args">(config_file)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Validate the config file. Check that the file exists and that it&#8216;s
-readable. TODO: Create real error.
-</p>
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000002-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000002-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/rconfig/properties_file_parser.rb, line 74</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">validate</span> <span class="ruby-identifier">config_file</span>
-    <span class="ruby-identifier">raise</span> <span class="ruby-value str">'Invalid config file name.'</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">config_file</span>
-    <span class="ruby-identifier">raise</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">ENOENT</span>, <span class="ruby-node">&quot;#{config_file} does not exist&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">config_file</span>.<span class="ruby-identifier">path</span>)
-    <span class="ruby-identifier">raise</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">EACCES</span>, <span class="ruby-node">&quot;#{config_file} is not readable&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">readable?</span>(<span class="ruby-identifier">config_file</span>.<span class="ruby-identifier">path</span>)
   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>

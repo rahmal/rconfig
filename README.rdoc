@@ -8,6 +8,7 @@ The complete solution for Ruby Configuration Management. RConfig is a Ruby libra
 * Simple, easy to install and use.
 * Supports yaml, xml, and properties files.
 * Yaml and xml files support infinite level of configuration grouping.
+* Properties files support git config-like configuration grouping.
 * Intuitive dot-notation 'key chaining' argument access.
 * Simple well-known hash/array based argument access.
 * Implements multilevel caching to reduce disk access.

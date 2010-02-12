@@ -2,10 +2,14 @@ class Object
 
   ##
   #   @person ? @person.name : nil
-  # vs
+  #            - or -
+  #  @people[:email] if @people
+  #            - vs -
   #   @person.try(:name)
-  def try(method)
-    send method if respond_to? method
+  def try(method, *args)
+    result = send(method, *args) if respond_to?(method)
+    result = send(:[], method) if result.nil? && respond_to?(:[])
+    result
   end
 
   ##

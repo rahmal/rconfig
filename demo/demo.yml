@@ -1,6 +1,7 @@
 admin_email: root@localhost
 listen_ip: 127.0.0.1
 listen_port: 87345
+file_type: yml
 
 group1:
   user_name: johnny

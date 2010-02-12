@@ -9,7 +9,6 @@
 * Refactored Hash#weave signature; changed dont_clobber=true, to clobber=false (reads more intuitively).
 * Added support for git-like config files, giving key/value properties files potentially three levels.
 * Removed redundant validate method from PropertiesFileParser.
-* Moved PropertiesFileParser regexps to constants.
 
 0.3.2
 =====

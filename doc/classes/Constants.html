@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: Constants</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">Constants</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../files/lib/rconfig/constants_rb.html">
+                lib/rconfig/constants.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">CONFIG_ROOT</td>
+          <td>=</td>
+          <td class="context-item-value">RAILS_ROOT + &quot;/config&quot; if defined?(RAILS_ROOT) &amp;&amp; defined?(CONFIG_ROOT)</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+Sets CONFIG_ROOT to RAILS_ROOT/config unless it has already been defined
+(i.e. in rails env, or calling ruby app).
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">ENV_TIER</td>
+          <td>=</td>
+          <td class="context-item-value">(defined?(RAILS_ENV) ? RAILS_ENV : (ENV['TIER'] || 'production')) unless defined? ENV_TIER</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+ENV TIER i.e. (development, integration, staging, or production) Defaults
+to RAILS_ENV if running in Rails, otherwise, it checks if
+ENV[&#8216;TIER&#8217;] is present. If not, it assumes production.
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">YML_FILE_TYPES</td>
+          <td>=</td>
+          <td class="context-item-value">[:yml, :yaml] unless defined? YML_FILE_TYPES</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+yml, yaml =&gt; yaml files, parsable by YAML library
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">XML_FILE_TYPES</td>
+          <td>=</td>
+          <td class="context-item-value">[:xml] unless defined? XML_FILE_TYPES</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+xml =&gt; self-explanatory
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">CNF_FILE_TYPES</td>
+          <td>=</td>
+          <td class="context-item-value">[:cnf, :conf, :config, :properties] unless defined? CNF_FILE_TYPES</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+conf, properties =&gt; &lt;key=value&gt; based config files
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">CONFIG_FILE_TYPES</td>
+          <td>=</td>
+          <td class="context-item-value">YML_FILE_TYPES + XML_FILE_TYPES + CNF_FILE_TYPES unless defined? CONFIG_FILE_TYPES</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+The type of file used for config. Valid choices include (yml, yaml, xml,
+conf, config, properties)
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">HOSTNAME</td>
+          <td>=</td>
+          <td class="context-item-value">ENV['CONFIG_HOSTNAME'] || Socket.gethostname unless defined? HOSTNAME</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+Use CONFIG_HOSTNAME environment variable to test host-based configurations.
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">HOSTNAME_SHORT</td>
+          <td>=</td>
+          <td class="context-item-value">HOSTNAME.sub(/\..*$/, '').freeze unless defined? HOSTNAME_SHORT</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+Short Hostname: removes all chars from HOSTNAME, after first &quot;.&quot;
+Used to specify machine-specific config files.
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SUFFIXES</td>
+          <td>=</td>
+          <td class="context-item-value">[nil,     :local,     :config, :local_config,     ENV_TIER, [ENV_TIER, :local],     HOSTNAME_SHORT, [HOSTNAME_SHORT, :config_local],     HOSTNAME, [HOSTNAME, :config_local]</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+This is an array of filename suffixes facilitates overriding configuration
+(i.e. &#8216;services_local&#8217;, &#8216;services_development&#8217;).
+These files get loaded in order of the array the last file loaded gets
+splatted on top of everything there. Ex. database_whiskey.yml overrides
+database_integration.yml
+
+<pre>
+    overrides database.yml
+</pre>
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">EMPTY_ARRAY</td>
+          <td>=</td>
+          <td class="context-item-value">[].freeze unless defined? EMPTY_ARRAY</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+Used in place of undefined but expected arrays, to prevent creating a bunch
+of unecesary arrays in memory. See ConfigCore.fire_on_load
+
+</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

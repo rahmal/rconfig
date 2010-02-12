@@ -56,7 +56,7 @@
     </tr>
     <tr class="top-aligned-row">
       <td><strong>Last Update:</strong></td>
-      <td>Sat Nov 21 06:57:12 -0600 2009</td>
+      <td>Wed Jan 06 17:58:24 -0600 2010</td>
     </tr>
     </table>
   </div>
@@ -68,19 +68,92 @@
 
   <div id="contextContent">
 
+    <div id="description">
+      <p>
+Copyright (c) 2009 Rahmal Conda &lt;rahmal@gmail.com&gt;
+</p>
+<hr size="10"></hr><p>
+The complete solution for Ruby Configuration Management. <a
+href="../../../classes/RConfig.html">RConfig</a> is a Ruby library that
+manages configuration within Ruby applications. It bridges the gap between
+yaml, xml, and key/value based properties files, by providing a centralized
+solution to handle application configuration from one location. It provides
+the simplicity of hash-based access, that Rubyists have come to know and
+love, supporting your configuration style of choice, while providing many
+new features, and an elegant API.
+</p>
+<hr size="10"></hr><ul>
+<li>Simple, easy to install and use.
 
-    <div id="requires-list">
-      <h3 class="section-bar">Required files</h3>
+</li>
+<li>Supports yaml, xml, and properties files.
 
-      <div class="name-list">
-      socket&nbsp;&nbsp;
-      yaml&nbsp;&nbsp;
-      rconfig/properties_file_parser&nbsp;&nbsp;
-      rconfig/config_hash&nbsp;&nbsp;
-      rconfig/core_ext&nbsp;&nbsp;
-      rconfig/exceptions&nbsp;&nbsp;
-      </div>
+</li>
+<li>Yaml and xml files supprt infinite level of configuration grouping.
+
+</li>
+<li>Intuitive dot-notation &#8216;key chaining&#8217; argument access.
+
+</li>
+<li>Simple well-known hash/array based argument access.
+
+</li>
+<li>Implements multilevel caching to reduce disk access.
+
+</li>
+<li>Short-hand access to &#8216;global&#8217; application configuration, and
+shell environment.
+
+</li>
+<li>Overlays multiple configuration files to support environment, host, and
+even locale-specific configuration.
+
+</li>
+</ul>
+<hr size="10"></hr><pre>
+ The overlay order of the config files is defined by SUFFIXES:
+ * nil
+ * _local
+ * _config
+ * _local_config
+ * _{environment} (.i.e _development)
+ * _{environment}_local (.i.e _development_local)
+ * _{hostname} (.i.e _whiskey)
+ * _{hostname}_config_local (.i.e _whiskey_config_local)
+</pre>
+<hr size="10"></hr><p>
+Example:
+</p>
+<pre>
+ shell/console =&gt;
+   export LANG=en
+
+ demo.yml =&gt;
+  server:
+    address: host.domain.com
+    port: 81
+ ...
+
+ application.properties =&gt;
+   debug_level = verbose
+ ...
+</pre>
+<p>
+demo.rb =&gt;
+</p>
+<pre>
+ require 'rconfig'
+ RConfig.config_paths = ['$HOME/config', '#{APP_ROOT}/config', '/demo/conf']
+ RConfig.demo[:server][:port] =&gt; 81
+ RConfig.demo.server.address  =&gt; 'host.domain.com'
+
+ RConfig[:debug_level] =&gt; 'verbose'
+ RConfig[:lang] =&gt; 'en'
+ ...
+</pre>
+
     </div>
+
 
    </div>
 

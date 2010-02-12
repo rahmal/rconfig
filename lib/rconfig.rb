@@ -23,19 +23,20 @@
 
 $:.unshift File.dirname(__FILE__)
 
-require 'rubygems'
-
 autoload :Socket, 'socket'
 autoload :YAML, 'yaml'
+autoload :Singleton, 'singleton'
+
+require 'rubygems'
+require 'active_support'
 
 autoload :Hash, 'active_support/core_ext/hash/conversions'
 autoload :HashWithIndifferentAccess, 'active_support/core_ext/hash/indifferent_access'
 
-autoload :Hash, 'rconfig/core_ext/hash'
-autoload :ConfigHash, 'rconfig/config_hash'
-autoload :PropertiesFileParser, 'rconfig/properties_file_parser'
-
 require 'rconfig/core_ext/object'
+require 'rconfig/core_ext/hash'
+require 'rconfig/config_hash'
+require 'rconfig/properties_file_parser'
 require 'rconfig/exceptions'
 require 'rconfig/constants'
 require 'rconfig/class_variables'

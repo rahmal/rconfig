@@ -56,7 +56,7 @@
     </tr>
     <tr class="top-aligned-row">
       <td><strong>Last Update:</strong></td>
-      <td>Sat Nov 21 05:54:16 -0600 2009</td>
+      <td>Fri Feb 12 15:17:46 -0600 2010</td>
     </tr>
     </table>
   </div>
@@ -91,6 +91,9 @@ new features, and an elegant API.
 <li>Yaml and xml files support infinite level of configuration grouping.
 
 </li>
+<li>Properties files support git config-like configuration grouping.
+
+</li>
 <li>Intuitive dot-notation &#8216;key chaining&#8217; argument access.
 
 </li>
@@ -106,6 +109,9 @@ shell environment.
 </li>
 <li>Overlays multiple configuration files to support environment and
 host-specific configuration.
+
+</li>
+<li>Onload callbacks for single, multiple, or any config file.
 
 </li>
 </ul>
@@ -151,11 +157,32 @@ host-specific configuration.
   sudo gem install rconfig
 </pre>
 <h2>ToDo</h2>
-<ul>
-<li>Fix tests; convert to RSpec and Cucumber
+<ol>
+<li>Finish JSpecs for existing code (Yeah, I know. You’re supposed to right
+the JSpecs first.)
 
 </li>
-<li>Complete Documentation
+<li>Create re-factor goals based on Caliper metrics.
+
+</li>
+<li>Prep for cleaner, stabler release.
+
+</li>
+</ol>
+<h2>Feature Ideas</h2>
+<ul>
+<li>Support for git-like config/properties files (You know, with the namespaced
+header blocks.).
+
+</li>
+<li>Support for Database-driven configuration.
+
+</li>
+<li>Removing dependency on ActiveSupport (Pull in needed code.).
+
+</li>
+<li>These are features I’m considering. E-mail me &lt;rahmal@gmail.com&gt; If
+you like to see a feature added or expedited.
 
 </li>
 </ul>

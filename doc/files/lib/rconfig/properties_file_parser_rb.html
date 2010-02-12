@@ -56,7 +56,7 @@
     </tr>
     <tr class="top-aligned-row">
       <td><strong>Last Update:</strong></td>
-      <td>Wed Nov 18 03:53:49 -0600 2009</td>
+      <td>Fri Feb 12 16:23:34 -0600 2010</td>
     </tr>
     </table>
   </div>
@@ -70,27 +70,46 @@
 
     <div id="description">
       <p>
-++
+Copyright (c) 2009 Rahmal Conda &lt;rahmal@gmail.com&gt;
+</p>
+<p>
+This class parses key/value based properties files used for configuration.
+It is used by rconfig to import configuration files of the aforementioned
+format. Unlike yaml, and xml files it can only support three levels. First,
+it can have root level properties:
 </p>
 <pre>
- Copyright (c) 2009 Rahmal Conda &lt;rahmal@gmail.com&gt;
+           server_url=host.domain.com
+           server_port=8080
+</pre>
+<p>
+Secondly, it can have properties grouped into catagories. The group names
+must be specified within brackets like [ &#8230; ]
+</p>
+<pre>
+           [server]
+           url=host.domain.com
+           port=8080
+</pre>
+<p>
+Finally, groups can also be qualified with namespaces, similar to git
+config files. Group names are same as before, but with namespace in within
+the brackets like [ &lt;group&gt; &quot;&lt;name&gt;&quot; ]
+</p>
+<pre>
+           [host &quot;dev&quot;]
+           domain=dev.server.com
 
- This class parses key/value based properties files used for configuration.
- It is used by rconfig to import configuration files of the aforementioned
- format. Unlike yaml, and xml files it can only support two levels. First,
- it can have root level properties.
-
- Example:
-            server_url=host.domain.com
-            server_port=8080
-
- Secondly, it can have properties grouped into catagories. The group names
- must be specified within brackets like [ ... ]
-
- Example:
-            [server]
-            url=host.domain.com
-            port=8080
+           [host &quot;prod&quot;]
+           domain=www.server.com
+</pre>
+<p>
+These can be retrieved using dot-notation or variable to do it dynamically.
+</p>
+<pre>
+           RConfig.props.host.dev.domain
+                     - or -
+           RConfig.props.host[env].domain  (where env is 'dev' or 'prod')
 </pre>
 
     </div>

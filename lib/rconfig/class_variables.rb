@@ -1,3 +1,4 @@
+# These are all the variables used to store RConfigs state.
 module ClassVariables
 
   # The list of directories to search for configuration files.

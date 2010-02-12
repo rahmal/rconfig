@@ -65,7 +65,9 @@
         <tr class="top-aligned-row">
             <td><strong>Parent:</strong></td>
             <td>
+                <a href="Object.html">
                 Object
+               </a>
             </td>
         </tr>
         </table>
@@ -80,15 +82,14 @@
 
     <div id="description">
       <p>
-++
+source: <a
+href="http://rubyforge.org/projects/facets">rubyforge.org/projects/facets</a>/
+version: 1.7.46 license: Ruby License NOTE: remove this method if the
+Facets gem is installed. BUG: <a href="Hash.html#M000010">weave</a> is
+destructive to values in the source hash that are arrays!
 </p>
 <pre>
- source: http://rubyforge.org/projects/facets/
- version: 1.7.46
- license: Ruby License
- NOTE: remove this method if the Facets gem is installed.
- BUG: weave is destructive to values in the source hash that are arrays!
-      (this is acceptable for RConfig's use as the basis for weave!)
+     (this is acceptable for RConfig's use as the basis for weave!)
 </pre>
 
     </div>
@@ -100,8 +101,8 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000009">weave</a>&nbsp;&nbsp;
-      <a href="#M000010">weave!</a>&nbsp;&nbsp;
+      <a href="#M000010">weave</a>&nbsp;&nbsp;
+      <a href="#M000011">weave!</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -123,12 +124,12 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000009" class="method-detail">
-        <a name="M000009"></a>
+      <div id="method-M000010" class="method-detail">
+        <a name="M000010"></a>
 
         <div class="method-heading">
-          <a href="#M000009" class="method-signature">
-          <span class="method-name">weave</span><span class="method-args">(other_hash, dont_clobber = true)</span>
+          <a href="#M000010" class="method-signature">
+          <span class="method-name">weave</span><span class="method-args">(other_hash, clobber = false)</span>
           </a>
         </div>
       
@@ -137,11 +138,11 @@
 Weaves the contents of two hashes producing a new hash.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000009-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000009-source">
+            onclick="toggleCode('M000010-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000010-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/rconfig/core_ext/hash.rb, line 15</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">weave</span>(<span class="ruby-identifier">other_hash</span>, <span class="ruby-identifier">dont_clobber</span> = <span class="ruby-keyword kw">true</span>)
+<span class="ruby-comment cmt"># File lib/rconfig/core_ext/hash.rb, line 14</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">weave</span>(<span class="ruby-identifier">other_hash</span>, <span class="ruby-identifier">clobber</span> = <span class="ruby-keyword kw">false</span>)
     <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">self</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">other_hash</span>
     <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">other_hash</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Hash</span>)
       <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;RConfig: (Hash#weave) expected &lt;Hash&gt;, but was &lt;#{other_hash.class}&gt;&quot;</span>
@@ -161,10 +162,10 @@ Weaves the contents of two hashes producing a new hash.
           <span class="ruby-comment cmt"># hash1, hash2 =&gt; hash3 (recursive +)</span>
           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">other_node</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>)
 
-            <span class="ruby-identifier">self_node</span>.<span class="ruby-identifier">weave</span>(<span class="ruby-identifier">other_node</span>, <span class="ruby-identifier">dont_clobber</span>)
+            <span class="ruby-identifier">self_node</span>.<span class="ruby-identifier">weave</span>(<span class="ruby-identifier">other_node</span>, <span class="ruby-identifier">clobber</span>)
 
           <span class="ruby-comment cmt"># hash, array =&gt; error (Can't weave'em, must clobber.)</span>
-          <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">other_node</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">dont_clobber</span>
+          <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">other_node</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">clobber</span>
 
             <span class="ruby-identifier">raise</span>(<span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;RConfig: (Hash#weave) Can't weave Hash and Array&quot;</span>)
 
@@ -179,7 +180,7 @@ Weaves the contents of two hashes producing a new hash.
           <span class="ruby-comment cmt"># array, hash =&gt; array &lt;&lt; hash</span>
           <span class="ruby-comment cmt"># array1, array2 =&gt; array1 + array2</span>
           <span class="ruby-comment cmt"># array, value =&gt; array &lt;&lt; value</span>
-          <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">dont_clobber</span>
+          <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">clobber</span>
             <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">other_node</span>
             <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Hash</span>
               <span class="ruby-identifier">self_node</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">other_node</span>
@@ -199,14 +200,14 @@ Weaves the contents of two hashes producing a new hash.
       <span class="ruby-keyword kw">else</span>
 
         <span class="ruby-comment cmt"># value, array =&gt; array.unshift(value)</span>
-        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">other_node</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">dont_clobber</span>
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">other_node</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">clobber</span>
           <span class="ruby-identifier">other_node</span>.<span class="ruby-identifier">unshift</span>(<span class="ruby-identifier">self_node</span>)
 
         <span class="ruby-comment cmt"># value1, value2 =&gt; value2</span>
         <span class="ruby-keyword kw">else</span>
           <span class="ruby-identifier">other_node</span>
         <span class="ruby-keyword kw">end</span>
-              
+
       <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt"># case self_node</span>
 
       <span class="ruby-comment cmt"># Target hash didn't have a node matching the key, </span>
@@ -225,12 +226,12 @@ Weaves the contents of two hashes producing a new hash.
         </div>
       </div>
 
-      <div id="method-M000010" class="method-detail">
-        <a name="M000010"></a>
+      <div id="method-M000011" class="method-detail">
+        <a name="M000011"></a>
 
         <div class="method-heading">
-          <a href="#M000010" class="method-signature">
-          <span class="method-name">weave!</span><span class="method-args">(other_hash, dont_clobber = true)</span>
+          <a href="#M000011" class="method-signature">
+          <span class="method-name">weave!</span><span class="method-args">(other_hash, clobber = false)</span>
           </a>
         </div>
       
@@ -240,12 +241,12 @@ Same as self.weave(other_hash, dont_clobber) except that it weaves other
 hash to itself, rather than create a new hash.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000010-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000010-source">
+            onclick="toggleCode('M000011-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000011-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/rconfig/core_ext/hash.rb, line 98</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">weave!</span>(<span class="ruby-identifier">other_hash</span>, <span class="ruby-identifier">dont_clobber</span> = <span class="ruby-keyword kw">true</span>)
-    <span class="ruby-identifier">weaved_hash</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">weave</span>(<span class="ruby-identifier">other_hash</span>, <span class="ruby-identifier">dont_clobber</span>)
+<span class="ruby-comment cmt"># File lib/rconfig/core_ext/hash.rb, line 97</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">weave!</span>(<span class="ruby-identifier">other_hash</span>, <span class="ruby-identifier">clobber</span> = <span class="ruby-keyword kw">false</span>)
+    <span class="ruby-identifier">weaved_hash</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">weave</span>(<span class="ruby-identifier">other_hash</span>, <span class="ruby-identifier">clobber</span>)
     <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">merge!</span>(<span class="ruby-identifier">weaved_hash</span>)
   <span class="ruby-keyword kw">end</span>
 </pre>
