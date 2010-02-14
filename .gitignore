@@ -3,6 +3,7 @@
 *.iml
 *.swp
 *.*~
+*~
 .rakeTasks
 .idea
 *.log
