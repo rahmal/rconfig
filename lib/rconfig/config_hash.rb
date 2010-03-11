@@ -40,7 +40,6 @@ class ConfigHash < HashWithIndifferentAccess
   # This also works inside the composite array keys.
   def method_missing(method, *args)
     method = method.to_s
-    # STDERR.puts "CHF#method_missing(#{method.inspect}, #{args.inspect}) on #{self.inspect}:#{self.class}" if method == 'dup'
     value = self[method]
       case args.size
         when 0
@@ -53,19 +52,22 @@ class ConfigHash < HashWithIndifferentAccess
           # e.g.: RConfig.application.method(arg_one, args_two, ...)
           value = value[args]
       end
-      # value =  convert_value(value)
-      value
-    end
 
-    ##
-    # Why the &*#^@*^&$ isn't HashWithIndifferentAccess actually doing this?
-    def [](key)
-      key = key.to_s if key.kind_of?(Symbol)
-      super(key)
-    end
+    # value =  convert_value(value)
+    value
+  end
 
-    # HashWithIndifferentAccess#default is broken!
-    define_method(:default_Hash, Hash.instance_method(:default))
+  ##
+  # Why the &*#^@*^&$ isn't HashWithIndifferentAccess doing this?
+  # HashWithIndifferentAccess doesn't override Hash's []! That's
+  # why it's so destructive!
+  def [](key)
+    key = key.to_s if key.kind_of?(Symbol)
+    super(key)
+  end
+
+  # HashWithIndifferentAccess#default is broken!
+  define_method(:default_Hash, Hash.instance_method(:default))
 
   ##
   # Allow hash.default => hash['default']

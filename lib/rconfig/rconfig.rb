@@ -60,7 +60,8 @@
 #
 class RConfig
   include Singleton, Constants, ClassVariables
-
+  
+  create_logger
 
   ##
   # Convenience method to initialize necessary fields including,
@@ -161,15 +162,19 @@ class RConfig
     begin
       config_paths = ENV['CONFIG_PATH']
     rescue
-      verbose_log "Forget something? No config paths! ENV['CONFIG_PATH'] is not set.",
-                  "Hint:  Use config_paths= or set_config_path."
+      logger.error { 
+        "Forget something? No config paths! ENV['CONFIG_PATH'] is not set.\n" +
+        "Hint:  Use config_paths= or set_config_path."
+      }
     end
 
     begin
       config_paths = [CONFIG_ROOT] 
     rescue
-      verbose_log "Forget something?  No config paths! CONFIG_ROOT is not set.",
-                  "Hint:  Use config_paths= or set_config_path."
+      logger.error { 
+        "Forget something?  No config paths! CONFIG_ROOT is not set.\n" +
+        "Hint:  Use config_paths= or set_config_path."
+      }
     end
 
     if @@config_paths.blank?
@@ -247,7 +252,7 @@ class RConfig
           end
           result.freeze
 
-          verbose_log "suffixes(#{name}) => #{result.inspect}"
+          logger.debug {"suffixes(#{name}) => #{result.inspect}"}
 
           result
         end
@@ -274,7 +279,7 @@ class RConfig
     # Get array of all the existing files file the config name.
     config_files = self.get_config_files(name)
 
-    verbose_log "load_config_files(#{name.inspect})" 
+    logger.debug "load_config_files(#{name.inspect})" 
     
     # Get all the data from all yaml files into as hashes
     hashes = config_files.collect do |f|
@@ -284,7 +289,7 @@ class RConfig
       # it's been loaded before.
       val, last_mtime, last_loaded = @@cache[filename] 
 
-      verbose_log "f = #{f.inspect}",
+      logger.debug "f = #{f.inspect}",
         "cache #{name_x} filename = #{filename.inspect}",
         "cache #{name_x} val = #{val.inspect}",
         "cache #{name_x} last_mtime = #{last_mtime.inspect}",
@@ -295,21 +300,21 @@ class RConfig
       if val.blank? || (now - last_loaded > @@reload_interval)
         if force || val.blank? || mtime != last_mtime
 
-          verbose_log "mtime #{name.inspect} #{filename.inspect} " + 
+          logger.debug "mtime #{name.inspect} #{filename.inspect} " + 
                       "changed #{mtime != last_mtime} : #{mtime.inspect} #{last_mtime.inspect}"
           
           # Get contents from config file
           File.open(filename) do |f|
-            verbose_log "RConfig: loading #{filename.inspect}" 
+            logger.debug "RConfig: loading #{filename.inspect}" 
             val = parse_file(f, ext)              
             val = val[name] if ext == :xml # xml document must have root tag matching the file name.
-            verbose_log "RConfig: loaded #{filename.inspect} => #{val.inspect}" 
+            logger.debug "RConfig: loaded #{filename.inspect} => #{val.inspect}" 
             (@@config_file_loaded ||= { })[name] = config_files
           end
             
           # Save cached config file contents, and mtime.
           @@cache[filename] = [ val, mtime, now ]
-          verbose_log "cache[#{filename.inspect}] = #{@@cache[filename].inspect}" 
+          logger.debug "cache[#{filename.inspect}] = #{@@cache[filename].inspect}" 
 
           # Flush merged hash cache.
           @@cache_hash[name] = nil
@@ -324,7 +329,7 @@ class RConfig
     end
     hashes.compact!
 
-    verbose_log "load_config_files(#{name.inspect}) => #{hashes.inspect}"
+    logger.debug "load_config_files(#{name.inspect}) => #{hashes.inspect}"
 
     # Keep last loaded config files around in case @@reload_dsabled.
     @@cache_config_files[name] = hashes #unless hashes.empty?
@@ -376,7 +381,7 @@ class RConfig
       end
     end
 
-    verbose_log "get_config_files(#{name}) => #{files.select{|x| x[3]}.inspect}" 
+    logger.debug "get_config_files(#{name}) => #{files.select{|x| x[3]}.inspect}" 
 
     files
   end
@@ -397,7 +402,7 @@ class RConfig
   # Returns true if any files for config have changes since
   # last load.
   def self.config_changed?(name)
-    verbose_log "config_changed?(#{name.inspect})" 
+    logger.debug "config_changed?(#{name.inspect})" 
     name = name.to_s # if name.is_a?(Symbol)
     ! (@@cache_files[name] === get_config_files(name))
   end
@@ -409,7 +414,7 @@ class RConfig
   # from all config files for a name.
   #
   def self.config_hash(name)
-    verbose_log "config_hash(#{name.inspect})"
+    logger.debug "config_hash(#{name.inspect})"
 
     name = name.to_s
     unless result = @@cache_hash[name]
@@ -419,7 +424,7 @@ class RConfig
             load_config_files(name)
           )
         )
-      verbose_log "config_hash(#{name.inspect}): reloaded" 
+      logger.debug "config_hash(#{name.inspect}): reloaded" 
     end
 
     result
@@ -444,14 +449,14 @@ class RConfig
       end
     end
 
-    verbose_log "check_config_changed(#{name.inspect}) => #{changed.inspect}" 
+    logger.debug "check_config_changed(#{name.inspect}) => #{changed.inspect}" 
 
     changed.empty? ? nil : changed
   end
 
 
   def self.config_has_changed?(name)
-    verbose_log "config_has_changed?(#{name.inspect}), reload_disabled=#{@@reload_disabled}" 
+    logger.debug "config_has_changed?(#{name.inspect}), reload_disabled=#{@@reload_disabled}" 
 
     changed = false
 
@@ -491,7 +496,7 @@ class RConfig
         end
         x = ConfigHash.new.merge!(x).freeze
       end
-      verbose_log "make_indefferent: x = #{x.inspect}:#{x.class}"
+      logger.debug "make_indefferent: x = #{x.inspect}:#{x.class}"
     when Array
       unless x.frozen?
         x.collect! do | v |
@@ -545,9 +550,9 @@ class RConfig
   # Get the value specified by the args, in the file specified by th name 
   #
   def self.with_file(name, *args)
-    # verbose_log "with_file(#{name.inspect}, #{args.inspect})"; result = 
+    # logger.debug "with_file(#{name.inspect}, #{args.inspect})"; result = 
     args.inject(get_config_file(name)) { | v, i | 
-      # verbose_log "v = #{v.inspect}, i = #{i.inspect}"
+      # logger.debug "v = #{v.inspect}, i = #{i.inspect}"
       case v
       when Hash
         v[i.to_s]
@@ -557,7 +562,7 @@ class RConfig
         nil
       end
     }
-    # verbose_log "with_file(#{name.inspect}, #{args.inspect}) => #{result.inspect}"; result
+    # logger.debug "with_file(#{name.inspect}, #{args.inspect}) => #{result.inspect}"; result
   end
 
 
@@ -576,7 +581,7 @@ class RConfig
 
     result = config_hash(name)
 
-    verbose_log "get_config_file(#{name.inspect}) => #{result.inspect}"
+    logger.debug "get_config_file(#{name.inspect}) => #{result.inspect}"
 
     result
   end
@@ -689,7 +694,7 @@ class RConfig
   #
   def self.method_missing(method, *args)
     value = with_file(method, *args)
-    verbose_log "#{self}.method_missing(#{method.inspect}, #{args.inspect}) => #{value.inspect}"
+    logger.debug "#{self}.method_missing(#{method.inspect}, #{args.inspect}) => #{value.inspect}"
     value
   end
 
@@ -766,7 +771,7 @@ protected
       (@@on_load['ANY'] || EMPTY_ARRAY) +
       (@@on_load[name] || EMPTY_ARRAY)
     callbacks.uniq!
-    verbose_log "fire_on_load(#{name.inspect}): callbacks[#{callbacks.inspect}]"  unless callbacks.empty?
+    logger.debug "fire_on_load(#{name.inspect}): callbacks[#{callbacks.inspect}]"  unless callbacks.empty?
     callbacks.each{|cb| cb.call()}
   end
 
@@ -789,13 +794,6 @@ protected
   # and directory.
   def self.filename_for_name(name, dir = config_paths[0], ext = :yml)
     File.join(dir, "#{name}.#{ext}")
-  end
-
-
-  ##
-  # Helper method for logging verbose messages.
-  def self.verbose_log *args
-    $stderr.puts(args.join("\n")) if @@verbose
   end
 
 end # class RConfig

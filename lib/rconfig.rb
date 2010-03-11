@@ -36,6 +36,7 @@ autoload :HashWithIndifferentAccess, 'active_support/core_ext/hash/indifferent_a
 require 'rconfig/core_ext/object'
 require 'rconfig/core_ext/hash'
 require 'rconfig/config_hash'
+require 'rconfig/logger'
 require 'rconfig/properties_file_parser'
 require 'rconfig/exceptions'
 require 'rconfig/constants'
