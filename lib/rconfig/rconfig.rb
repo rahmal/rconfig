@@ -59,13 +59,15 @@
 #  ...
 #
 class RConfig
-  include Singleton, Constants, ClassVariables
+  include Singleton, 
+          Mixins::Constants, Mixins::ClassVariables,
+          Mixins::ConfigPaths, Mixins::Overlay
   
   create_logger
 
   ##
   # Convenience method to initialize necessary fields including,
-  # config paths, overlay, reload_disabled, and verbose, all at
+  # config path(s), overlay, allow_reload, and log_level, all at
   # one time.
   def self.initialize(*args)
     case args[0]
@@ -74,191 +76,16 @@ class RConfig
       paths   = params[:paths]
       overlay = params[:overlay]
       reload  = params[:reload]
-      verbose = params[:verbose]
+      loglvl  = params[:log_level]
     else
-      paths, overlay, reload, verbose = *args
+      paths, overlay, reload, loglvl = *args
     end
     self.config_paths = paths
     self.overlay      = overlay
     self.allow_reload = reload
-    self.verbose      = verbose
+    self.log_level    = loglvl
   end
   
-
-  ##
-  # Sets the list of directories to search for
-  # configuration files.
-  # The argument must be an array of strings representing
-  # the paths to the directories, or a string representing
-  # either a single path or a list of paths separated by
-  # either a colon (:) or a semi-colon (;).
-  # If reload is disabled, it can only be set once.
-  def self.config_paths=(paths)
-    return if @@reload_disabled && config_paths_set?
-    if paths.is_a? String
-      path_sep = (paths =~ /;/) ? ';' : ':'
-      paths = paths.split(/#{path_sep}+/)
-    end
-    unless paths.is_a? Array
-      raise ArgumentError, 
-            "Path(s) must be a String or an Array [#{paths.inspect}]"
-    end
-    if paths.empty?
-      raise ArgumentError, 
-            "Must provide at least one paths: [#{paths.inspect}]"
-    end
-    paths.all? do |dir|
-      dir = CONFIG_ROOT if dir == 'CONFIG_ROOT'
-      unless File.directory?(dir)
-        raise InvalidConfigPathError, 
-              "This directory is invalid: [#{dir.inspect}]"
-      end
-    end
-    reload
-    @@config_paths = paths
-  end
-  class << self; alias_method :set_config_paths, :config_paths= end
-
-
-  ##
-  # Adds the specified path to the list of directories to search for
-  # configuration files.
-  # It only allows one path to be entered at a time.
-  # If reload is disabled, it can onle be set once.
-  def self.set_config_path path
-    return if @@reload_disabled && config_paths_set?
-    return unless path.is_a?(String)      # only allow string argument
-    path_sep = (path =~ /;/) ? ';' : ':'  # if string contains multiple paths
-    path = path.split(/#{path_sep}+/)[0]  # only accept first one.    
-
-    if @@config_paths.blank? 
-      set_config_paths(path)
-    else 
-      config_paths << path if File.directory?(path)
-      reload
-      @@config_paths
-    end    
-  end
-  class << self; alias_method :add_config_path, :set_config_path end
-
-
-  ##
-  # Returns a list of directories to search for
-  # configuration files.
-  # 
-  # Can be preset with config_paths=/set_config_path, 
-  # controlled via ENV['CONFIG_PATH'], 
-  # or defaulted to CONFIG_ROOT (assumming some sort of 
-  # application initiation as in RAILS).
-  # Defaults to [ CONFIG_ROOT ].
-  #
-  # Examples:
-  #   export CONFIG_PATH="$HOME/work/config:CONFIG_ROOT" 
-  #   CONFIG_ROOT = RAILS_ROOT + "/config" unless defined? CONFIG_ROOT
-  #
-  def self.config_paths
-    return @@config_paths unless @@config_paths.blank?
-
-    begin
-      config_paths = ENV['CONFIG_PATH']
-    rescue
-      logger.error { 
-        "Forget something? No config paths! ENV['CONFIG_PATH'] is not set.\n" +
-        "Hint:  Use config_paths= or set_config_path."
-      }
-    end
-
-    begin
-      config_paths = [CONFIG_ROOT] 
-    rescue
-      logger.error { 
-        "Forget something?  No config paths! CONFIG_ROOT is not set.\n" +
-        "Hint:  Use config_paths= or set_config_path."
-      }
-    end
-
-    if @@config_paths.blank?
-       raise InvalidConfigPathError,
-             "Forget something?  No config paths!\n" +
-             "Niether ENV['CONFIG_PATH'] or CONFIG_ROOT is set.\n" +
-             "Hint:  Use config_paths= or set_config_path."
-    end
-
-    @@config_paths
-  end
-
-
-  ##
-  # Indicates whether or not config_paths have been set.
-  # Returns true if @@config_paths has at least one directory.
-  def self.config_paths_set?
-    !@@config_paths.blank?
-  end
-
-
-  # Specifies an additional overlay suffix.
-  #
-  # E.g. 'gb' for UK locale.
-  #
-  # Defaults from ENV['CONFIG_OVERLAY'].
-  def self.overlay
-    @@overlay ||= (x = ENV['CONFIG_OVERLAY']) && x.dup.freeze
-  end
-
-
-  ##
-  # Sets overlay for 
-  def self.overlay=(x)
-    flush_cache if @@overlay != x
-    @@overlay = x && x.dup.freeze
-  end
-
-
-  ##
-  # Returns a list of suffixes to try for a given config name.
-  #
-  # A config name with an explicit overlay (e.g.: 'name_GB')
-  # overrides any current _overlay.
-  #
-  # This allows code to specifically ask for config overlays
-  # for a particular locale.
-  #
-  def self.suffixes(name)
-    name = name.to_s
-    @@suffixes[name] ||=
-        begin
-          ol = overlay
-          name_x = name.dup
-          if name_x.sub!(/_([A-Z]+)$/, '')
-            ol = $1
-          end
-          name_x.freeze
-          result = if ol
-            ol_ = ol.upcase
-            ol = ol.downcase
-            x = [ ]
-            SUFFIXES.each do | suffix |
-              # Standard, no overlay:
-              # e.g.: database_<suffix>.yml
-              x << suffix
-
-              # Overlay:
-              # e.g.: database_(US|GB)_<suffix>.yml
-              x << [ ol_, suffix ]
-            end
-            [ name_x, x.freeze ]
-          else
-            [ name.dup.freeze, SUFFIXES.freeze ]
-          end
-          result.freeze
-
-          logger.debug {"suffixes(#{name}) => #{result.inspect}"}
-
-          result
-        end
-  end
-
-
   ##
   # Get each config file's yaml hash for the given config name, 
   # to be merged later. Files will only be loaded if they have 
@@ -289,11 +116,13 @@ class RConfig
       # it's been loaded before.
       val, last_mtime, last_loaded = @@cache[filename] 
 
-      logger.debug "f = #{f.inspect}",
-        "cache #{name_x} filename = #{filename.inspect}",
-        "cache #{name_x} val = #{val.inspect}",
-        "cache #{name_x} last_mtime = #{last_mtime.inspect}",
+      logger.debug {
+        "f = #{f.inspect}" +
+        "cache #{name_x} filename = #{filename.inspect}" +
+        "cache #{name_x} val = #{val.inspect}" +
+        "cache #{name_x} last_mtime = #{last_mtime.inspect}" +
         "cache #{name_x} last_loaded = #{last_loaded.inspect}"
+      }
 
       # Load the file if its never been loaded or its been more than
       # so many minutes since last load attempt. (default: 5 minutes) 
@@ -587,95 +416,6 @@ class RConfig
   end
   
 
-  ##
-  # Register a callback when a config has been reloaded. If no config name
-  # is specified, the callback will be registered under the name :ANY. The
-  # name :ANY will register a callback for any config file change.
-  #
-  # Example:
-  #
-  #   class MyClass
-  #     @@my_config = { }
-  #     RConfig.on_load(:cache) do
-  #       @@my_config = { }
-  #     end
-  #     def my_config
-  #       @@my_config ||= something_expensive_thing_on_config(RConfig.cache.memory_limit)
-  #     end
-  #   end
-  #
-  def self.on_load(*args, &blk)
-    args << :ANY if args.empty?
-    proc = blk.to_proc
-
-    # Call proc on registration.
-    proc.call()
-
-    # Register callback proc.
-    args.each do | name |
-      name = name.to_s
-      (@@on_load[name] ||= [ ]) << proc
-    end
-  end
-
-
-  ##
-  # Sets the flag indicating whether or not reload should be executed.
-  def self.allow_reload=(reload)
-    raise ArgumentError, 'Argument must be true or false.' unless [true, false].include?(reload)
-    @@reload_disabled = (not reload)
-  end
-
-
-  ##
-  # Flag indicating whether or not reload should be executed.
-  def self.reload?
-    !@@reload_disabled
-  end
-
-
-  ##
-  # Sets the number of seconds between reloading of config files
-  # and automatic reload checks. Defaults to 5 minutes.
-  def self.reload_interval=(x)
-    raise ArgumentError, 'Argument must be Integer.' unless x.kind_of?(Integer)
-    @@reload_interval = (x || 300)
-  end
-
-
-  ##
-  # Flushes cached config data, so that it can be reloaded from disk.
-  # It is recommended that this should be used with caution, and any
-  # need to reload in a production setting should minimized or
-  # completely avoided if possible.
-  def self.reload(force = false)
-    raise ArgumentError, 'Argument must be true or false.' unless [true, false].include?(force)
-    if force || reload?
-      flush_cache
-    end
-    nil
-  end
-
-
-  ## 
-  # Disables any reloading of config,
-  # executes &block, 
-  # calls check_config_changed,
-  # returns result of block
-  def self.disable_reload(&block)
-    # This should increment @@reload_disabled on entry, decrement on exit.
-    result = nil
-    reload_disabled_save = @@reload_disabled
-    begin
-      @@reload_disabled = true
-      result = yield
-    ensure
-      @@reload_disabled = reload_disabled_save
-      check_config_changed unless @@reload_disabled
-    end
-    result
-  end
-
 
   ##
   # Creates a dottable hash for all Hash objects, recursively.
@@ -738,10 +478,13 @@ class RConfig
   # Helper method for white-box testing and debugging.
   # Sets the flag indicating whether or not to log
   # errors and application run-time information.
-  def self.verbose=(x)
-    @@verbose = x.nil? ? false : x;
+  def self.log_level=(x)
+    logger.level = level unless level.nil?
   end
 
+  def self.log_level
+    logger.level
+  end
 
   ##
   # Helper method for white-box testing and debugging.

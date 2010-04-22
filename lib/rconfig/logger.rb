@@ -7,27 +7,32 @@ require 'logger'
 #
 module DefaultLogger
 
- module MacroMethods
+ module ClassMethods
   
     def create_logger options = {}
-      class_inheritable_accessor :default_logger
+      class_inheritable_accessor :default_logger, :options
 
-      logger = Logger.new options[:file] ? options[:file] : STDOUT
-      logger.level = options[:level] ? options[:level] :  Logger::WARN       
-      logger.datetime_format = options[:format] ? options[:format] : "%Y-%m-%d %H:%M:%S"
-      logger.progname = options[:app_name] ? options[:app_name] : nil
+      self.options = options || {}
+
+      logger = Logger.new( check_options(:file, STDOUT) )
+      logger.level = check_options(:level,  ENV['LOG_LEVEL'] || Logger::INFO)
+      logger.datetime_format = check_options(:format, "%Y-%m-%d %H:%M:%S")
+      logger.progname = check_options(:app_name, 'RConfig')
       
       self.default_logger = logger
             
       include DefaultLogger::InstanceMethods
-      extend  DefaultLogger::ClassMethods  
     end
-  end
-  
-  module ClassMethods
+
     def logger
       self.default_logger
     end
+
+    def check_options key, default_value=nil
+      puts "Key: #{key.inspect}, Value: #{self.options[key]}, Default: #{default_value}"
+      self.options[key].nil? ? default_value : self.options[key]
+    end
+
   end
   
   module InstanceMethods
@@ -37,5 +42,5 @@ module DefaultLogger
   end
   
 end
-Object.class_eval { extend DefaultLogger::MacroMethods }
+Object.class_eval { extend DefaultLogger::ClassMethods }
 

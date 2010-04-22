@@ -25,6 +25,7 @@ $:.unshift File.dirname(__FILE__)
 
 autoload :Socket, 'socket'
 autoload :YAML, 'yaml'
+autoload :Logger, 'logger'
 autoload :Singleton, 'singleton'
 
 require 'rubygems'
@@ -33,8 +34,8 @@ require 'active_support'
 autoload :Hash, 'active_support/core_ext/hash/conversions'
 autoload :HashWithIndifferentAccess, 'active_support/core_ext/hash/indifferent_access'
 
-require 'rconfig/core_ext/object'
-require 'rconfig/core_ext/hash'
+require 'rconfig/mixins'
+require 'rconfig/core_ext'
 require 'rconfig/config_hash'
 require 'rconfig/logger'
 require 'rconfig/properties_file_parser'
