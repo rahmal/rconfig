@@ -7,20 +7,20 @@ require 'logger'
 #
 module DefaultLogger
 
- module ClassMethods
-  
+  module ClassMethods
+
     def create_logger options = {}
       class_inheritable_accessor :default_logger, :options
 
       self.options = options || {}
 
-      logger = Logger.new( check_options(:file, STDOUT) )
-      logger.level = check_options(:level,  ENV['LOG_LEVEL'] || Logger::INFO)
+      logger = Logger.new(check_options(:file, STDOUT))
+      logger.level = check_options(:level, ENV['LOG_LEVEL'] || Logger::INFO)
       logger.datetime_format = check_options(:format, "%Y-%m-%d %H:%M:%S")
       logger.progname = check_options(:app_name, 'RConfig')
-      
+
       self.default_logger = logger
-            
+
       include DefaultLogger::InstanceMethods
     end
 
@@ -35,13 +35,13 @@ module DefaultLogger
     end
 
   end
-  
+
   module InstanceMethods
-     def logger
-       self.class.logger
-     end
+    def logger
+      self.class.logger
+    end
   end
-  
+
 end
 Object.class_eval { extend DefaultLogger::ClassMethods }
 

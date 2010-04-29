@@ -59,11 +59,11 @@
 #  ...
 #
 class RConfig
-  include Singleton, 
+  include Singleton,
           Mixins::Constants, Mixins::ClassVariables,
           Mixins::ConfigPaths, Mixins::Overlay,
           Mixins::Loader, Mixins::Callbacks, Mixins::Utils
-  
+
   ##
   # Convenience method to initialize necessary fields including,
   # config path(s), overlay, allow_reload, and log_level, all at
@@ -72,26 +72,26 @@ class RConfig
   #           RConfig.initialize(:config, 'en_US', true, :warn)
   #                           - or -
   #           RConfig.initialize(:paths => ['config', 'var/config'], :reload => false)
-  def self.initialize(*args)
-    logger.info{"Initialing RConfig"}
+  def self.initialize(* args)
+    logger.info { "Initialing RConfig" }
     case args[0]
-    when Hash
-      params  = args[0].symbolize_keys
-      paths   = params[:paths]
-      overlay = params[:overlay]
-      reload  = params[:reload]
-      loglvl  = params[:log_level]
-    else
-      paths, overlay, reload, loglvl = *args
+      when Hash
+        params  = args[0].symbolize_keys
+        paths   = params[:paths]
+        overlay = params[:overlay]
+        reload  = params[:reload]
+        loglvl  = params[:log_level]
+      else
+        paths, overlay, reload, loglvl = * args
     end
-    logger.debug{"PATHS: #{paths}\nOVERLAY: #{overlay}\nRELOAD: #{reload}\nLOG_LEVEL: #{loglvl}"}
+    logger.debug { "PATHS: #{paths}\nOVERLAY: #{overlay}\nRELOAD: #{reload}\nLOG_LEVEL: #{loglvl}" }
     self.config_paths = paths
     self.overlay      = overlay
     self.allow_reload = reload
     self.log_level    = loglvl
     true
   end
-  
+
   ##
   # Get each config file's yaml hash for the given config name, 
   # to be merged later. Files will only be loaded if they have 
@@ -103,31 +103,30 @@ class RConfig
 
     # Return last config file hash list loaded,
     # if reload is disabled and files have already been loaded.
-    return @@cache_config_files[name] if 
-      @@reload_disabled && 
-      @@cache_config_files[name]
+    return @@cache_config_files[name] if @@reload_disabled &&
+        @@cache_config_files[name]
 
     now = Time.now
 
     # Get array of all the existing files file the config name.
     config_files = self.get_config_files(name)
 
-    logger.debug "load_config_files(#{name.inspect})" 
-    
+    logger.debug "load_config_files(#{name.inspect})"
+
     # Get all the data from all yaml files into as hashes
     hashes = config_files.collect do |f|
-      name, name_x, filename, ext, mtime = *f
+      name, name_x, filename, ext, mtime = * f
 
       # Get the cached file info the specific file, if 
       # it's been loaded before.
-      val, last_mtime, last_loaded = @@cache[filename] 
+      val, last_mtime, last_loaded = @@cache[filename]
 
       logger.debug {
         "f = #{f.inspect}" +
-        "cache #{name_x} filename = #{filename.inspect}" +
-        "cache #{name_x} val = #{val.inspect}" +
-        "cache #{name_x} last_mtime = #{last_mtime.inspect}" +
-        "cache #{name_x} last_loaded = #{last_loaded.inspect}"
+            "cache #{name_x} filename = #{filename.inspect}" +
+            "cache #{name_x} val = #{val.inspect}" +
+            "cache #{name_x} last_mtime = #{last_mtime.inspect}" +
+            "cache #{name_x} last_loaded = #{last_loaded.inspect}"
       }
 
       # Load the file if its never been loaded or its been more than
@@ -135,30 +134,30 @@ class RConfig
       if val.blank? || (now - last_loaded > @@reload_interval)
         if force || val.blank? || mtime != last_mtime
 
-          logger.debug "mtime #{name.inspect} #{filename.inspect} " + 
-                      "changed #{mtime != last_mtime} : #{mtime.inspect} #{last_mtime.inspect}"
-          
+          logger.debug "mtime #{name.inspect} #{filename.inspect} " +
+              "changed #{mtime != last_mtime} : #{mtime.inspect} #{last_mtime.inspect}"
+
           # Get contents from config file
           File.open(filename) do |f|
-            logger.debug "RConfig: loading #{filename.inspect}" 
-            val = parse_file(f, ext)              
+            logger.debug "RConfig: loading #{filename.inspect}"
+            val = parse_file(f, ext)
             val = val[name] if ext == :xml # xml document must have root tag matching the file name.
-            logger.debug "RConfig: loaded #{filename.inspect} => #{val.inspect}" 
-            (@@config_file_loaded ||= { })[name] = config_files
+            logger.debug "RConfig: loaded #{filename.inspect} => #{val.inspect}"
+            (@@config_file_loaded ||= {})[name] = config_files
           end
-            
+
           # Save cached config file contents, and mtime.
-          @@cache[filename] = [ val, mtime, now ]
-          logger.debug "cache[#{filename.inspect}] = #{@@cache[filename].inspect}" 
+          @@cache[filename] = [val, mtime, now]
+          logger.debug "cache[#{filename.inspect}] = #{@@cache[filename].inspect}"
 
           # Flush merged hash cache.
           @@cache_hash[name] = nil
-                 
+
           # Config files changed or disappeared.
           @@cache_files[name] = config_files
 
         end # if val == nil || (now - last_loaded > @@reload_interval)
-      end   # if force || val == nil || mtime != last_mtime
+      end # if force || val == nil || mtime != last_mtime
 
       val
     end
@@ -182,23 +181,23 @@ class RConfig
   #     "/the/absolute/path/to/yaml.yml",
   #     # The mtime of the yml file or nil, if it doesn't exist.
   #   ]
-  def self.get_config_files(name) 
+  def self.get_config_files(name)
     files = []
 
-    config_paths.reverse.each do | dir |
+    config_paths.reverse.each do |dir|
       # splatting *suffix allows us to deal with multipart suffixes 
       name_no_overlay, suffixes = suffixes(name)
-      suffixes.map { | suffix | [ name_no_overlay, *suffix ].compact.join('_') }.each do | name_x |
-        CONFIG_FILE_TYPES.each do |ext|    
+      suffixes.map { |suffix| [name_no_overlay, * suffix].compact.join('_') }.each do |name_x|
+        CONFIG_FILE_TYPES.each do |ext|
           filename = filename_for_name(name_x, dir, ext)
           if File.exists?(filename)
-            files << [ name, name_x, filename, ext, File.stat(filename).mtime ]
+            files << [name, name_x, filename, ext, File.stat(filename).mtime]
           end
         end
       end
     end
 
-    logger.debug "get_config_files(#{name}) => #{files.select{|x| x[3]}.inspect}" 
+    logger.debug "get_config_files(#{name}) => #{files.select { |x| x[3] }.inspect}"
 
     files
   end
@@ -218,9 +217,9 @@ class RConfig
   # Returns true if any files for config have changes since
   # last load.
   def self.config_changed?(name)
-    logger.debug "config_changed?(#{name.inspect})" 
+    logger.debug "config_changed?(#{name.inspect})"
     name = name.to_s # if name.is_a?(Symbol)
-    ! (@@cache_files[name] === get_config_files(name))
+    !(@@cache_files[name] === get_config_files(name))
   end
 
 
@@ -234,13 +233,13 @@ class RConfig
 
     name = name.to_s
     unless result = @@cache_hash[name]
-      result = @@cache_hash[name] = 
-        make_indifferent(
-          merge_hashes(
-            load_config_files(name)
+      result = @@cache_hash[name] =
+          make_indifferent(
+              merge_hashes(
+                  load_config_files(name)
+              )
           )
-        )
-      logger.debug "config_hash(#{name.inspect}): reloaded" 
+      logger.debug "config_hash(#{name.inspect}): reloaded"
     end
 
     result
@@ -253,7 +252,7 @@ class RConfig
   def self.check_config_changed(name = nil)
     changed = []
     if name == nil
-      @@cache_hash.keys.dup.each do | name |
+      @@cache_hash.keys.dup.each do |name|
         if config_has_changed?(name)
           changed << name
         end
@@ -265,14 +264,14 @@ class RConfig
       end
     end
 
-    logger.debug "check_config_changed(#{name.inspect}) => #{changed.inspect}" 
+    logger.debug "check_config_changed(#{name.inspect}) => #{changed.inspect}"
 
     changed.empty? ? nil : changed
   end
 
 
   def self.config_has_changed?(name)
-    logger.debug "config_has_changed?(#{name.inspect}), reload_disabled=#{@@reload_disabled}" 
+    logger.debug "config_has_changed?(#{name.inspect}), reload_disabled=#{@@reload_disabled}"
 
     changed = false
 
@@ -289,7 +288,6 @@ class RConfig
 
     changed
   end
-
 
 
   ##
@@ -327,17 +325,17 @@ class RConfig
   ##
   # Get the value specified by the args, in the file specified by th name 
   #
-  def self.with_file(name, *args)
+  def self.with_file(name, * args)
     # logger.debug "with_file(#{name.inspect}, #{args.inspect})"; result = 
-    args.inject(get_config_file(name)) { | v, i | 
-      # logger.debug "v = #{v.inspect}, i = #{i.inspect}"
+    args.inject(get_config_file(name)) { |v, i|
+    # logger.debug "v = #{v.inspect}, i = #{i.inspect}"
       case v
-      when Hash
-        v[i.to_s]
-      when Array
-        i.is_a?(Integer) ? v[i] : nil
-      else
-        nil
+        when Hash
+          v[i.to_s]
+        when Array
+          i.is_a?(Integer) ? v[i] : nil
+        else
+          nil
       end
     }
     # logger.debug "with_file(#{name.inspect}, #{args.inspect}) => #{result.inspect}"; result
@@ -348,10 +346,10 @@ class RConfig
   # Will auto check every 5 minutes, for longer running apps.
   #
   def self.get_config_file(name)
-    name = name.to_s 
+    name = name.to_s
     now = Time.now
 
-    if (! @@last_auto_check[name]) || (now - @@last_auto_check[name]) > @@reload_interval
+    if (!@@last_auto_check[name]) || (now - @@last_auto_check[name]) > @@reload_interval
       @@last_auto_check[name] = now
       check_config_changed(name)
     end
@@ -362,7 +360,7 @@ class RConfig
 
     result
   end
-  
+
   ##
   # Creates a dottable hash for all Hash objects, recursively.
   def self.create_dottable_hash(value)
@@ -377,8 +375,8 @@ class RConfig
   #   RConfig.provider(:foo) => RConfig.with_file(:provider).foo
   #   RConfig.provider.foo   => RConfig.with_file(:provider).foo
   #
-  def self.method_missing(method, *args)
-    value = with_file(method, *args)
+  def self.method_missing(method, * args)
+    value = with_file(method, * args)
     logger.debug "#{self}.method_missing(#{method.inspect}, #{args.inspect}) => #{value.inspect}"
     value
   end
@@ -396,8 +394,8 @@ class RConfig
   #   config.provider(:foo) => RConfig.provider(:foo)
   #   config.provider.foo   => RConfig.provider.foo
   #
-  def method_missing(method, *args)
-    self.class.method_missing(method, *args)
+  def method_missing(method, * args)
+    self.class.method_missing(method, * args)
   end
 
   ##

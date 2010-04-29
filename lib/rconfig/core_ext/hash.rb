@@ -23,68 +23,68 @@ class Hash
 
       self_dup[key] =
 
-      if self_node = self_dup[key]
+          if self_node = self_dup[key]
 
-        case self_node
-        when Hash
+            case self_node
+              when Hash
 
-          # hash1, hash2 => hash3 (recursive +)
-          if other_node.is_a?(Hash)
+                # hash1, hash2 => hash3 (recursive +)
+                if other_node.is_a?(Hash)
 
-            self_node.weave(other_node, clobber)
+                  self_node.weave(other_node, clobber)
 
-          # hash, array => error (Can't weave'em, must clobber.)
-          elsif other_node.is_a?(Array) && !clobber
+                  # hash, array => error (Can't weave'em, must clobber.)
+                elsif other_node.is_a?(Array) && !clobber
 
-            raise(ArgumentError, "RConfig: (Hash#weave) Can't weave Hash and Array")
+                  raise(ArgumentError, "RConfig: (Hash#weave) Can't weave Hash and Array")
 
-          # hash, array => hash[key] = array
-          # hash, value => hash[key] = value
+                  # hash, array => hash[key] = array
+                  # hash, value => hash[key] = value
+                else
+                  other_node
+                end
+
+              when Array
+
+                # array, hash => array << hash
+                # array1, array2 => array1 + array2
+                # array, value => array << value
+                unless clobber
+                  case other_node
+                    when Hash
+                      self_node << other_node
+                    when Array
+                      self_node + other_node
+                    else
+                      self_node << other_node
+                  end
+
+                  # array, hash => hash
+                  # array1, array2 => array2
+                  # array, value => value
+                else
+                  other_node
+                end
+
+              else
+
+                # value, array => array.unshift(value)
+                if other_node.is_a?(Array) && !clobber
+                  other_node.unshift(self_node)
+
+                  # value1, value2 => value2
+                else
+                  other_node
+                end
+
+            end # case self_node
+
+            # Target hash didn't have a node matching the key,
+            # so just add it from the source hash.
+            # !self_dup.has_key?(key) => self_dup.add(key, other_node)
           else
             other_node
           end
-
-        when Array
-
-          # array, hash => array << hash
-          # array1, array2 => array1 + array2
-          # array, value => array << value
-          unless clobber
-            case other_node
-            when Hash
-              self_node << other_node
-            when Array
-              self_node + other_node
-            else
-              self_node << other_node
-            end
-
-          # array, hash => hash
-          # array1, array2 => array2
-          # array, value => value
-          else
-            other_node
-          end
-
-      else
-
-        # value, array => array.unshift(value)
-        if other_node.is_a?(Array) && !clobber
-          other_node.unshift(self_node)
-
-        # value1, value2 => value2
-        else
-          other_node
-        end
-
-      end # case self_node
-
-      # Target hash didn't have a node matching the key, 
-      # so just add it from the source hash.
-      # !self_dup.has_key?(key) => self_dup.add(key, other_node)
-      else
-        other_node
-      end
 
     } # other_hash.each
 

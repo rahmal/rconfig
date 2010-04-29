@@ -18,7 +18,7 @@ module Mixins
 
     # conf, properties => <key=value> based config files  
     CNF_FILE_TYPES = [:cnf, :conf, :config, :properties] unless defined? CNF_FILE_TYPES
-    
+
     # The type of file used for config. Valid choices
     # include (yml, yaml, xml, conf, config, properties)  
     CONFIG_FILE_TYPES = YML_FILE_TYPES + XML_FILE_TYPES + CNF_FILE_TYPES unless defined? CONFIG_FILE_TYPES
@@ -38,11 +38,11 @@ module Mixins
     # Ex. database_whiskey.yml overrides database_integration.yml
     #     overrides database.yml
     SUFFIXES = [nil,
-      :local,
-      :config, :local_config,
-      ENV_TIER, [ENV_TIER, :local],
-      HOSTNAME_SHORT, [HOSTNAME_SHORT, :config_local],
-      HOSTNAME, [HOSTNAME, :config_local]
+                :local,
+                :config, :local_config,
+                ENV_TIER, [ENV_TIER, :local],
+                HOSTNAME_SHORT, [HOSTNAME_SHORT, :config_local],
+                HOSTNAME, [HOSTNAME, :config_local]
     ] unless defined? SUFFIXES
 
     # Used in place of undefined but expected arrays,

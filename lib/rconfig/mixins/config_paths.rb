@@ -16,24 +16,27 @@ module Mixins
         paths = paths.split(/#{path_sep}+/)
       end
       unless paths.is_a? Array
-        raise ArgumentError, 
-          "Path(s) must be a String or an Array [#{paths.inspect}]"
+        raise ArgumentError,
+              "Path(s) must be a String or an Array [#{paths.inspect}]"
       end
       if paths.empty?
-        raise ArgumentError, 
-          "Must provide at least one paths: [#{paths.inspect}]"
+        raise ArgumentError,
+              "Must provide at least one paths: [#{paths.inspect}]"
       end
       paths.all? do |dir|
         dir = CONFIG_ROOT if dir == 'CONFIG_ROOT'
         unless File.directory?(dir)
-          raise InvalidConfigPathError, 
-            "This directory is invalid: [#{dir.inspect}]"
+          raise InvalidConfigPathError,
+                "This directory is invalid: [#{dir.inspect}]"
         end
       end
       reload
       @@config_paths = paths
     end
-    class << self; alias_method :set_config_paths, :config_paths= end
+
+    class << self;
+      alias_method :set_config_paths, :config_paths=
+    end
 
     ##
     # Adds the specified path to the list of directories to search for
@@ -42,19 +45,22 @@ module Mixins
     # If reload is disabled, it can onle be set once.
     def self.set_config_path path
       return if @@reload_disabled && config_paths_set?
-      return unless path.is_a?(String)      # only allow string argument
-      path_sep = (path =~ /;/) ? ';' : ':'  # if string contains multiple paths
-      path = path.split(/#{path_sep}+/)[0]  # only accept first one.    
+      return unless path.is_a?(String) # only allow string argument
+      path_sep = (path =~ /;/) ? ';' : ':' # if string contains multiple paths
+      path = path.split(/#{path_sep}+/)[0] # only accept first one.
 
-      if @@config_paths.blank? 
+      if @@config_paths.blank?
         set_config_paths(path)
-      else 
+      else
         config_paths << path if File.directory?(path)
         reload
         @@config_paths
-      end    
+      end
     end
-    class << self; alias_method :add_config_path, :set_config_path end
+
+    class << self;
+      alias_method :add_config_path, :set_config_path
+    end
 
     ##
     # Returns a list of directories to search for
@@ -76,26 +82,26 @@ module Mixins
       begin
         config_paths = ENV['CONFIG_PATH']
       rescue
-        logger.error { 
+        logger.error {
           "Forget something? No config paths! ENV['CONFIG_PATH'] is not set.\n" +
-          "Hint:  Use config_paths= or set_config_path."
+              "Hint:  Use config_paths= or set_config_path."
         }
       end
 
       begin
-        config_paths = [CONFIG_ROOT] 
+        config_paths = [CONFIG_ROOT]
       rescue
-        logger.error { 
+        logger.error {
           "Forget something?  No config paths! CONFIG_ROOT is not set.\n" +
-          "Hint:  Use config_paths= or set_config_path."
+              "Hint:  Use config_paths= or set_config_path."
         }
       end
 
       if @@config_paths.blank?
-         raise InvalidConfigPathError,
-               "Forget something?  No config paths!\n" +
-               "Niether ENV['CONFIG_PATH'] or CONFIG_ROOT is set.\n" +
-               "Hint:  Use config_paths= or set_config_path."
+        raise InvalidConfigPathError,
+              "Forget something?  No config paths!\n" +
+                  "Niether ENV['CONFIG_PATH'] or CONFIG_ROOT is set.\n" +
+                  "Hint:  Use config_paths= or set_config_path."
       end
 
       @@config_paths

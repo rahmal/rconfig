@@ -1,6 +1,6 @@
 module Mixins
   module Overlay
-   
+
     # Specifies an additional overlay suffix.
     #
     # E.g. 'gb' for UK locale.
@@ -41,23 +41,23 @@ module Mixins
             result = if ol
               ol_ = ol.upcase
               ol = ol.downcase
-              x = [ ]
-              SUFFIXES.each do | suffix |
+              x = []
+              SUFFIXES.each do |suffix|
                 # Standard, no overlay:
                 # e.g.: database_<suffix>.yml
                 x << suffix
 
                 # Overlay:
                 # e.g.: database_(US|GB)_<suffix>.yml
-                x << [ ol_, suffix ]
+                x << [ol_, suffix]
               end
-              [ name_x, x.freeze ]
+              [name_x, x.freeze]
             else
-              [ name.dup.freeze, SUFFIXES.freeze ]
+              [name.dup.freeze, SUFFIXES.freeze]
             end
             result.freeze
 
-            logger.debug {"suffixes(#{name}) => #{result.inspect}"}
+            logger.debug { "suffixes(#{name}) => #{result.inspect}" }
 
             result
           end

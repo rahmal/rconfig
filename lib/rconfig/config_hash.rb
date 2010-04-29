@@ -38,20 +38,20 @@ class ConfigHash < HashWithIndifferentAccess
   # Depending on what kind of parameter the method being mocked out is going
   # to be called with, define in the YAML file either a string or a symbol.
   # This also works inside the composite array keys.
-  def method_missing(method, *args)
+  def method_missing(method, * args)
     method = method.to_s
     value = self[method]
-      case args.size
-        when 0
-          # e.g.: RConfig.application.method
-          ;
-        when 1
-          # e.g.: RConfig.application.method(one_arg)
-          value = value.send(args[0])
-        else
-          # e.g.: RConfig.application.method(arg_one, args_two, ...)
-          value = value[args]
-      end
+    case args.size
+      when 0
+        # e.g.: RConfig.application.method
+        ;
+      when 1
+        # e.g.: RConfig.application.method(one_arg)
+        value = value.send(args[0])
+      else
+        # e.g.: RConfig.application.method(arg_one, args_two, ...)
+        value = value[args]
+    end
 
     # value =  convert_value(value)
     value
@@ -72,7 +72,7 @@ class ConfigHash < HashWithIndifferentAccess
   ##
   # Allow hash.default => hash['default']
   # without breaking Hash's usage of default(key)
-  @@no_key = [ :no_key ] # magically unique value.
+  @@no_key = [:no_key] # magically unique value.
   def default(key = @@no_key)
     key = key.to_s if key.is_a?(Symbol)
     key == @@no_key ? self['default'] : default_Hash(key == @@no_key ? nil : key)
@@ -103,5 +103,5 @@ class ConfigHash < HashWithIndifferentAccess
     # STDERR.puts "convert_value(#{value.inspect}:#{value.class})"
     value.class == Hash ? self.class.new(value).freeze : value
   end
-    
+
 end # class ConfigHash

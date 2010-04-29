@@ -6,8 +6,8 @@ class Object
   #  @people[:email] if @people
   #            - vs -
   #   @person.try(:name)
-  def try(method, *args)
-    result = send(method, *args) if respond_to?(method)
+  def try(method, * args)
+    result = send(method, * args) if respond_to?(method)
     result = send(:[], method) if result.nil? && respond_to?(:[])
     result
   end
@@ -39,7 +39,7 @@ class Object
   #       the class (RConfig).
   #
   def config
-    this_config = $config.send(self.class.name.underscore.to_sym)    
+    this_config = $config.send(self.class.name.underscore.to_sym)
     this_config.blank? ? $config : this_config
   end
 

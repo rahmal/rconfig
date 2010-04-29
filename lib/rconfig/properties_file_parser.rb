@@ -52,46 +52,46 @@ class PropertiesFileParser
     # The config is top down.. anything after a [group] gets added as part
     # of that group until a new [group] is found.  
     group, topgrp = nil
-    config_file.each do |line|              # for each line in the config file
+    config_file.each do |line| # for each line in the config file
       line.strip!
-      unless (COMMENT.match(line))          # skip comments (lines that state with '#')
-        if(KEYVAL.match(line))              # if this line is a config property
-          key, val = line.split(KEYVAL, 2)  # parse key and value from line
+      unless (COMMENT.match(line)) # skip comments (lines that state with '#')
+        if (KEYVAL.match(line)) # if this line is a config property
+          key, val = line.split(KEYVAL, 2) # parse key and value from line
           key = key.chomp.strip
           val = val.chomp.strip
           if (val)
-            if val =~ QUOTES                # if the value is in quotes
-              value = $1                    # strip out value from quotes
+            if val =~ QUOTES # if the value is in quotes
+              value = $1 # strip out value from quotes
             else
-              value = val                   # otherwise, leave as-is
+              value = val # otherwise, leave as-is
             end
           else
-            value = ''                      # if value was nil, set it to empty string
+            value = '' # if value was nil, set it to empty string
           end
 
-          if topgrp                         # If there was a top-level named group
+          if topgrp # If there was a top-level named group
             config[topgrp][group][key] =    # then there must be a group.
-              value                         # add the prop to the named group
-          elsif group                       # if this property is part of a group
-            config[group][key] = value      # then add it to the group
+            value # add the prop to the named group
+          elsif group # if this property is part of a group
+            config[group][key] = value # then add it to the group
           else
-            config[key] = value             # otherwise, add it to top-level config
+            config[key] = value # otherwise, add it to top-level config
           end
 
-        elsif match = NAMEGRP.match(line)   # This line is a named group (i.e. [env "test"], [env "qa"], [env "production"])
+        elsif match = NAMEGRP.match(line) # This line is a named group (i.e. [env "test"], [env "qa"], [env "production"])
           topgrp, group = match.to_a[1..-1] # There can be multiple groups within a single top-level group
-          config[topgrp] ||= {}             # add group to top-level group
-          config[topgrp][group] ||= {}      # add name of group as subgroup (properties are added to subgroup)
+          config[topgrp] ||= {} # add group to top-level group
+          config[topgrp][group] ||= {} # add name of group as subgroup (properties are added to subgroup)
 
-        elsif match = GROUP.match(line)     # if this line is a config group
-          group = match.to_a[1]             # parse the group name from line
-          topgrp = nil                      # we got a new group with no namespace, so reset topgrp
-          config[group] ||= {}              # add group to top-level config
+        elsif match = GROUP.match(line) # if this line is a config group
+          group = match.to_a[1] # parse the group name from line
+          topgrp = nil # we got a new group with no namespace, so reset topgrp
+          config[group] ||= {} # add group to top-level config
         end
       end
     end
 
-    config  # return config hash
-  end       # def parse
+    config # return config hash
+  end # def parse
 
 end # class PropertiesFileParser

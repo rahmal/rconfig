@@ -42,7 +42,7 @@ module Mixins
     # executes &block, 
     # calls check_config_changed,
     # returns result of block
-    def self.disable_reload(&block)
+    def self.disable_reload(& block)
       # This should increment @@reload_disabled on entry, decrement on exit.
       result = nil
       reload_disabled_save = @@reload_disabled

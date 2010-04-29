@@ -1,6 +1,6 @@
 module Mixins
   module Callbacks
-    
+
     ##
     # Register a callback when a config has been reloaded. If no config name
     # is specified, the callback will be registered under the name :ANY. The
@@ -18,7 +18,7 @@ module Mixins
     #     end
     #   end
     #
-    def self.on_load(*args, &blk)
+    def self.on_load(* args, & blk)
       args << :ANY if args.empty?
       proc = blk.to_proc
 
@@ -26,13 +26,13 @@ module Mixins
       proc.call()
 
       # Register callback proc.
-      args.each do | name |
+      args.each do |name|
         name = name.to_s
-        (@@on_load[name] ||= [ ]) << proc
+        (@@on_load[name] ||= []) << proc
       end
     end
 
-protected
+    protected
 
     ##
     # Executes all of the reload callbacks registered to the specified config name,
@@ -40,11 +40,11 @@ protected
     # :ANY symbol.
     def self.fire_on_load(name)
       callbacks =
-        (@@on_load['ANY'] || EMPTY_ARRAY) +
-        (@@on_load[name] || EMPTY_ARRAY)
+          (@@on_load['ANY'] || EMPTY_ARRAY) +
+              (@@on_load[name] || EMPTY_ARRAY)
       callbacks.uniq!
-      logger.debug "fire_on_load(#{name.inspect}): callbacks[#{callbacks.inspect}]"  unless callbacks.empty?
-      callbacks.each{|cb| cb.call()}
+      logger.debug "fire_on_load(#{name.inspect}): callbacks[#{callbacks.inspect}]" unless callbacks.empty?
+      callbacks.each { |cb| cb.call() }
     end
 
   end
