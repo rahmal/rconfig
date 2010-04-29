@@ -40,8 +40,6 @@ require 'rconfig/config_hash'
 require 'rconfig/logger'
 require 'rconfig/properties_file_parser'
 require 'rconfig/exceptions'
-require 'rconfig/constants'
-require 'rconfig/class_variables'
 require 'rconfig/rconfig'
 
 # Create global reference to RConfig instance

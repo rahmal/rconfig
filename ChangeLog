@@ -1,7 +1,7 @@
 0.3.3
 =====
 * Extend object to add short-hand access to config.
-* Moved constants, and class variables to separate modules to decrease core class size.
+* Break rconfig core into separate modules to decrease core class size.
 * Fixed a syntax error in when clause of config_hash.rb for ruby 1.9.1 - From dvyjones/rconfig (github).
 * Fixed raise on allow_reload method.
 * Fixed unit test, rconfig_test.rb.

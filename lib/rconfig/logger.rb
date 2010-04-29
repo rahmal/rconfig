@@ -25,6 +25,7 @@ module DefaultLogger
     end
 
     def logger
+      create_logger if self.default_logger.nil?
       self.default_logger
     end
 

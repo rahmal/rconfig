@@ -61,15 +61,19 @@
 class RConfig
   include Singleton, 
           Mixins::Constants, Mixins::ClassVariables,
-          Mixins::ConfigPaths, Mixins::Overlay
+          Mixins::ConfigPaths, Mixins::Overlay,
+          Mixins::Loader, Mixins::Callbacks, Mixins::Utils
   
-  create_logger
-
   ##
   # Convenience method to initialize necessary fields including,
   # config path(s), overlay, allow_reload, and log_level, all at
   # one time.
+  # Examples:
+  #           RConfig.initialize(:config, 'en_US', true, :warn)
+  #                           - or -
+  #           RConfig.initialize(:paths => ['config', 'var/config'], :reload => false)
   def self.initialize(*args)
+    logger.info{"Initialing RConfig"}
     case args[0]
     when Hash
       params  = args[0].symbolize_keys
@@ -80,10 +84,12 @@ class RConfig
     else
       paths, overlay, reload, loglvl = *args
     end
+    logger.debug{"PATHS: #{paths}\nOVERLAY: #{overlay}\nRELOAD: #{reload}\nLOG_LEVEL: #{loglvl}"}
     self.config_paths = paths
     self.overlay      = overlay
     self.allow_reload = reload
     self.log_level    = loglvl
+    true
   end
   
   ##
@@ -167,24 +173,6 @@ class RConfig
   end
 
 
-  ##
-  # Parses file based on file type.
-  # 
-  def self.parse_file(conf_file, ext)
-    hash = case ext
-    when *YML_FILE_TYPES
-      YAML::load(conf_file)
-    when *XML_FILE_TYPES
-      Hash.from_xml(conf_file)
-    when *CNF_FILE_TYPES
-      PropertiesFileParser.parse(conf_file)
-    else
-      raise ConfigError, "Unknown File type:#{ext}"
-    end
-    hash.freeze
-  end
-
-
   ## 
   # Returns a list of all relevant config files as specified
   # by _suffixes list.
@@ -214,7 +202,6 @@ class RConfig
 
     files
   end
-
 
   ##
   # Return the config file information for the given config name.
@@ -304,43 +291,6 @@ class RConfig
   end
 
 
-  ##
-  # Returns a merge of hashes.
-  #
-  def self.merge_hashes(hashes)
-    hashes.inject({ }) { | n, h | n.weave(h, true) }
-  end
-
-
-  ## 
-  # Recursively makes hashes into frozen IndifferentAccess ConfigFakerHash
-  # Arrays are also traversed and frozen.
-  #
-  def self.make_indifferent(x)
-    case x
-    when Hash
-      unless x.frozen?
-        x.each_pair do | k, v |
-          x[k] = make_indifferent(v)
-        end
-        x = ConfigHash.new.merge!(x).freeze
-      end
-      logger.debug "make_indefferent: x = #{x.inspect}:#{x.class}"
-    when Array
-      unless x.frozen?
-        x.collect! do | v |
-          make_indifferent(v)
-        end
-        x.freeze
-      end
-    # Freeze Strings.
-    when String
-      x.freeze
-    end
-
-    x
-  end
-
 
   ##
   # This method provides shorthand to retrieve confiuration data that 
@@ -374,7 +324,6 @@ class RConfig
     self.get_config_file(file)[key] || ENV[key.to_s.upcase]
   end
 
-
   ##
   # Get the value specified by the args, in the file specified by th name 
   #
@@ -393,7 +342,6 @@ class RConfig
     }
     # logger.debug "with_file(#{name.inspect}, #{args.inspect}) => #{result.inspect}"; result
   end
-
 
   ##
   # Get the merged config hash.
@@ -415,14 +363,11 @@ class RConfig
     result
   end
   
-
-
   ##
   # Creates a dottable hash for all Hash objects, recursively.
   def self.create_dottable_hash(value)
     make_indifferent(value)
   end
-
 
   ##
   # Short-hand access to config file by its name.
@@ -437,7 +382,6 @@ class RConfig
     logger.debug "#{self}.method_missing(#{method.inspect}, #{args.inspect}) => #{value.inspect}"
     value
   end
-
 
   ##
   # Creating an instance isn't required.  But if you just have to a reference to RConfig
@@ -456,7 +400,6 @@ class RConfig
     self.class.method_missing(method, *args)
   end
 
-
   ##
   # Creating an instance isn't required.  But if you just have to a reference to RConfig
   # you can get it using RConfig.instance.  It's a singleton, so there's never more than
@@ -471,72 +414,6 @@ class RConfig
   #
   def [](key)
     self.class[key]
-  end
-
-
-  ##
-  # Helper method for white-box testing and debugging.
-  # Sets the flag indicating whether or not to log
-  # errors and application run-time information.
-  def self.log_level=(x)
-    logger.level = level unless level.nil?
-  end
-
-  def self.log_level
-    logger.level
-  end
-
-  ##
-  # Helper method for white-box testing and debugging.
-  # Sets a hash of each file that has been loaded.
-  def self.config_file_loaded=(x)
-    @@config_file_loaded = x
-  end
-
-
-  ##
-  # Helper method for white-box testing and debugging.
-  # Returns a hash of each file that has been loaded.
-  def self.config_file_loaded
-    @@config_file_loaded
-  end
-
-
-protected
-
-
-  ##
-  # Executes all of the reload callbacks registered to the specified config name,
-  # and all of the callbacks registered to run on any config, as specified by the
-  # :ANY symbol.
-  def self.fire_on_load(name)
-    callbacks =
-      (@@on_load['ANY'] || EMPTY_ARRAY) +
-      (@@on_load[name] || EMPTY_ARRAY)
-    callbacks.uniq!
-    logger.debug "fire_on_load(#{name.inspect}): callbacks[#{callbacks.inspect}]"  unless callbacks.empty?
-    callbacks.each{|cb| cb.call()}
-  end
-
-
-  ##
-  # Flushes cached config data. This should avoided in production
-  # environments, if possible.
-  def self.flush_cache
-    @@suffixes = { }
-    @@cache = { } 
-    @@cache_files = { } 
-    @@cache_hash = { }
-    @@last_auto_check = { }
-    self
-  end
-
-
-  ##
-  # Get complete file name, including file path for the given config name
-  # and directory.
-  def self.filename_for_name(name, dir = config_paths[0], ext = :yml)
-    File.join(dir, "#{name}.#{ext}")
   end
 
 end # class RConfig
