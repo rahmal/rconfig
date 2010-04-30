@@ -9,7 +9,7 @@ module DefaultLogger
 
   module ClassMethods
 
-    def create_logger options = {}
+    def create_logger options={}
       class_inheritable_accessor :default_logger, :options
 
       self.options = options || {}

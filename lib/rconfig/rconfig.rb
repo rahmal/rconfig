@@ -62,7 +62,7 @@ class RConfig
   include Singleton,
           Mixins::Constants, Mixins::ClassVariables,
           Mixins::ConfigPaths, Mixins::Overlay,
-          Mixins::Loader, Mixins::Callbacks, Mixins::Utils
+          Mixins::Reload, Mixins::Callbacks, Mixins::Utils
 
   ##
   # Convenience method to initialize necessary fields including,
@@ -72,7 +72,7 @@ class RConfig
   #           RConfig.initialize(:config, 'en_US', true, :warn)
   #                           - or -
   #           RConfig.initialize(:paths => ['config', 'var/config'], :reload => false)
-  def self.initialize(* args)
+  def self.initialize(*args)
     logger.info { "Initialing RConfig" }
     case args[0]
       when Hash
@@ -99,19 +99,20 @@ class RConfig
   # last five minutes, or force is explicitly set to true.
   #
   def self.load_config_files(name, force=false)
-    name = name.to_s # if name.is_a?(Symbol)
+    name = name.to_s
 
     # Return last config file hash list loaded,
     # if reload is disabled and files have already been loaded.
-    return @@cache_config_files[name] if @@reload_disabled &&
-        @@cache_config_files[name]
+    return @@cache_config_files[name] if @@reload_disabled && @@cache_config_files[name]
+
+    logger.info{"Loading config files for: #{name}"}
+    logger.debug{"load_config_files(#{name.inspect})"}
+
 
     now = Time.now
 
     # Get array of all the existing files file the config name.
     config_files = self.get_config_files(name)
-
-    logger.debug "load_config_files(#{name.inspect})"
 
     # Get all the data from all yaml files into as hashes
     hashes = config_files.collect do |f|
@@ -123,9 +124,9 @@ class RConfig
 
       logger.debug {
         "f = #{f.inspect}" +
-            "cache #{name_x} filename = #{filename.inspect}" +
-            "cache #{name_x} val = #{val.inspect}" +
-            "cache #{name_x} last_mtime = #{last_mtime.inspect}" +
+        "cache #{name_x} filename = #{filename.inspect}" +
+        "cache #{name_x} val = #{val.inspect}" +
+        "cache #{name_x} last_mtime = #{last_mtime.inspect}" +
             "cache #{name_x} last_loaded = #{last_loaded.inspect}"
       }
 
@@ -134,8 +135,8 @@ class RConfig
       if val.blank? || (now - last_loaded > @@reload_interval)
         if force || val.blank? || mtime != last_mtime
 
-          logger.debug "mtime #{name.inspect} #{filename.inspect} " +
-              "changed #{mtime != last_mtime} : #{mtime.inspect} #{last_mtime.inspect}"
+          logger.debug{"mtime #{name.inspect} #{filename.inspect} " +
+            "changed #{mtime != last_mtime} : #{mtime.inspect} #{last_mtime.inspect}"}
 
           # Get contents from config file
           File.open(filename) do |f|
@@ -163,7 +164,7 @@ class RConfig
     end
     hashes.compact!
 
-    logger.debug "load_config_files(#{name.inspect}) => #{hashes.inspect}"
+    logger.debug{"load_config_files(#{name.inspect}) => #{hashes.inspect}"}
 
     # Keep last loaded config files around in case @@reload_dsabled.
     @@cache_config_files[name] = hashes #unless hashes.empty?
@@ -218,7 +219,7 @@ class RConfig
   # last load.
   def self.config_changed?(name)
     logger.debug "config_changed?(#{name.inspect})"
-    name = name.to_s # if name.is_a?(Symbol)
+    name = name.to_s
     !(@@cache_files[name] === get_config_files(name))
   end
 
@@ -228,8 +229,8 @@ class RConfig
   # Returns a cached indifferent access faker hash merged
   # from all config files for a name.
   #
-  def self.config_hash(name)
-    logger.debug "config_hash(#{name.inspect})"
+  def self.get_config_data(name)
+    logger.debug "get_config_data(#{name.inspect})"
 
     name = name.to_s
     unless result = @@cache_hash[name]
@@ -239,53 +240,44 @@ class RConfig
                   load_config_files(name)
               )
           )
-      logger.debug "config_hash(#{name.inspect}): reloaded"
+      logger.debug "get_config_data(#{name.inspect}): reloaded"
     end
 
     result
   end
 
-
   ##
-  # If config files have changed,
-  # Caches are flushed, on_load triggers are run.
-  def self.check_config_changed(name = nil)
+  # If name is specified, checks that file for changes and
+  # reloads it if there are.  Otherwise, checks all files
+  # in the cache, reloading the changed files.
+  def self.check_for_changes(name=nil)
     changed = []
     if name == nil
       @@cache_hash.keys.dup.each do |name|
-        if config_has_changed?(name)
+        if reload_on_change(name)
           changed << name
         end
       end
     else
-      name = name.to_s #  if name.is_a?(Symbol)
-      if config_has_changed?(name)
+      name = name.to_s
+      if reload_on_change(name)
         changed << name
       end
     end
-
-    logger.debug "check_config_changed(#{name.inspect}) => #{changed.inspect}"
-
-    changed.empty? ? nil : changed
+    logger.debug "check_for_changes(#{name.inspect}) => #{changed.inspect}"
+    changed
   end
 
-
-  def self.config_has_changed?(name)
-    logger.debug "config_has_changed?(#{name.inspect}), reload_disabled=#{@@reload_disabled}"
-
-    changed = false
-
-    if config_changed?(name) && reload?
+  ##
+  # If config files have changed, caches are flushed, on_load triggers are run.
+  def self.reload_on_change(name)
+    logger.debug "reload_on_change(#{name.inspect}), reload_disabled=#{@@reload_disabled}"
+    if changed = config_changed?(name) && reload?
       if @@cache_hash[name]
-        @@cache_hash[name] = nil
-
-        # force on_load triggers.
-        fire_on_load(name)
+        flush_cache(name)  # flush cached config values.
+        fire_on_load(name) # force on_load triggers.
       end
-
-      changed = true
     end
-
     changed
   end
 
@@ -319,16 +311,16 @@ class RConfig
   #       the supported formats (yml, xml, conf, etc.)
   #
   def self.[](key, file=:application)
-    self.get_config_file(file)[key] || ENV[key.to_s.upcase]
+    self.config_for(file)[key] || ENV[key.to_s.upcase]
   end
 
   ##
   # Get the value specified by the args, in the file specified by th name 
   #
-  def self.with_file(name, * args)
-    # logger.debug "with_file(#{name.inspect}, #{args.inspect})"; result = 
-    args.inject(get_config_file(name)) { |v, i|
-    # logger.debug "v = #{v.inspect}, i = #{i.inspect}"
+  def self.with_file(name, *args)
+    logger.debug{"with_file(#{name.inspect}, #{args.inspect})"}
+    result = args.inject(config_for(name)) { |v, i|
+      logger.debug{"v = #{v.inspect}, i = #{i.inspect}"}
       case v
         when Hash
           v[i.to_s]
@@ -338,33 +330,20 @@ class RConfig
           nil
       end
     }
-    # logger.debug "with_file(#{name.inspect}, #{args.inspect}) => #{result.inspect}"; result
-  end
-
-  ##
-  # Get the merged config hash.
-  # Will auto check every 5 minutes, for longer running apps.
-  #
-  def self.get_config_file(name)
-    name = name.to_s
-    now = Time.now
-
-    if (!@@last_auto_check[name]) || (now - @@last_auto_check[name]) > @@reload_interval
-      @@last_auto_check[name] = now
-      check_config_changed(name)
-    end
-
-    result = config_hash(name)
-
-    logger.debug "get_config_file(#{name.inspect}) => #{result.inspect}"
-
+    logger.debug{"with_file(#{name.inspect}, #{args.inspect}) => #{result.inspect}"}
     result
   end
 
   ##
-  # Creates a dottable hash for all Hash objects, recursively.
-  def self.create_dottable_hash(value)
-    make_indifferent(value)
+  # Get a hash of merged config data.
+  # Will auto check every 5 minutes, for longer running apps, unless reload is disabled.
+  #
+  def self.config_for(name)
+    name = name.to_s
+    check_for_changes(name) if auto_check?(name)
+    data = get_config_data(name)
+    logger.debug "config_for(#{name.inspect}) => #{data.inspect}"
+    data
   end
 
   ##

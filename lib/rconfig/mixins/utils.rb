@@ -5,7 +5,7 @@ module Mixins
     # Helper method for white-box testing and debugging.
     # Sets the flag indicating whether or not to log
     # errors and application run-time information.
-    def self.log_level=(x)
+    def self.log_level=(level)
       logger.level = level unless level.nil?
     end
 
@@ -16,8 +16,8 @@ module Mixins
     ##
     # Helper method for white-box testing and debugging.
     # Sets a hash of each file that has been loaded.
-    def self.config_file_loaded=(x)
-      @@config_file_loaded = x
+    def self.config_file_loaded=(loaded)
+      @@config_file_loaded = loaded
     end
 
 
@@ -28,6 +28,12 @@ module Mixins
       @@config_file_loaded
     end
 
+    ##
+    # Creates a dottable hash for all Hash objects, recursively.
+    def self.create_dottable_hash(hash)
+      make_indifferent(hash)
+    end
+    
     protected
 
     ##
@@ -85,21 +91,28 @@ module Mixins
 
 
     ##
-    # Flushes cached config data. This should avoided in production
-    # environments, if possible.
-    def self.flush_cache
-      @@suffixes = {}
-      @@cache = {}
-      @@cache_files = {}
-      @@cache_hash = {}
-      @@last_auto_check = {}
-      self
+    # If a config file name is specified, flushes cached config values
+    # for specified config file. Otherwise, flushes all cached config data.
+    # The latter should be avoided in production environments, if possible.
+    def self.flush_cache(name=nil)
+      if name
+        name = name.to_s
+        @@cache_hash[name] = nil if @@cache_hash[name]
+      else
+        logger.warn "Flushing complete config data cache."
+        @@suffixes = {}
+        @@cache = {}
+        @@cache_files = {}
+        @@cache_hash = {}
+        @@last_auto_check = {}
+        self
+      end
     end
 
     ##
     # Get complete file name, including file path for the given config name
     # and directory.
-    def self.filename_for_name(name, dir = config_paths[0], ext = :yml)
+    def self.filename_for_name(name, dir=config_paths[0], ext=:yml)
       File.join(dir, "#{name}.#{ext}")
     end
 

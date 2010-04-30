@@ -38,7 +38,7 @@ class ConfigHash < HashWithIndifferentAccess
   # Depending on what kind of parameter the method being mocked out is going
   # to be called with, define in the YAML file either a string or a symbol.
   # This also works inside the composite array keys.
-  def method_missing(method, * args)
+  def method_missing(method, *args)
     method = method.to_s
     value = self[method]
     case args.size

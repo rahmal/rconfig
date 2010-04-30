@@ -11,7 +11,7 @@ class Hash
 
   ##
   # Weaves the contents of two hashes producing a new hash.
-  def weave(other_hash, clobber = false)
+  def weave(other_hash, clobber=false)
     return self unless other_hash
     unless other_hash.kind_of?(Hash)
       raise ArgumentError, "RConfig: (Hash#weave) expected <Hash>, but was <#{other_hash.class}>"
@@ -94,7 +94,7 @@ class Hash
   ##
   # Same as self.weave(other_hash, dont_clobber) except that it weaves other hash 
   # to itself, rather than create a new hash.
-  def weave!(other_hash, clobber = false)
+  def weave!(other_hash, clobber=false)
     weaved_hash = self.weave(other_hash, clobber)
     self.merge!(weaved_hash)
   end

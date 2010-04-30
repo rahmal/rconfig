@@ -18,7 +18,7 @@ module Mixins
     #     end
     #   end
     #
-    def self.on_load(* args, & blk)
+    def self.on_load(*args, &blk)
       args << :ANY if args.empty?
       proc = blk.to_proc
 

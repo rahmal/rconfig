@@ -6,7 +6,7 @@ class Object
   #  @people[:email] if @people
   #            - vs -
   #   @person.try(:name)
-  def try(method, * args)
+  def try(method, *args)
     result = send(method, * args) if respond_to?(method)
     result = send(:[], method) if result.nil? && respond_to?(:[])
     result

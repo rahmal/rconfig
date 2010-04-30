@@ -7,15 +7,15 @@ module Mixins
     #
     # Defaults from ENV['CONFIG_OVERLAY'].
     def self.overlay
-      @@overlay ||= (x = ENV['CONFIG_OVERLAY']) && x.dup.freeze
+      @@overlay ||= (value = ENV['CONFIG_OVERLAY']) && value.dup.freeze
     end
 
 
     ##
     # Sets overlay for 
-    def self.overlay=(x)
-      flush_cache if @@overlay != x
-      @@overlay = x && x.dup.freeze
+    def self.overlay=(value)
+      flush_cache if @@overlay != value
+      @@overlay = value && value.dup.freeze
     end
 
 

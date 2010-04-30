@@ -44,7 +44,7 @@ class PropertiesFileParser
   ##
   # Parse config file and import data into hash to be stored in config.
   #
-  def self.parse config_file
+  def self.parse(config_file)
     raise ArgumentError, 'Invalid config file name.' unless config_file
 
     config = {}
