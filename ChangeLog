@@ -1,4 +1,4 @@
-0.3.3
+0.4.0
 =====
 * Extend object to add short-hand access to config.
 * Break rconfig core into separate modules to decrease core class size.
