@@ -53,5 +53,19 @@ module Mixins
     # A hash of each file that has been loaded.
     @@config_file_loaded = nil
 
+
+    # Magically unique value. Used to provide a key to retrieve a default value
+    # specified in a config file. The symbol is wrapped in an array so that it will
+    # not be treated like a normal key and changed to a string.
+    #
+    # Example:
+    #          currency:
+    #            us: dollar
+    #            gb: pound
+    #            default: dollar
+    #
+    #          RConfig.currency.ca => 'dollar'
+    @@no_key = [:no_key]
+
   end
 end

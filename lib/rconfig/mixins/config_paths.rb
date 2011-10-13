@@ -1,5 +1,5 @@
 module Mixins
-  module ConfingPaths
+  module ConfigPaths
 
     ##
     # Sets the list of directories to search for

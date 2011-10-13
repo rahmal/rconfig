@@ -8,10 +8,10 @@
 #
 class ConfigHash < HashWithIndifferentAccess
 
-  # HashWithIndifferentAccess#dup always returns HashWithIndifferentAccess!
-  def dup
-    self.class.new(self)
-  end
+  ##
+  # HashWithIndifferentAccess#default is broken in early versions of Rails.
+  # This is defined to use the hash version in ConfigHash#default
+  define_method(:hash_default, Hash.instance_method(:default))
 
   ##
   # Dotted notation can be used with arguments (useful for creating mock objects)
@@ -42,47 +42,42 @@ class ConfigHash < HashWithIndifferentAccess
     method = method.to_s
     value = self[method]
     case args.size
-      when 0
-        # e.g.: RConfig.application.method
-        ;
-      when 1
-        # e.g.: RConfig.application.method(one_arg)
-        value = value.send(args[0])
-      else
-        # e.g.: RConfig.application.method(arg_one, args_two, ...)
-        value = value[args]
+    when 0  # e.g.: RConfig.application.method
+      value
+    when 1  # e.g.: RConfig.application.method(one_arg)
+      value.send(args[0])
+    else    # e.g.: RConfig.application.method(arg_one, args_two, ...)
+      value[args]
     end
+  end
 
-    # value =  convert_value(value)
-    value
+  ##
+  # HashWithIndifferentAccess#dup always returns HashWithIndifferentAccess!
+  # This is overriden to return ConfigHash (or any other derived class)
+  def dup
+    self.class.new(self)
   end
 
   ##
   # Why the &*#^@*^&$ isn't HashWithIndifferentAccess doing this?
-  # HashWithIndifferentAccess doesn't override Hash's []! That's
-  # why it's so destructive!
+  # HashWithIndifferentAccess doesn't (or didn't?) override Hash's
+  # []! That's why it's so destructive!
   def [](key)
     key = key.to_s if key.kind_of?(Symbol)
     super(key)
   end
 
-  # HashWithIndifferentAccess#default is broken!
-  define_method(:default_Hash, Hash.instance_method(:default))
-
   ##
   # Allow hash.default => hash['default']
   # without breaking Hash's usage of default(key)
-  @@no_key = [:no_key] # magically unique value.
   def default(key = @@no_key)
     key = key.to_s if key.is_a?(Symbol)
-    key == @@no_key ? self['default'] : default_Hash(key == @@no_key ? nil : key)
+    key == @@no_key ? self['default'] : hash_default(key)
   end
 
   ##
-  # HashWithIndifferentAccess#update is broken!
-  # Hash#update returns self,
-  # BUT,
-  # HashWithIndifferentAccess#update does not!
+  # HashWithIndifferentAccess#update is broken in early versions of Rails
+  # Hash#update returns self, BUT, HashWithIndifferentAccess#update does not!
   #
   #   { :a => 1 }.update({ :b => 2, :c => 3 })
   #   => { :a => 1, :b => 2, :c => 3 }
@@ -97,11 +92,10 @@ class ConfigHash < HashWithIndifferentAccess
   end
 
   ##
-  # Override WithIndifferentAccess#convert_value
+  # Override HashWithIndifferentAccess#convert_value
   # return instances of this class for Hash values.
   def convert_value(value)
-    # STDERR.puts "convert_value(#{value.inspect}:#{value.class})"
-    value.class == Hash ? self.class.new(value).freeze : value
+    [Hash, HashWithIndifferentAccess].include?(value.class) ? self.class.new(value).freeze : value
   end
 
 end # class ConfigHash

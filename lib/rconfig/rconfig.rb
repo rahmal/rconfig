@@ -64,6 +64,8 @@ class RConfig
           Mixins::ConfigPaths, Mixins::Overlay,
           Mixins::Reload, Mixins::Callbacks, Mixins::Utils
 
+  create_logger
+
   ##
   # Convenience method to initialize necessary fields including,
   # config path(s), overlay, allow_reload, and log_level, all at
@@ -75,14 +77,14 @@ class RConfig
   def self.initialize(*args)
     logger.info { "Initialing RConfig" }
     case args[0]
-      when Hash
-        params  = args[0].symbolize_keys
-        paths   = params[:paths]
-        overlay = params[:overlay]
-        reload  = params[:reload]
-        loglvl  = params[:log_level]
-      else
-        paths, overlay, reload, loglvl = * args
+    when Hash
+      params  = args[0].symbolize_keys
+      paths   = params[:paths]
+      overlay = params[:overlay]
+      reload  = params[:reload]
+      loglvl  = params[:log_level]
+    else
+      paths, overlay, reload, loglvl = *args
     end
     logger.debug { "PATHS: #{paths}\nOVERLAY: #{overlay}\nRELOAD: #{reload}\nLOG_LEVEL: #{loglvl}" }
     self.config_paths = paths
@@ -283,7 +285,7 @@ class RConfig
 
 
   ##
-  # This method provides shorthand to retrieve confiuration data that 
+  # This method provides shorthand to retrieve configuration data that
   # is global in scope, and used on an application or environment-wide 
   # level. The default location that it checks is the application file.  
   # The application config file is a special config file that should be 
