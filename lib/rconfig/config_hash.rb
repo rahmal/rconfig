@@ -70,13 +70,13 @@ class ConfigHash < HashWithIndifferentAccess
   ##
   # Allow hash.default => hash['default']
   # without breaking Hash's usage of default(key)
-  def default(key = @@no_key)
+  def default(key = self.default_key)
     key = key.to_s if key.is_a?(Symbol)
-    key == @@no_key ? self['default'] : hash_default(key)
+    key == self.default_key ? self['default'] : hash_default(key)
   end
 
   ##
-  # HashWithIndifferentAccess#update is broken in early versions of Rails
+  # HashWithIndifferentAccess#update is broken in earlier versions of Rails
   # Hash#update returns self, BUT, HashWithIndifferentAccess#update does not!
   #
   #   { :a => 1 }.update({ :b => 2, :c => 3 })
@@ -93,9 +93,9 @@ class ConfigHash < HashWithIndifferentAccess
 
   ##
   # Override HashWithIndifferentAccess#convert_value
-  # return instances of this class for Hash values.
+  # return instance of ConfigHash for Hash values.
   def convert_value(value)
-    [Hash, HashWithIndifferentAccess].include?(value.class) ? self.class.new(value).freeze : value
+    value.is_a?(Hash) ? self.class.new(value).freeze : super
   end
 
 end # class ConfigHash
