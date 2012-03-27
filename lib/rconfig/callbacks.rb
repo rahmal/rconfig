@@ -1,4 +1,4 @@
-module Mixins
+module RConfig
   module Callbacks
 
     ##
@@ -9,16 +9,16 @@ module Mixins
     # Example:
     #
     #   class MyClass
-    #     @@my_config = { }
+    #     self.my_config = { }
     #     RConfig.on_load(:cache) do
-    #       @@my_config = { }
+    #       self.my_config = { }
     #     end
     #     def my_config
-    #       @@my_config ||= something_expensive_thing_on_config(RConfig.cache.memory_limit)
+    #       self.my_config ||= something_expensive_thing_on_config(RConfig.cache.memory_limit)
     #     end
     #   end
     #
-    def self.on_load(*args, &blk)
+    def on_load(*args, &blk)
       args << :ANY if args.empty?
       proc = blk.to_proc
 
@@ -27,24 +27,19 @@ module Mixins
 
       # Register callback proc.
       args.each do |name|
-        name = name.to_s
-        (@@on_load[name] ||= []) << proc
+        (self.callbacks[name.to_s] ||= []) << proc
       end
     end
-
-    protected
 
     ##
     # Executes all of the reload callbacks registered to the specified config name,
     # and all of the callbacks registered to run on any config, as specified by the
     # :ANY symbol.
-    def self.fire_on_load(name)
-      callbacks =
-          (@@on_load['ANY'] || EMPTY_ARRAY) +
-              (@@on_load[name] || EMPTY_ARRAY)
-      callbacks.uniq!
-      logger.debug "fire_on_load(#{name.inspect}): callbacks[#{callbacks.inspect}]" unless callbacks.empty?
-      callbacks.each { |cb| cb.call() }
+    def fire_on_load(name)
+      procs = (self.callbacks['ANY'] || RConfig::EMPTY_ARRAY) + (self.callbacks[name] || RConfig::EMPTY_ARRAY)
+      procs.uniq!
+      logger.debug "fire_on_load(#{name.inspect}): callbacks[#{procs.inspect}]" unless procs.empty?
+      procs.each { |proc| proc.call() }
     end
 
   end

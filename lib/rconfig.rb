@@ -1,47 +1,107 @@
-#--
+##
+#
 # Copyright (c) 2009 Rahmal Conda <rahmal@gmail.com>
+# -------------------------------------------------------------------
+# The complete solution for Ruby Configuration Management. RConfig is a Ruby library that
+# manages configuration within Ruby applications. It bridges the gap between yaml, xml, and
+# key/value based properties files, by providing a centralized solution to handle application
+# configuration from one location. It provides the simplicity of hash-based access, that
+# Rubyists have come to know and love, supporting your configuration style of choice, while
+# providing many new features, and an elegant API.
 #
-# Permission is hereby granted, free of charge, to any person obtaining
-# a copy of this software and associated documentation files (the
-# "Software"), to deal in the Software without restriction, including
-# without limitation the rights to use, copy, modify, merge, publish,
-# distribute, sublicense, and/or sell copies of the Software, and to
-# permit persons to whom the Software is furnished to do so, subject to
-# the following conditions:
+# -------------------------------------------------------------------
+# * Simple, easy to install and use.
+# * Supports yaml, xml, and properties files.
+# * Yaml and xml files supprt infinite level of configuration grouping.
+# * Intuitive dot-notation 'key chaining' argument access.
+# * Simple well-known hash/array based argument access.
+# * Implements multilevel caching to reduce disk access.
+# * Short-hand access to 'global' application configuration, and shell environment.
+# * Overlays multiple configuration files to support environment, host, and
+#   even locale-specific configuration.
 #
-# The above copyright notice and this permission notice shall be
-# included in all copies or substantial portions of the Software.
+# -------------------------------------------------------------------
+#  The overlay order of the config files is defined by SUFFIXES:
+#  * nil
+#  * _local
+#  * _config
+#  * _local_config
+#  * _{environment} (.i.e _development)
+#  * _{environment}_local (.i.e _development_local)
+#  * _{hostname} (.i.e _whiskey)
+#  * _{hostname}_config_local (.i.e _whiskey_config_local)
 #
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-#++
-
-$:.unshift File.dirname(__FILE__)
-
-autoload :Socket, 'socket'
-autoload :YAML, 'yaml'
-autoload :Logger, 'logger'
-autoload :Singleton, 'singleton'
-
-require 'rubygems'
+# -------------------------------------------------------------------
+#
+# Example:
+#
+#  shell/console =>
+#    export LANG=en
+#
+#  demo.yml =>
+#   server:
+#     address: host.domain.com
+#     port: 81
+#  ...
+#
+#  application.properties =>
+#    debug_level = verbose
+#  ...
+#
+# demo.rb =>
+#  require 'rconfig'
+#  RConfig.config_paths = ['$HOME/config', '#{APP_ROOT}/config', '/demo/conf']
+#  RConfig.demo[:server][:port] => 81
+#  RConfig.demo.server.address  => 'host.domain.com'
+#
+#  RConfig[:debug_level] => 'verbose'
+#  RConfig[:lang] => 'en'
+#  ...
+#
 require 'active_support'
+require 'rconfig/core_ext/array'
+require 'rconfig/core_ext/hash'
+require 'rconfig/core_ext/nil'
 
-autoload :Hash, 'active_support/core_ext/hash/conversions'
-autoload :HashWithIndifferentAccess, 'active_support/core_ext/hash/indifferent_access'
+module RConfig
+  VERSION = '0.4.0'
 
-require 'rconfig/mixins'
-require 'rconfig/core_ext'
-require 'rconfig/config_hash'
-require 'rconfig/logger'
-require 'rconfig/properties_file_parser'
-require 'rconfig/exceptions'
-require 'rconfig/rconfig'
+  autoload :Socket,                    'socket'
+  autoload :YAML,                      'yaml'
+  autoload :Logger,                    'logger'
+  autoload :Singleton,                 'singleton'
 
-# Create global reference to RConfig instance
-$config = RConfig.instance
+  autoload :Concern,                   'active_support/concern'
+  autoload :Hash,                      'active_support/core_ext/hash/conversions'
+  autoload :HashWithIndifferentAccess, 'active_support/core_ext/hash/indifferent_access'
 
+  #autoload :Hash,                      'rconfig/core_ext/hash'
+  #autoload :NilClass,                  'rconfig/core_ext/nil'
+  #autoload :Enumerable,                'rconfig/core_ext/enumerable'
+
+  autoload :Config,                    'rconfig/config'
+  autoload :Logger,                    'rconfig/logger'
+  autoload :Exceptions,                'rconfig/exceptions'
+  autoload :Utils,                     'rconfig/utils'
+  autoload :Constants,                 'rconfig/constants'
+  autoload :Settings,                  'rconfig/settings'
+  autoload :ConfigError,               'rconfig/exceptions'
+  autoload :LoadPaths,                 'rconfig/load_paths'
+  autoload :Cascade,                   'rconfig/cascade'
+  autoload :Callbacks,                 'rconfig/callbacks'
+  autoload :Reload,                    'rconfig/reload'
+  autoload :CoreMethods,               'rconfig/core_methods'
+  autoload :PropertiesFileParser,      'rconfig/properties_file_parser'
+
+  extend ActiveSupport::Concern
+
+  extend Utils
+  extend Constants
+  extend Settings
+  extend Exceptions
+  extend LoadPaths
+  extend Cascade
+  extend Callbacks
+  extend Reload
+  extend CoreMethods
+end

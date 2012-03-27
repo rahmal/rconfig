@@ -1,15 +1,22 @@
 0.4.0
 =====
-* Extend object to add short-hand access to config.
-* Break rconfig core into separate modules to decrease core class size.
+* Broke RConfig core into separate modules to decrease core class size.
+* Added Rails generator to override RConfig settings in Rails projects
+* Added support for git-like config files, giving key/value properties files potentially three levels.
+* Refactored settings module to allow for clean defaults, and overriding.
+* Added RConfig logger.
+* Renamed overlay to cascade
 * Fixed a syntax error in when clause of config_hash.rb for ruby 1.9.1 - From dvyjones/rconfig (github).
 * Fixed raise on allow_reload method.
 * Fixed unit test, rconfig_test.rb.
 * Fixed minor typos, comments, and bugs.
 * Refactored Hash#weave signature; changed dont_clobber=true, to clobber=false (reads more intuitively).
-* Added support for git-like config files, giving key/value properties files potentially three levels.
 * Removed redundant validate method from PropertiesFileParser.
 * Moved PropertiesFileParser regexps to constants.
+
+0.3.3
+=====
+* Fixed overlay class variable not loaded warning.
 
 0.3.2
 =====

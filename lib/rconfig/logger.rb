@@ -1,47 +1,86 @@
-require 'logger'
+module RConfig
+  class Logger #:nodoc:
+    attr_accessor :level, :log_format, :date_format
+    attr_reader   :output
 
-##
-# Creates a logger for small apps or gems that may not be using log4r.
-# I created this to encapsulate all of the logging code in my smaller 
-# projects so thay I don't clutter them up with utility code.
-#
-module DefaultLogger
+    FATAL     = 4
+    ERROR     = 3
+    WARN      = 2
+    INFO      = 1
+    DEBUG     = 0
+    
+    MAX_LEVEL = 4
 
-  module ClassMethods
+    def initialize(options={})
+      # Use provided output
+      if output = options[:output] && output.respond_to?(:puts)
+        @output = output
+        @needs_close = false
+      end
 
-    def create_logger options={}
-      class_inheritable_accessor :default_logger, :options
+      # Use log file
+      if output.nil? && options[:file] && File.exists?(optios[:file])
+        @output = File.open(options[:file].to_s, 'a')
+        @needs_close = true
+      end
 
-      self.options = options || {}
+      # Default to stderr, if no outputter or file provider
+      @output ||= STDERR
 
-      logger = Logger.new(check_options(:file, STDOUT))
-      logger.level = check_options(:level, ENV['LOG_LEVEL'] || Logger::INFO)
-      logger.datetime_format = check_options(:format, "%Y-%m-%d %H:%M:%S")
-      logger.progname = check_options(:app_name, 'RConfig')
+      # Use provided level or default to warn
+      @level = options[:level] ||
+        ((defined?(Rails) && %w[test development].include?(Rails.env)) ? DEBUG : WARN)
 
-      self.default_logger = logger
-
-      include DefaultLogger::InstanceMethods
+      # Date format
+      @date_format = options[:date_format] || '%Y-%m-%d %H:%M:%S'
+      #@log_format  = options[:log_format] || "[%l] %d :: %M :: %t"
     end
 
-    def logger
-      create_logger if self.default_logger.nil?
-      self.default_logger
+    def close
+      output.close if @needs_close
     end
 
-    def check_options key, default_value=nil
-      puts "Key: #{key.inspect}, Value: #{self.options[key]}, Default: #{default_value}"
-      self.options[key].nil? ? default_value : self.options[key]
+    def log(level, message)
+      if self.level <= level
+        indent = "%*s" % [MAX_LEVEL, "*" * (MAX_LEVEL - level)]
+        message.lines.each do |line|
+          log_str = "[#{indent}] #{Time.now.strftime(self.date_format)} :: #{line.strip}\n"
+          output.puts log_str
+        end
+      end
+    end
+
+    def fatal(message)
+      log(FATAL, message)
+    end
+
+    def error(message)
+      log(ERROR, message)
+    end
+
+    def warn(message)
+      log(WARN, message)
+    end
+
+    def info(message)
+      log(INFO, message)
+    end
+
+    def debug(message)
+      log(DEBUG, message)
     end
 
   end
 
-  module InstanceMethods
-    def logger
-      self.class.logger
-    end
-  end
+  class DisabledLogger
+    def log(level, message) end
+    def dont_log(message) end
 
+    alias_method :fatal, :dont_log
+    alias_method :error, :dont_log
+    alias_method :warn,  :dont_log
+    alias_method :info,  :dont_log
+    alias_method :debug, :dont_log
+  end
 end
-Object.class_eval { extend DefaultLogger::ClassMethods }
 

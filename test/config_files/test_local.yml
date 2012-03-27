@@ -1,9 +1,0 @@
-test_mode: true
-
-
-hash_1:
-  foo: "foo"
-  bar: "baz"
-  zzz: "zzz"
-
-
