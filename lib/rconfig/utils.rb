@@ -7,7 +7,7 @@ module RConfig
     def setup
       yield self
       raise_load_path_error if load_paths.empty?
-      logger ||= DisabledLogger.new
+      self.logger ||= DisabledLogger.new
     end
 
     # Creates a class variable a sets it to the default value specified.
@@ -74,18 +74,28 @@ module RConfig
     end
 
     ##
-    # Parses file based on file type.
+    # Reads and parses the config data from the specified file.
+    def read(file, name, ext)
+      contents = File.read(file)           # Read the contents from the file.
+      contents = ERB.new(contents).result  # Evaluate any ruby code using ERB.
+      parse(contents, name, ext)           # Parse the contents based on the file type
+    end
+
+    ##
+    # Parses contents of the config file based on file type.
+    # XML files expect the root element to be the same as the
+    # file name.
     #
-    def parse_file(conf_file, ext)
+    def parse(contents, name, ext)
       hash = case ext
-        when * YML_FILE_TYPES
-          YAML::load(conf_file)
-        when * XML_FILE_TYPES
-          Hash.from_xml(conf_file)
-        when * CNF_FILE_TYPES
-          RConfig::PropertiesFileParser.parse(conf_file)
+        when *YML_FILE_TYPES
+          YAML::load(contents)
+        when *XML_FILE_TYPES
+          Hash.from_xml(contents)[name] # xml document must have root tag matching the file name.
+        when *CNF_FILE_TYPES
+          RConfig::PropertiesFileParser.parse(contents)
         else
-          raise ConfigError, "Unknown File type:#{ext}"
+          raise ConfigError, "Unknown File type: #{ext}"
         end
       hash.freeze
     end
@@ -98,14 +108,14 @@ module RConfig
     end
 
     ##
-    # Recursively makes hashes into frozen IndifferentAccess ConfigFakerHash
+    # Recursively makes hashes into frozen IndifferentAccess Config Hash
     # Arrays are also traversed and frozen.
     #
     def make_indifferent(hash)
       case hash
         when Hash
           unless hash.frozen?
-            hash.each_pair do |k, v|
+            hash.each do |k, v|
               hash[k] = make_indifferent(v)
             end
             hash = RConfig::Config.new.merge!(hash).freeze

@@ -1,6 +1,7 @@
 module RConfig
   module Settings
-    extend Constants
+    extend Utils
+    include Constants
 
     ### Configuration Settings ====>
 

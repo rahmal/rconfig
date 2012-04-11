@@ -3,11 +3,12 @@
 # Instead, edit Jeweler::Tasks in Rakefile, and run 'rake gemspec'
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
+require "rconfig"
 
 Gem::Specification.new do |s|
 
   # Metadata
-  s.name          = "RConfig"
+  s.name          = 'rconfig'
   s.version       = RConfig::VERSION
   s.authors       = ['Rahmal Conda']
   s.email         = ['rahmal@gmail.com']

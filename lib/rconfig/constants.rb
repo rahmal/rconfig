@@ -3,7 +3,7 @@ module RConfig
 
     # Sets CONFIG_ROOT to RAILS_ROOT/config unless it has already
     # been defined (i.e. in rails env, or calling ruby app).
-    CONFIG_ROOT = File.join(Rails.root, 'config') if defined?(::Rails) && !defined?(CONFIG_ROOT)
+    CONFIG_ROOT = File.join(::Rails.root || '', 'config').gsub(/^\//, '').gsub(/\/$/,'') if defined?(::Rails) && !defined?(CONFIG_ROOT)
 
     # ENV TIER i.e. (development, integration, staging, or production)
     # Defaults to RAILS_ENV if running in Rails, otherwise, it checks

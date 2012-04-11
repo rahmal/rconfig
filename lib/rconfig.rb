@@ -50,7 +50,7 @@
 #
 # demo.rb =>
 #  require 'rconfig'
-#  RConfig.config_paths = ['$HOME/config', '#{APP_ROOT}/config', '/demo/conf']
+#  RConfig.load_paths = ['$HOME/config', '#{APP_ROOT}/config', '/demo/conf']
 #  RConfig.demo[:server][:port] => 81
 #  RConfig.demo.server.address  => 'host.domain.com'
 #
@@ -68,16 +68,13 @@ module RConfig
 
   autoload :Socket,                    'socket'
   autoload :YAML,                      'yaml'
+  autoload :ERB,                       'erb'
   autoload :Logger,                    'logger'
   autoload :Singleton,                 'singleton'
 
   autoload :Concern,                   'active_support/concern'
   autoload :Hash,                      'active_support/core_ext/hash/conversions'
   autoload :HashWithIndifferentAccess, 'active_support/core_ext/hash/indifferent_access'
-
-  #autoload :Hash,                      'rconfig/core_ext/hash'
-  #autoload :NilClass,                  'rconfig/core_ext/nil'
-  #autoload :Enumerable,                'rconfig/core_ext/enumerable'
 
   autoload :Config,                    'rconfig/config'
   autoload :Logger,                    'rconfig/logger'

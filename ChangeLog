@@ -3,6 +3,7 @@
 * Broke RConfig core into separate modules to decrease core class size.
 * Added Rails generator to override RConfig settings in Rails projects
 * Added support for git-like config files, giving key/value properties files potentially three levels.
+* Added support for values referencing other properties in key-value config files
 * Refactored settings module to allow for clean defaults, and overriding.
 * Added RConfig logger.
 * Renamed overlay to cascade

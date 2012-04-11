@@ -27,83 +27,83 @@ module RConfig
       # Get array of all the existing files file the config name.
       config_files = self.get_config_files(name)
 
-      # Get all the data from all yaml files into as hashes
-      hashes = config_files.collect do |f|
-        name, name_x, filename, ext, mtime = * f
+      # Get all the data from all yaml files into as configs
+      configs = config_files.collect do |f|
+        name, name_with_suffix, filename, ext, modified_time = * f
 
         # Get the cached file info the specific file, if
         # it's been loaded before.
-        val, last_mtime, last_loaded = self.cache[filename]
+        config_data, last_modified, last_loaded = self.cache[filename]
 
-        logger.debug "f = #{f.inspect}" +
-          "cache #{name_x} filename = #{filename.inspect}" +
-          "cache #{name_x} val = #{val.inspect}" +
-          "cache #{name_x} last_mtime = #{last_mtime.inspect}" +
-              "cache #{name_x} last_loaded = #{last_loaded.inspect}"
+        logger.debug "f = #{f.inspect}\n" +
+          "cache #{name_with_suffix} filename      = #{filename.inspect}\n" +
+          "cache #{name_with_suffix} config_data   = #{config_data.inspect}\n" +
+          "cache #{name_with_suffix} last_modified = #{last_modified.inspect}\n" +
+          "cache #{name_with_suffix} last_loaded   = #{last_loaded.inspect}\n"
 
         # Load the file if its never been loaded or its been more than
         # so many minutes since last load attempt. (default: 5 minutes)
-        if val.blank? || (now - last_loaded > self.reload_interval)
-          if force || val.blank? || mtime != last_mtime
+        if config_data.blank? || (now - last_loaded > self.reload_interval)
+          if force || config_data.blank? || modified_time != last_modified
 
-            logger.debug "mtime #{name.inspect} #{filename.inspect} " +
-              "changed #{mtime != last_mtime} : #{mtime.inspect} #{last_mtime.inspect}"
+            logger.debug "modified_time #{name.inspect} #{filename.inspect} " +
+              "changed #{modified_time != last_modified} : #{modified_time.inspect} #{last_modified.inspect}"
 
-            # Get contents from config file
-            File.open(filename) do |f|
-              logger.debug "RConfig: loading #{filename.inspect}"
-              val = parse_file(f, ext)
-              val = val[name] if ext == :xml # xml document must have root tag matching the file name.
-              logger.debug "RConfig: loaded #{filename.inspect} => #{val.inspect}"
-              (self.config_loaded ||= {})[name] = config_files
-            end
+            logger.debug "RConfig: loading #{filename.inspect}"
 
-            # Save cached config file contents, and mtime.
-            self.cache[filename] = [val, mtime, now]
+            config_data = read(filename, name, ext)  # Get contents from config file
+
+            logger.debug "RConfig: loaded #{filename.inspect} => #{config_data.inspect}"
+
+            (self.config_loaded ||= {})[name] = config_files  # add files to the loaded files cache
+
+            self.cache[filename] = [config_data, modified_time, now]  # Save cached config file contents, and modified_time.
+
             logger.debug "cache[#{filename.inspect}] = #{self.cache[filename].inspect}"
 
-            # Flush merged hash cache.
-            self.cache_hash[name] = nil
+            self.cache_hash[name] = nil # Flush merged hash cache.
 
-            # Config files changed or disappeared.
-            self.cache_files[name] = config_files
+            self.cache_files[name] = config_files  # Config files changed or disappeared.
 
-          end # if val == nil || (now - last_loaded > self.reload_interval)
-        end # if force || val == nil || mtime != last_mtime
+          end # if config_data == nil || (now - last_loaded > self.reload_interval)
+        end # if force || config_data == nil || modified_time != last_modified
 
-        val
-      end
-      hashes.compact!
+        config_data
+      end # config_files.collect
+      configs.compact!
 
-      logger.debug "load_config_files(#{name.inspect}) => #{hashes.inspect}"
+      logger.debug "load_config_files(#{name.inspect}) => #{configs.inspect}"
 
       # Keep last loaded config files around in case self.reload_dsabled.
-      self.cache_config_files[name] = hashes #unless hashes.empty?
+      self.cache_config_files[name] = configs #unless configs.empty?
 
-      hashes
+      configs
     end
 
 
     ##
-    # Returns a list of all relevant config files as specified
-    # by _suffixes list.
+    # Returns a list of all relevant config files as specified by suffixes list.
     # Each element is an Array, containing:
-    #   [ "the-top-level-config-name",
-    #     "the-suffixed-config-name",
-    #     "/the/absolute/path/to/yaml.yml",
-    #     # The mtime of the yml file or nil, if it doesn't exist.
+    #
+    #   [ 
+    #     "server",              # The base name of the 
+    #     "server_production",   # The suffixed name
+    #     "/path/to/server.yml", # The absolute path to the file 
+    #     <Wed Apr 09 08:53:14>  # The last modified time of the file or nil, if it doesn't exist.
     #   ]
+    #
     def get_config_files(name)
       files = []
 
-      self.load_paths.reverse.each do |dir|
+      self.load_paths.reverse.each do |directory|
         # splatting *suffix allows us to deal with multipart suffixes
         name_no_overlay, suffixes = suffixes_for(name)
-        suffixes.map { |suffix| [name_no_overlay, * suffix].compact.join('_') }.each do |name_x|
+        suffixes.map { |suffix| [name_no_overlay, *suffix].compact.join('_') }.each do |name_with_suffix|
           self.file_types.each do |ext|
-            filename = filename_for_name(name_x, dir, ext)
+            filename = filename_for_name(name_with_suffix, directory, ext)
             if File.exists?(filename)
-              files << [name, name_x, filename, ext, File.stat(filename).mtime]
+              modified_time = File.stat(filename).mtime
+              files << [name, name_with_suffix, filename, ext, modified_time]
             end
           end
         end
