@@ -33,7 +33,7 @@
 #            RConfig.props.host[env].domain  (where env is 'dev' or 'prod')
 #
 module RConfig
-  class PropertiesFileParser
+  class PropertiesFile
     include Singleton # Don't instantiate this class
 
     COMMENT = /^\#/

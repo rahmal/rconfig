@@ -93,7 +93,7 @@ module RConfig
         when *XML_FILE_TYPES
           Hash.from_xml(contents)[name] # xml document must have root tag matching the file name.
         when *CNF_FILE_TYPES
-          RConfig::PropertiesFileParser.parse(contents)
+          PropertiesFile.parse(contents)
         else
           raise ConfigError, "Unknown File type: #{ext}"
         end
