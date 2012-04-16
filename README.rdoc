@@ -13,8 +13,37 @@ The complete solution for Ruby Configuration Management. RConfig is a Ruby libra
 * Simple well-known hash/array based argument access.
 * Implements multilevel caching to reduce disk access.
 * Short-hand access to 'global' application configuration, and shell environment.
-* Overlays multiple configuration files to support environment and host-specific configuration.
-* Onload callbacks for single, multiple, or any config file.
+* Cascades multiple configuration files to support environment and host-specific configuration.
+* On-load callbacks for single, multiple, or any config file.
+* Embedded ruby code with ERB templating.
+* Support for referencing values in property files (Yaml also has built in support using node anchors).
+
+
+== Getting Started
+=== Rails Apps
+RConfig is released as a Ruby Gem. The gem is to be installed within a Ruby on Rails 3 application. To install, simply add the following to your Gemfile:
+
+    # Gemfile
+    gem 'rconfig'
+
+After updating your bundle, run the installer
+
+    $> rails generate rconfig:install
+
+The installer creates an initializer used for configuring defaults used by RConfig
+
+=== Non-Rails Apps
+If you're not using RConfig in a Rails app, and you don't use Gemfile you can install RConfig with RubyGems
+
+    gem install rconfig
+
+
+== Requirements
+Starting with version 0.4.0, RConfig requires at least Ruby 1.9, and Rails 3. Previous versions can be used in Ruby 1.8 and Rails 2.2+. Non-rails projects need ActiveSupport (>= 3 for RConfig 0.4.0, and > 2.2 for RConfig 0.3).
+
+* Ruby 1.9+
+* ActiveSupport 3.0+
+
 
 == Example
 
@@ -25,10 +54,13 @@ The complete solution for Ruby Configuration Management. RConfig is a Ruby libra
    server:
      address: host.domain.com
      port: 81
+     host: <%= %x{host_name} %>
    ...
 
   application.properties =>
     debug_level=verbose
+    app_root=/home/rahmal/apps/rconfig
+    test_root=%{app_root}/tests
   ...
 
  demo.rb => 
@@ -36,35 +68,19 @@ The complete solution for Ruby Configuration Management. RConfig is a Ruby libra
   RConfig.config_paths = ['$HOME/config', '#{APP_ROOT}/config', '/demo/conf']
   RConfig.demo[:server][:port] => 81
   RConfig.demo.server.address  => 'host.domain.com'
+  RConfig.demo.server.host     => 'host.local'
+
+  RConfig.application.test_root => '/home/rahmal/apps/rconfig/tests'
 
   RConfig[:debug_level] => 'verbose'
   RConfig[:lang] => 'en'
   ...
 
-== Requirements
 
-* Ruby (Developed on 1.8.7)
-* RubyGems (Developed on 1.3.5)
-* activesupport (2.2.2+)
+== Bugs and Feature Requests
 
-== Install
-
-  sudo gem install rconfig
-
-== ToDo
-
-1. Finish JSpecs for existing code (Yeah, I know. You’re supposed to right the JSpecs first.)
-2. Create re-factor goals based on Caliper metrics.
-3. Prep for cleaner, stabler release.
-
-
-== Feature Ideas
-
-* Support for git-like config/properties files (You know, with the namespaced header blocks.).
-* Support for Database-driven configuration.
-* Removing dependency on ActiveSupport (Pull in needed code.).
-* These are features I’m considering. E-mail me <rahmal@gmail.com> If you like to see a feature added or expedited.
-
+* Bug Reports & Feature Requests: Please use to the [Issues page](https://github.com/rahmal/rconfig/issues)
+* Want to Contribute? Send a Pull Request
 
 == Known Issues
 
