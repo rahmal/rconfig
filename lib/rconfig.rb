@@ -88,7 +88,8 @@ module RConfig
   autoload :Callbacks,                 'rconfig/callbacks'
   autoload :Reload,                    'rconfig/reload'
   autoload :CoreMethods,               'rconfig/core_methods'
-  autoload :PropertiesFileParser,      'rconfig/properties_file_parser'
+  autoload :PropertiesFile,            'rconfig/properties_file'
+  autoload :InstallGenerator,          'generators/rconfig/install_generator'
 
   extend ActiveSupport::Concern
 

@@ -91,13 +91,21 @@ module RConfig
         when *YML_FILE_TYPES
           YAML::load(contents)
         when *XML_FILE_TYPES
-          Hash.from_xml(contents)[name] # xml document must have root tag matching the file name.
+          parse_xml(contents, name)
         when *CNF_FILE_TYPES
-          PropertiesFile.parse(contents)
+          RConfig::PropertiesFile.parse(contents)
         else
           raise ConfigError, "Unknown File type: #{ext}"
         end
       hash.freeze
+    end
+
+    ##
+    # Parses xml file and processes any references in the property values.
+    def parse_xml(contents, name)
+      hash = Hash.from_xml(contents)
+      hash = hash[name] if hash.size == 1 && hash.key?(name)  # xml document could have root tag matching the file name.
+      RConfig::PropertiesFile.parse_references(hash)
     end
 
     ##
@@ -144,7 +152,7 @@ module RConfig
         name = name.to_s
         self.cache_hash[name] &&= nil
       else
-        logger.warn "Flushing complete config data cache."
+        logger.warn "RConfig: Flushing config data cache."
         self.suffixes        = {}
         self.cache           = {}
         self.cache_files     = {}
@@ -157,8 +165,8 @@ module RConfig
     ##
     # Get complete file name, including file path for the given config name
     # and directory.
-    def filename_for_name(name, dir=self.load_paths.first, ext=:yml)
-      File.join(dir, "#{name}.#{ext}")
+    def filename_for_name(name, directory=self.load_paths.first, ext=:yml)
+      File.join(directory, "#{name}.#{ext}")
     end
 
 

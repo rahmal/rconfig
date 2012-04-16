@@ -7,7 +7,7 @@
 # embedded hash values, similar to the way one might traverse a object tree.
 #
 module RConfig
-  class Config < HashWithIndifferentAccess
+  class Config < ::HashWithIndifferentAccess
 
     ##
     # HashWithIndifferentAccess#default is broken in early versions of Rails.
@@ -41,6 +41,7 @@ module RConfig
     # This also works inside the composite array keys.
     def method_missing(method, *args)
       method = method.to_s
+      return if method == 'default_key'
       value = self[method]
       case args.size
       when 0  # e.g.: RConfig.application.method
@@ -53,44 +54,18 @@ module RConfig
     end
 
     ##
-    # HashWithIndifferentAccess#dup always returns HashWithIndifferentAccess!
-    # This is overriden to return Config (or any other derived class)
-    def dup
-      self.class.new(self)
-    end
-
-    ##
-    # Why the &*#^@*^&$ isn't HashWithIndifferentAccess doing this?
-    # HashWithIndifferentAccess doesn't (or didn't?) override Hash's
-    # []! That's why it's so destructive!
-    def [](key)
-      key = key.to_s if key.kind_of?(Symbol)
-      super(key)
-    end
-
-    ##
     # Allow hash.default => hash['default']
     # without breaking Hash's usage of default(key)
     def default(key = self.default_key)
       key = key.to_s if key.is_a?(Symbol)
-      key == self.default_key ? self['default'] : hash_default(key)
+      if key == self.default_key 
+        self['default'] if key?('default')
+      else
+        hash_default(key)
+      end
     end
 
-    ##
-    # HashWithIndifferentAccess#update is broken in earlier versions of Rails
-    # Hash#update returns self, BUT, HashWithIndifferentAccess#update does not!
-    #
-    #   { :a => 1 }.update({ :b => 2, :c => 3 })
-    #   => { :a => 1, :b => 2, :c => 3 }
-    #
-    #   HashWithIndifferentAccess.new({ :a => 1 }).update({ :b => 2, :c => 3 })
-    #   => { :b => 2, :c => 3 } # WTF?
-    #
-    # Subclasses should *never* override methods and break their protocols!!!!
-    def update(hash)
-      super(hash)
-      self
-    end
+    protected
 
     ##
     # Override HashWithIndifferentAccess#convert_value

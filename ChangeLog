@@ -13,7 +13,7 @@
 * Fixed minor typos, comments, and bugs.
 * Refactored Hash#weave signature; changed dont_clobber=true, to clobber=false (reads more intuitively).
 * Removed redundant validate method from PropertiesFileParser.
-* Moved PropertiesFileParser regexps to constants.
+* Renamed PropertiesFileParser to PropertiesFile
 
 0.3.3
 =====

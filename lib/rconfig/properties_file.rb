@@ -54,7 +54,7 @@ module RConfig
       # The config is top down.. anything after a [group] gets added as part
       # of that group until a new [group] is found.  
       group, topgrp = nil
-      config_file.each do |line|   # for each line in the config file
+      config_file.split("\n").each do |line|   # for each line in the config file
         line.strip!
         unless COMMENT.match(line) # skip comments (lines that state with '#')
           if KEYVAL.match(line)    # if this line is a config property
