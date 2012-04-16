@@ -59,6 +59,7 @@
 #  ...
 #
 require 'active_support'
+require 'active_support/hash_with_indifferent_access'
 require 'rconfig/core_ext/array'
 require 'rconfig/core_ext/hash'
 require 'rconfig/core_ext/nil'
