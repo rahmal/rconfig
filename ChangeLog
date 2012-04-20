@@ -1,7 +1,8 @@
 0.4.1
 =====
-* Fixed error occuring in non-Rails apps - NameError HashWithIndifferentAccess
-- From vandries/rconfig (github)
+* Fixed error occuring in non-Rails apps (NameError/HashWithIndifferentAccess missing) - From vandries/rconfig (github)
+* Fixed install generator
+* Fixed application file shorthand (i.e. RConfig[key] == RConfig.application.key)
 
 0.4.0
 =====

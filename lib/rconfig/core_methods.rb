@@ -222,7 +222,7 @@ module RConfig
     #       the supported formats (yml, xml, conf, etc.)
     #
     def [](key, file=:application)
-      self.config_for(file)[key] || ENV[key.to_s.upcase]
+      with_file(file, key) || ENV[key.to_s.upcase]
     end
 
     ##
