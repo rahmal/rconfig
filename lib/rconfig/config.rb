@@ -54,6 +54,15 @@ module RConfig
     end
 
     ##
+    # Why the &*#^@*^&$ isn't HashWithIndifferentAccess doing this?
+    # HashWithIndifferentAccess doesn't override Hash's []! That's 
+    # why it's so destructive!
+    def [](key)
+      key = key.to_s if key.kind_of?(Symbol)
+      super(key)
+    end
+
+    ##
     # Allow hash.default => hash['default']
     # without breaking Hash's usage of default(key)
     def default(key = self.default_key)

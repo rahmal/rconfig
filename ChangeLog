@@ -1,3 +1,7 @@
+0.4.2
+=====
+* Fixed indifferent access in Config object.
+
 0.4.1
 =====
 * Fixed error occuring in non-Rails apps (NameError/HashWithIndifferentAccess missing) - From vandries/rconfig (github)
