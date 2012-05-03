@@ -1,0 +1,3 @@
+admin:
+  name: <%= ENV['USER'] %>
+  home: <%= ENV['HOME'] %>

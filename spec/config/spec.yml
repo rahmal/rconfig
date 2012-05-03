@@ -1,0 +1,17 @@
+admin:
+  name: 'Harry Potter'
+  email: 'harry@hogwarts.com'
+
+server:
+  host: 127.0.0.1
+  port: 8080
+
+teams:
+  alpha:
+    name: 'Alpha Squad'
+    location: 'San Francisco, CA'
+    num_members: 12
+  beta:
+    beta: 'Beta Squad'
+    location: 'New York, NY'
+    num_members: 10

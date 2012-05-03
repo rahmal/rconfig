@@ -1,0 +1,22 @@
+<xml_config>
+  <admin>
+    <name>Harry Potter</name>
+    <email>harry@hogwarts.com</email>
+  </admin>
+  <server>
+    <host>127.0.0.1</host>
+    <port>8080</port>
+  </server>
+  <teams>
+    <alpha>
+      <name>Alpha Squad</name>
+      <location>San Francisco, CA</location>
+      <num_members>12</num_members>
+    </alpha>
+    <beta>
+      <name>Beta Squad</name>
+      <location>New York, NY</location>
+      <num_members>10</num_members>
+    </beta>
+  </teams>
+</xml_config>

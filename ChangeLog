@@ -1,3 +1,8 @@
+0.4.3
+=====
+* Fixed error handling in parse_load_paths
+* Updated specs
+
 0.4.2
 =====
 * Fixed indifferent access in Config object.

@@ -21,6 +21,7 @@ module RConfig
     def add_load_path(path)
       if path = parse_load_paths(path).first # only accept first one.
         self.load_paths << path
+        self.load_paths.uniq!
         return reload(true)  # Load Paths have changed so force a reload
       end
       false
@@ -30,7 +31,6 @@ module RConfig
     # If the paths are made up of a delimited string, then parse out the
     # individual paths. Verify that each path is valid.
     def parse_load_paths(paths)
-      return [] unless paths
       if paths.is_a? String
         path_sep = (paths =~ /;/) ? ';' : ':'
         paths = paths.split(/#{path_sep}+/)
@@ -39,7 +39,7 @@ module RConfig
       raise ArgumentError, "Must provide at least one load path: [#{paths.inspect}]" if paths.empty?
       paths.each do |dir|
         dir = CONFIG_ROOT if dir == 'CONFIG_ROOT'
-        raise RConfig::InvalidConfigPathError, "This directory is invalid: [#{dir.inspect}]" unless Dir.exists?(dir)
+        raise InvalidLoadPathError, "This directory is invalid: [#{dir.inspect}]" unless Dir.exists?(dir)
       end
       paths
     end
