@@ -2,6 +2,8 @@
 =====
 * Fixed error handling in parse_load_paths
 * Updated specs
+* Update Rakefile and rake tasks.
+* Updated Docs.
 
 0.4.2
 =====
