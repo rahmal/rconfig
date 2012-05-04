@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+	<title>Class: Hash</title>
+
+	<link rel="stylesheet" href="./rdoc.css" type="text/css" media="screen" />
+
+	<script src="./js/jquery.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="./js/thickbox-compressed.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="./js/quicksearch.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="./js/darkfish.js" type="text/javascript"
+		charset="utf-8"></script>
+
+</head>
+<body class="class">
+
+	<div id="metadata">
+		<div id="home-metadata">
+			<div id="home-section" class="section">
+        <h3 class="section-header">
+          <a href="./index.html">Home</a>
+          <a href="./index.html#classes">Classes</a>
+          <a href="./index.html#methods">Methods</a>
+        </h3>
+			</div>
+		</div>
+
+		<div id="file-metadata">
+			<div id="file-list-section" class="section">
+				<h3 class="section-header">In Files</h3>
+				<div class="section-body">
+					<ul>
+					
+						<li><a href="./lib/rconfig/core_ext/hash_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+							class="thickbox" title="lib/rconfig/core_ext/hash.rb">lib/rconfig/core_ext/hash.rb</a></li>
+					
+					</ul>
+				</div>
+			</div>
+
+			
+		</div>
+
+		<div id="class-metadata">
+
+			<!-- Parent Class -->
+			
+			<div id="parent-class-section" class="section">
+				<h3 class="section-header">Parent</h3>
+				
+				<p class="link">Object</p>
+				
+			</div>
+			
+
+			<!-- Namespace Contents -->
+			
+
+			<!-- Method Quickref -->
+			
+			<div id="method-list-section" class="section">
+				<h3 class="section-header">Methods</h3>
+				<ul class="link-list">
+					
+					<li><a href="#method-i-weave">#weave</a></li>
+					
+					<li><a href="#method-i-weave%21">#weave!</a></li>
+					
+				</ul>
+			</div>
+			
+
+			<!-- Included Modules -->
+			
+		</div>
+
+		<div id="project-metadata">
+			
+			
+			<div id="fileindex-section" class="section project-section">
+				<h3 class="section-header">Files</h3>
+				<ul>
+				
+					<li class="file"><a href="./README_rdoc.html">README.rdoc</a></li>
+				
+				</ul>
+			</div>
+			
+
+			<div id="classindex-section" class="section project-section">
+				<h3 class="section-header">Class Index
+					<span class="search-toggle"><img src="./images/find.png"
+						height="16" width="16" alt="[+]"
+						title="show/hide quicksearch" /></span></h3>
+				<form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+				<fieldset>
+					<legend>Quicksearch</legend>
+					<input type="text" name="quicksearch" value=""
+						class="quicksearch-field" />
+				</fieldset>
+				</form>
+
+				<ul class="link-list">
+				
+					<li><a href="./RConfig.html">RConfig</a></li>
+				
+					<li><a href="./RConfig/Callbacks.html">RConfig::Callbacks</a></li>
+				
+					<li><a href="./RConfig/Cascade.html">RConfig::Cascade</a></li>
+				
+					<li><a href="./RConfig/Config.html">RConfig::Config</a></li>
+				
+					<li><a href="./RConfig/ConfigError.html">RConfig::ConfigError</a></li>
+				
+					<li><a href="./RConfig/Constants.html">RConfig::Constants</a></li>
+				
+					<li><a href="./RConfig/CoreMethods.html">RConfig::CoreMethods</a></li>
+				
+					<li><a href="./RConfig/DisabledLogger.html">RConfig::DisabledLogger</a></li>
+				
+					<li><a href="./RConfig/Exceptions.html">RConfig::Exceptions</a></li>
+				
+					<li><a href="./RConfig/Generators.html">RConfig::Generators</a></li>
+				
+					<li><a href="./RConfig/Generators/InstallGenerator.html">RConfig::Generators::InstallGenerator</a></li>
+				
+					<li><a href="./RConfig/InvalidLoadPathError.html">RConfig::InvalidLoadPathError</a></li>
+				
+					<li><a href="./RConfig/LoadPaths.html">RConfig::LoadPaths</a></li>
+				
+					<li><a href="./RConfig/PropertiesFile.html">RConfig::PropertiesFile</a></li>
+				
+					<li><a href="./RConfig/Reload.html">RConfig::Reload</a></li>
+				
+					<li><a href="./RConfig/Settings.html">RConfig::Settings</a></li>
+				
+					<li><a href="./RConfig/Utils.html">RConfig::Utils</a></li>
+				
+					<li><a href="./Array.html">Array</a></li>
+				
+					<li><a href="./Hash.html">Hash</a></li>
+				
+					<li><a href="./NilClass.html">NilClass</a></li>
+				
+					<li><a href="./String.html">String</a></li>
+				
+				</ul>
+				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
+			</div>
+
+			
+		</div>
+	</div>
+
+	<div id="documentation">
+		<h1 class="class">Hash</h1>
+
+		<div id="description">
+			<p>
+source: <a
+href="http://rubyforge.org/projects/facets/">rubyforge.org/projects/facets/</a>
+version: 1.7.46 license: Ruby License NOTE: remove this method if the
+Facets gem is installed. BUG: weave is destructive to values in the source
+hash that are arrays!
+</p>
+<pre>
+     (this is acceptable for RConfig's use as the basis for weave!)</pre>
+
+		</div>
+
+		<!-- Constants -->
+		
+
+		<!-- Attributes -->
+		
+
+		<!-- Methods -->
+		
+		<div id="public-instance-method-details" class="method-section section">
+			<h3 class="section-header">Public Instance Methods</h3>
+
+		
+			<div id="weave-method" class="method-detail ">
+				<a name="method-i-weave"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">weave</span><span
+						class="method-args">(other_hash, clobber=false)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Weaves the contents of two hashes producing a new hash.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="weave-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/rconfig/core_ext/hash.rb, line 14</span>
+14:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">weave</span>(<span class="ruby-identifier">other_hash</span>, <span class="ruby-identifier">clobber</span>=<span class="ruby-keyword kw">false</span>)
+15:     <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">self</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">other_hash</span>
+16:     <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">other_hash</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Hash</span>)
+17:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;RConfig: (Hash#weave) expected &lt;Hash&gt;, but was &lt;#{other_hash.class}&gt;&quot;</span>
+18:     <span class="ruby-keyword kw">end</span>
+19: 
+20:     <span class="ruby-identifier">self_dup</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">dup</span> <span class="ruby-comment cmt"># self.clone does not remove freeze!</span>
+21: 
+22:     <span class="ruby-identifier">other_hash</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">other_node</span><span class="ruby-operator">|</span>
+23: 
+24:       <span class="ruby-identifier">self_dup</span>[<span class="ruby-identifier">key</span>] =
+25: 
+26:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">self_node</span> = <span class="ruby-identifier">self_dup</span>[<span class="ruby-identifier">key</span>]
+27: 
+28:             <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">self_node</span>
+29:               <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Hash</span>
+30: 
+31:                 <span class="ruby-comment cmt"># hash1, hash2 =&gt; hash3 (recursive +)</span>
+32:                 <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">other_node</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>)
+33: 
+34:                   <span class="ruby-identifier">self_node</span>.<span class="ruby-identifier">weave</span>(<span class="ruby-identifier">other_node</span>, <span class="ruby-identifier">clobber</span>)
+35: 
+36:                   <span class="ruby-comment cmt"># hash, array =&gt; error (Can't weave'em, must clobber.)</span>
+37:                 <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">other_node</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">clobber</span>
+38: 
+39:                   <span class="ruby-identifier">raise</span>(<span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;RConfig: (Hash#weave) Can't weave Hash and Array&quot;</span>)
+40: 
+41:                   <span class="ruby-comment cmt"># hash, array =&gt; hash[key] = array</span>
+42:                   <span class="ruby-comment cmt"># hash, value =&gt; hash[key] = value</span>
+43:                 <span class="ruby-keyword kw">else</span>
+44:                   <span class="ruby-identifier">other_node</span>
+45:                 <span class="ruby-keyword kw">end</span>
+46: 
+47:               <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Array</span>
+48: 
+49:                 <span class="ruby-comment cmt"># array, hash =&gt; array &lt;&lt; hash</span>
+50:                 <span class="ruby-comment cmt"># array1, array2 =&gt; array1 + array2</span>
+51:                 <span class="ruby-comment cmt"># array, value =&gt; array &lt;&lt; value</span>
+52:                 <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">clobber</span>
+53:                   <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">other_node</span>
+54:                     <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Hash</span>
+55:                       <span class="ruby-identifier">self_node</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">other_node</span>
+56:                     <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Array</span>
+57:                       <span class="ruby-identifier">self_node</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">other_node</span>
+58:                     <span class="ruby-keyword kw">else</span>
+59:                       <span class="ruby-identifier">self_node</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">other_node</span>
+60:                   <span class="ruby-keyword kw">end</span>
+61: 
+62:                   <span class="ruby-comment cmt"># array, hash =&gt; hash</span>
+63:                   <span class="ruby-comment cmt"># array1, array2 =&gt; array2</span>
+64:                   <span class="ruby-comment cmt"># array, value =&gt; value</span>
+65:                 <span class="ruby-keyword kw">else</span>
+66:                   <span class="ruby-identifier">other_node</span>
+67:                 <span class="ruby-keyword kw">end</span>
+68: 
+69:               <span class="ruby-keyword kw">else</span>
+70: 
+71:                 <span class="ruby-comment cmt"># value, array =&gt; array.unshift(value)</span>
+72:                 <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">other_node</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">clobber</span>
+73:                   <span class="ruby-identifier">other_node</span>.<span class="ruby-identifier">unshift</span>(<span class="ruby-identifier">self_node</span>)
+74: 
+75:                   <span class="ruby-comment cmt"># value1, value2 =&gt; value2</span>
+76:                 <span class="ruby-keyword kw">else</span>
+77:                   <span class="ruby-identifier">other_node</span>
+78:                 <span class="ruby-keyword kw">end</span>
+79: 
+80:             <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt"># case self_node</span>
+81: 
+82:             <span class="ruby-comment cmt"># Target hash didn't have a node matching the key,</span>
+83:             <span class="ruby-comment cmt"># so just add it from the source hash.</span>
+84:             <span class="ruby-comment cmt"># !self_dup.has_key?(key) =&gt; self_dup.add(key, other_node)</span>
+85:           <span class="ruby-keyword kw">else</span>
+86:             <span class="ruby-identifier">other_node</span>
+87:           <span class="ruby-keyword kw">end</span>
+88: 
+89:     } <span class="ruby-comment cmt"># other_hash.each</span>
+90: 
+91:     <span class="ruby-identifier">self_dup</span> <span class="ruby-comment cmt"># return new weaved hash</span>
+92:   <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="weave--method" class="method-detail ">
+				<a name="method-i-weave%21"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">weave!</span><span
+						class="method-args">(other_hash, clobber=false)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Same as self.weave(other_hash, dont_clobber) except that it weaves other
+hash  to itself, rather than create a new hash.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="weave--source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/rconfig/core_ext/hash.rb, line 97</span>
+ 97:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">weave!</span>(<span class="ruby-identifier">other_hash</span>, <span class="ruby-identifier">clobber</span>=<span class="ruby-keyword kw">false</span>)
+ 98:     <span class="ruby-identifier">weaved_hash</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">weave</span>(<span class="ruby-identifier">other_hash</span>, <span class="ruby-identifier">clobber</span>)
+ 99:     <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">merge!</span>(<span class="ruby-identifier">weaved_hash</span>)
+100:   <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+		</div>
+	
+
+	</div>
+
+
+	<div id="rdoc-debugging-section-dump" class="debugging-section">
+	
+		<p>Disabled; run with --debug to generate this.</p>
+	
+	</div>
+
+	<div id="validator-badges">
+		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+			Rdoc Generator</a> 1.1.6</small>.</p>
+	</div>
+
+</body>
+</html>
+

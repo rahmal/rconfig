@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+	<title>Module: RConfig::Reload</title>
+
+	<link rel="stylesheet" href="../rdoc.css" type="text/css" media="screen" />
+
+	<script src="../js/jquery.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/thickbox-compressed.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/quicksearch.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/darkfish.js" type="text/javascript"
+		charset="utf-8"></script>
+
+</head>
+<body class="module">
+
+	<div id="metadata">
+		<div id="home-metadata">
+			<div id="home-section" class="section">
+        <h3 class="section-header">
+          <a href="../index.html">Home</a>
+          <a href="../index.html#classes">Classes</a>
+          <a href="../index.html#methods">Methods</a>
+        </h3>
+			</div>
+		</div>
+
+		<div id="file-metadata">
+			<div id="file-list-section" class="section">
+				<h3 class="section-header">In Files</h3>
+				<div class="section-body">
+					<ul>
+					
+						<li><a href="../lib/rconfig/reload_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+							class="thickbox" title="lib/rconfig/reload.rb">lib/rconfig/reload.rb</a></li>
+					
+					</ul>
+				</div>
+			</div>
+
+			
+		</div>
+
+		<div id="class-metadata">
+
+			<!-- Parent Class -->
+			
+
+			<!-- Namespace Contents -->
+			
+
+			<!-- Method Quickref -->
+			
+			<div id="method-list-section" class="section">
+				<h3 class="section-header">Methods</h3>
+				<ul class="link-list">
+					
+					<li><a href="#method-i-auto_check%3F">#auto_check?</a></li>
+					
+					<li><a href="#method-i-enable_reload%3D">#enable_reload=</a></li>
+					
+					<li><a href="#method-i-reload">#reload</a></li>
+					
+					<li><a href="#method-i-reload%3F">#reload?</a></li>
+					
+					<li><a href="#method-i-reload_disabled%3F">#reload_disabled?</a></li>
+					
+					<li><a href="#method-i-reload_interval%3D">#reload_interval=</a></li>
+					
+					<li><a href="#method-i-without_reload">#without_reload</a></li>
+					
+				</ul>
+			</div>
+			
+
+			<!-- Included Modules -->
+			
+		</div>
+
+		<div id="project-metadata">
+			
+			
+			<div id="fileindex-section" class="section project-section">
+				<h3 class="section-header">Files</h3>
+				<ul>
+				
+					<li class="file"><a href="../README_rdoc.html">README.rdoc</a></li>
+				
+				</ul>
+			</div>
+			
+
+			<div id="classindex-section" class="section project-section">
+				<h3 class="section-header">Class Index
+					<span class="search-toggle"><img src="../images/find.png"
+						height="16" width="16" alt="[+]"
+						title="show/hide quicksearch" /></span></h3>
+				<form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+				<fieldset>
+					<legend>Quicksearch</legend>
+					<input type="text" name="quicksearch" value=""
+						class="quicksearch-field" />
+				</fieldset>
+				</form>
+
+				<ul class="link-list">
+				
+					<li><a href="../RConfig.html">RConfig</a></li>
+				
+					<li><a href="../RConfig/Callbacks.html">RConfig::Callbacks</a></li>
+				
+					<li><a href="../RConfig/Cascade.html">RConfig::Cascade</a></li>
+				
+					<li><a href="../RConfig/Config.html">RConfig::Config</a></li>
+				
+					<li><a href="../RConfig/ConfigError.html">RConfig::ConfigError</a></li>
+				
+					<li><a href="../RConfig/Constants.html">RConfig::Constants</a></li>
+				
+					<li><a href="../RConfig/CoreMethods.html">RConfig::CoreMethods</a></li>
+				
+					<li><a href="../RConfig/DisabledLogger.html">RConfig::DisabledLogger</a></li>
+				
+					<li><a href="../RConfig/Exceptions.html">RConfig::Exceptions</a></li>
+				
+					<li><a href="../RConfig/Generators.html">RConfig::Generators</a></li>
+				
+					<li><a href="../RConfig/Generators/InstallGenerator.html">RConfig::Generators::InstallGenerator</a></li>
+				
+					<li><a href="../RConfig/InvalidLoadPathError.html">RConfig::InvalidLoadPathError</a></li>
+				
+					<li><a href="../RConfig/LoadPaths.html">RConfig::LoadPaths</a></li>
+				
+					<li><a href="../RConfig/PropertiesFile.html">RConfig::PropertiesFile</a></li>
+				
+					<li><a href="../RConfig/Reload.html">RConfig::Reload</a></li>
+				
+					<li><a href="../RConfig/Settings.html">RConfig::Settings</a></li>
+				
+					<li><a href="../RConfig/Utils.html">RConfig::Utils</a></li>
+				
+					<li><a href="../Array.html">Array</a></li>
+				
+					<li><a href="../Hash.html">Hash</a></li>
+				
+					<li><a href="../NilClass.html">NilClass</a></li>
+				
+					<li><a href="../String.html">String</a></li>
+				
+				</ul>
+				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
+			</div>
+
+			
+		</div>
+	</div>
+
+	<div id="documentation">
+		<h1 class="module">RConfig::Reload</h1>
+
+		<div id="description">
+			
+		</div>
+
+		<!-- Constants -->
+		
+
+		<!-- Attributes -->
+		
+
+		<!-- Methods -->
+		
+		<div id="public-instance-method-details" class="method-section section">
+			<h3 class="section-header">Public Instance Methods</h3>
+
+		
+			<div id="auto-check--method" class="method-detail ">
+				<a name="method-i-auto_check%3F"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">auto_check?</span><span
+						class="method-args">(name)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="auto-check--source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/rconfig/reload.rb, line 65</span>
+65:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">auto_check?</span>(<span class="ruby-identifier">name</span>)
+66:       <span class="ruby-identifier">now</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
+67:       <span class="ruby-keyword kw">if</span> (<span class="ruby-operator">!</span><span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">last_auto_check</span>[<span class="ruby-identifier">name</span>]) <span class="ruby-operator">||</span> (<span class="ruby-identifier">now</span> <span class="ruby-operator">-</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">last_auto_check</span>[<span class="ruby-identifier">name</span>]) <span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">reload_interval</span>
+68:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">last_auto_check</span>[<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">now</span>
+69:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span>
+70:       <span class="ruby-keyword kw">end</span>
+71:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span>
+72:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="enable-reload--method" class="method-detail ">
+				<a name="method-i-enable_reload%3D"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">enable_reload=</span><span
+						class="method-args">(reload)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Sets the flag indicating whether or not reload should be executed.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="enable-reload--source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/rconfig/reload.rb, line 16</span>
+16:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">enable_reload=</span>(<span class="ruby-identifier">reload</span>)
+17:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">'Argument must be true or false.'</span> <span class="ruby-keyword kw">unless</span> [<span class="ruby-keyword kw">true</span>, <span class="ruby-keyword kw">false</span>].<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">reload</span>)
+18:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">enable_reload</span> = <span class="ruby-identifier">reload</span>
+19:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="reload-method" class="method-detail ">
+				<a name="method-i-reload"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">reload</span><span
+						class="method-args">(force=false)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Flushes cached config data, so that it can be reloaded from disk. It is
+recommended that this should be used with caution, and any need to reload
+in a production setting should minimized or completely avoided if possible.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="reload-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/rconfig/reload.rb, line 36</span>
+36:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">reload</span>(<span class="ruby-identifier">force</span>=<span class="ruby-keyword kw">false</span>)
+37:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">'Argument must be true or false.'</span> <span class="ruby-keyword kw">unless</span> [<span class="ruby-keyword kw">true</span>, <span class="ruby-keyword kw">false</span>].<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">force</span>)
+38:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">force</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">reload?</span>
+39:         <span class="ruby-identifier">flush_cache</span>
+40:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span>
+41:       <span class="ruby-keyword kw">end</span>
+42:       <span class="ruby-keyword kw">false</span>
+43:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="reload--method" class="method-detail ">
+				<a name="method-i-reload%3F"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">reload?</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Flag indicating whether or not reload should be executed.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="reload--source">
+<pre>
+   <span class="ruby-comment cmt"># File lib/rconfig/reload.rb, line 6</span>
+6:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">reload?</span>
+7:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">enable_reload</span>
+8:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="reload-disabled--method" class="method-detail ">
+				<a name="method-i-reload_disabled%3F"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">reload_disabled?</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="reload-disabled--source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/rconfig/reload.rb, line 10</span>
+10:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">reload_disabled?</span>
+11:       <span class="ruby-keyword kw">not</span> <span class="ruby-identifier">reload?</span>
+12:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="reload-interval--method" class="method-detail ">
+				<a name="method-i-reload_interval%3D"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">reload_interval=</span><span
+						class="method-args">(interval)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Sets the number of seconds between reloading of config files and automatic
+reload checks. Defaults to 5 minutes. Setting
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="reload-interval--source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/rconfig/reload.rb, line 25</span>
+25:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">reload_interval=</span>(<span class="ruby-identifier">interval</span>)
+26:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">'Argument must be Integer.'</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">interval</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Integer</span>)
+27:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">enable_reload</span> = <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">interval</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>  <span class="ruby-comment cmt"># Sett</span>
+28:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">reload_interval</span> = <span class="ruby-identifier">interval</span>
+29:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="without-reload-method" class="method-detail ">
+				<a name="method-i-without_reload"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">without_reload</span><span
+						class="method-args">(&block)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Executes given block, without reloading any config. Meant to run
+configuration-sensitive code that may otherwise trigger a reload of any/all
+config files. If reload is disabled then it makes no difference  if this
+wrapper is used or not. Returns result of the block
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="without-reload-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/rconfig/reload.rb, line 51</span>
+51:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">without_reload</span>(&amp;<span class="ruby-identifier">block</span>)
+52:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">block_given?</span>
+53:       <span class="ruby-identifier">result</span> = <span class="ruby-keyword kw">nil</span>
+54:       <span class="ruby-identifier">enable_reload_cache</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">enable_reload</span>
+55:       <span class="ruby-keyword kw">begin</span>
+56:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">enable_reload</span>
+57:         <span class="ruby-identifier">result</span> = <span class="ruby-keyword kw">yield</span>
+58:       <span class="ruby-keyword kw">ensure</span>
+59:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">enable_reload</span> = <span class="ruby-identifier">enable_reload_cache</span>
+60:         <span class="ruby-identifier">check_config_changed</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">reload?</span>
+61:       <span class="ruby-keyword kw">end</span>
+62:       <span class="ruby-identifier">result</span>
+63:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+		</div>
+	
+
+	</div>
+
+
+	<div id="rdoc-debugging-section-dump" class="debugging-section">
+	
+		<p>Disabled; run with --debug to generate this.</p>
+	
+	</div>
+
+	<div id="validator-badges">
+		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+			Rdoc Generator</a> 1.1.6</small>.</p>
+	</div>
+
+</body>
+</html>
+

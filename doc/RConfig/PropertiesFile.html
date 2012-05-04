@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+	<title>Class: RConfig::PropertiesFile</title>
+
+	<link rel="stylesheet" href="../rdoc.css" type="text/css" media="screen" />
+
+	<script src="../js/jquery.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/thickbox-compressed.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/quicksearch.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/darkfish.js" type="text/javascript"
+		charset="utf-8"></script>
+
+</head>
+<body class="class">
+
+	<div id="metadata">
+		<div id="home-metadata">
+			<div id="home-section" class="section">
+        <h3 class="section-header">
+          <a href="../index.html">Home</a>
+          <a href="../index.html#classes">Classes</a>
+          <a href="../index.html#methods">Methods</a>
+        </h3>
+			</div>
+		</div>
+
+		<div id="file-metadata">
+			<div id="file-list-section" class="section">
+				<h3 class="section-header">In Files</h3>
+				<div class="section-body">
+					<ul>
+					
+						<li><a href="../lib/rconfig/properties_file_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+							class="thickbox" title="lib/rconfig/properties_file.rb">lib/rconfig/properties_file.rb</a></li>
+					
+					</ul>
+				</div>
+			</div>
+
+			
+		</div>
+
+		<div id="class-metadata">
+
+			<!-- Parent Class -->
+			
+			<div id="parent-class-section" class="section">
+				<h3 class="section-header">Parent</h3>
+				
+				<p class="link">Object</p>
+				
+			</div>
+			
+
+			<!-- Namespace Contents -->
+			
+
+			<!-- Method Quickref -->
+			
+			<div id="method-list-section" class="section">
+				<h3 class="section-header">Methods</h3>
+				<ul class="link-list">
+					
+					<li><a href="#method-c-parse">::parse</a></li>
+					
+					<li><a href="#method-c-parse_references">::parse_references</a></li>
+					
+				</ul>
+			</div>
+			
+
+			<!-- Included Modules -->
+			
+			<div id="includes-section" class="section">
+				<h3 class="section-header">Included Modules</h3>
+				<ul class="link-list">
+				
+				
+					<li><span class="include">Singleton</span></li>
+				
+				
+				</ul>
+			</div>
+			
+		</div>
+
+		<div id="project-metadata">
+			
+			
+			<div id="fileindex-section" class="section project-section">
+				<h3 class="section-header">Files</h3>
+				<ul>
+				
+					<li class="file"><a href="../README_rdoc.html">README.rdoc</a></li>
+				
+				</ul>
+			</div>
+			
+
+			<div id="classindex-section" class="section project-section">
+				<h3 class="section-header">Class Index
+					<span class="search-toggle"><img src="../images/find.png"
+						height="16" width="16" alt="[+]"
+						title="show/hide quicksearch" /></span></h3>
+				<form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+				<fieldset>
+					<legend>Quicksearch</legend>
+					<input type="text" name="quicksearch" value=""
+						class="quicksearch-field" />
+				</fieldset>
+				</form>
+
+				<ul class="link-list">
+				
+					<li><a href="../RConfig.html">RConfig</a></li>
+				
+					<li><a href="../RConfig/Callbacks.html">RConfig::Callbacks</a></li>
+				
+					<li><a href="../RConfig/Cascade.html">RConfig::Cascade</a></li>
+				
+					<li><a href="../RConfig/Config.html">RConfig::Config</a></li>
+				
+					<li><a href="../RConfig/ConfigError.html">RConfig::ConfigError</a></li>
+				
+					<li><a href="../RConfig/Constants.html">RConfig::Constants</a></li>
+				
+					<li><a href="../RConfig/CoreMethods.html">RConfig::CoreMethods</a></li>
+				
+					<li><a href="../RConfig/DisabledLogger.html">RConfig::DisabledLogger</a></li>
+				
+					<li><a href="../RConfig/Exceptions.html">RConfig::Exceptions</a></li>
+				
+					<li><a href="../RConfig/Generators.html">RConfig::Generators</a></li>
+				
+					<li><a href="../RConfig/Generators/InstallGenerator.html">RConfig::Generators::InstallGenerator</a></li>
+				
+					<li><a href="../RConfig/InvalidLoadPathError.html">RConfig::InvalidLoadPathError</a></li>
+				
+					<li><a href="../RConfig/LoadPaths.html">RConfig::LoadPaths</a></li>
+				
+					<li><a href="../RConfig/PropertiesFile.html">RConfig::PropertiesFile</a></li>
+				
+					<li><a href="../RConfig/Reload.html">RConfig::Reload</a></li>
+				
+					<li><a href="../RConfig/Settings.html">RConfig::Settings</a></li>
+				
+					<li><a href="../RConfig/Utils.html">RConfig::Utils</a></li>
+				
+					<li><a href="../Array.html">Array</a></li>
+				
+					<li><a href="../Hash.html">Hash</a></li>
+				
+					<li><a href="../NilClass.html">NilClass</a></li>
+				
+					<li><a href="../String.html">String</a></li>
+				
+				</ul>
+				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
+			</div>
+
+			
+		</div>
+	</div>
+
+	<div id="documentation">
+		<h1 class="class">RConfig::PropertiesFile</h1>
+
+		<div id="description">
+			
+		</div>
+
+		<!-- Constants -->
+		
+		<div id="constants-list" class="section">
+			<h3 class="section-header">Constants</h3>
+			<dl>
+			
+				<dt><a name="COMMENT">COMMENT</a></dt>
+				
+				<dd class="description"></dd>
+				
+			
+				<dt><a name="KEYVAL">KEYVAL</a></dt>
+				
+				<dd class="description"></dd>
+				
+			
+				<dt><a name="QUOTES">QUOTES</a></dt>
+				
+				<dd class="description"></dd>
+				
+			
+				<dt><a name="GROUP">GROUP</a></dt>
+				
+				<dd class="description"></dd>
+				
+			
+				<dt><a name="NAMEGRP">NAMEGRP</a></dt>
+				
+				<dd class="description"></dd>
+				
+			
+				<dt><a name="KEY_REF">KEY_REF</a></dt>
+				
+				<dd class="description"></dd>
+				
+			
+			</dl>
+		</div>
+		
+
+		<!-- Attributes -->
+		
+
+		<!-- Methods -->
+		
+		<div id="public-class-method-details" class="method-section section">
+			<h3 class="section-header">Public Class Methods</h3>
+
+		
+			<div id="parse-method" class="method-detail ">
+				<a name="method-c-parse"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">parse</span><span
+						class="method-args">(config_file)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Parse config file and import data into hash to be stored in config.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="parse-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/rconfig/properties_file.rb, line 49</span>
+ 49:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">config_file</span>)
+ 50:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">'Invalid config file name.'</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">config_file</span>
+ 51: 
+ 52:       <span class="ruby-identifier">config</span> = {}
+ 53: 
+ 54:       <span class="ruby-comment cmt"># The config is top down.. anything after a [group] gets added as part</span>
+ 55:       <span class="ruby-comment cmt"># of that group until a new [group] is found.  </span>
+ 56:       <span class="ruby-identifier">group</span>, <span class="ruby-identifier">topgrp</span> = <span class="ruby-keyword kw">nil</span>
+ 57:       <span class="ruby-identifier">config_file</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">&quot;\n&quot;</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span>   <span class="ruby-comment cmt"># for each line in the config file</span>
+ 58:         <span class="ruby-identifier">line</span>.<span class="ruby-identifier">strip!</span>
+ 59:         <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">COMMENT</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">line</span>) <span class="ruby-comment cmt"># skip comments (lines that state with '#')</span>
+ 60:           <span class="ruby-keyword kw">if</span> <span class="ruby-constant">KEYVAL</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">line</span>)    <span class="ruby-comment cmt"># if this line is a config property</span>
+ 61:             <span class="ruby-identifier">key</span>, <span class="ruby-identifier">val</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-constant">KEYVAL</span>, <span class="ruby-value">2</span>) <span class="ruby-comment cmt"># parse key and value from line</span>
+ 62:             <span class="ruby-identifier">key</span> = <span class="ruby-identifier">key</span>.<span class="ruby-identifier">chomp</span>.<span class="ruby-identifier">strip</span>
+ 63:             <span class="ruby-identifier">val</span> = <span class="ruby-identifier">val</span>.<span class="ruby-identifier">chomp</span>.<span class="ruby-identifier">strip</span>
+ 64:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">val</span>
+ 65:               <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">val</span> <span class="ruby-operator">=~</span> <span class="ruby-constant">QUOTES</span> <span class="ruby-comment cmt"># if the value is in quotes</span>
+ 66:                 <span class="ruby-identifier">value</span> = <span class="ruby-node">$1</span>     <span class="ruby-comment cmt"># strip out value from quotes</span>
+ 67:               <span class="ruby-keyword kw">else</span>
+ 68:                 <span class="ruby-identifier">value</span> = <span class="ruby-identifier">val</span>    <span class="ruby-comment cmt"># otherwise, leave as-is</span>
+ 69:               <span class="ruby-keyword kw">end</span>
+ 70:             <span class="ruby-keyword kw">else</span>
+ 71:               <span class="ruby-identifier">value</span> = <span class="ruby-value str">''</span>       <span class="ruby-comment cmt"># if value was nil, set it to empty string</span>
+ 72:             <span class="ruby-keyword kw">end</span>
+ 73: 
+ 74:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">topgrp</span>                                <span class="ruby-comment cmt"># If there was a top-level named group, then there must be a group.</span>
+ 75:               <span class="ruby-identifier">config</span>[<span class="ruby-identifier">topgrp</span>][<span class="ruby-identifier">group</span>][<span class="ruby-identifier">key</span>] = <span class="ruby-identifier">value</span>     <span class="ruby-comment cmt"># so add the prop to the named group</span>
+ 76:             <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">group</span>                              <span class="ruby-comment cmt"># if this property is part of a group</span>
+ 77:               <span class="ruby-identifier">config</span>[<span class="ruby-identifier">group</span>][<span class="ruby-identifier">key</span>] = <span class="ruby-identifier">value</span>             <span class="ruby-comment cmt"># then add it to the group</span>
+ 78:             <span class="ruby-keyword kw">else</span>                                     <span class="ruby-comment cmt"># otherwise... </span>
+ 79:               <span class="ruby-identifier">config</span>[<span class="ruby-identifier">key</span>] = <span class="ruby-identifier">value</span>                    <span class="ruby-comment cmt"># add the prop to top-level config</span>
+ 80:             <span class="ruby-keyword kw">end</span>
+ 81: 
+ 82:           <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">match</span> = <span class="ruby-constant">NAMEGRP</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">line</span>) <span class="ruby-comment cmt"># This line is a named group (i.e. [env &quot;test&quot;], [env &quot;qa&quot;], [env &quot;production&quot;])</span>
+ 83:             <span class="ruby-identifier">topgrp</span>, <span class="ruby-identifier">group</span> = <span class="ruby-identifier">match</span>.<span class="ruby-identifier">to_a</span>[<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">1</span>] <span class="ruby-comment cmt"># There can be multiple groups within a single top-level group</span>
+ 84:             <span class="ruby-identifier">config</span>[<span class="ruby-identifier">topgrp</span>] <span class="ruby-operator">||=</span> {} <span class="ruby-comment cmt"># add group to top-level group</span>
+ 85:             <span class="ruby-identifier">config</span>[<span class="ruby-identifier">topgrp</span>][<span class="ruby-identifier">group</span>] <span class="ruby-operator">||=</span> {} <span class="ruby-comment cmt"># add name of group as subgroup (properties are added to subgroup)</span>
+ 86: 
+ 87:           <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">match</span> = <span class="ruby-constant">GROUP</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">line</span>) <span class="ruby-comment cmt"># if this line is a config group</span>
+ 88:             <span class="ruby-identifier">group</span> = <span class="ruby-identifier">match</span>.<span class="ruby-identifier">to_a</span>[<span class="ruby-value">1</span>] <span class="ruby-comment cmt"># parse the group name from line</span>
+ 89:             <span class="ruby-identifier">topgrp</span> = <span class="ruby-keyword kw">nil</span> <span class="ruby-comment cmt"># we got a new group with no namespace, so reset topgrp</span>
+ 90:             <span class="ruby-identifier">config</span>[<span class="ruby-identifier">group</span>] <span class="ruby-operator">||=</span> {} <span class="ruby-comment cmt"># add group to top-level config</span>
+ 91:           <span class="ruby-keyword kw">end</span>
+ 92:         <span class="ruby-keyword kw">end</span>
+ 93:       <span class="ruby-keyword kw">end</span>
+ 94: 
+ 95:       <span class="ruby-comment cmt"># Pre-populate the values that refer to other properties</span>
+ 96:       <span class="ruby-comment cmt"># Example:</span>
+ 97:       <span class="ruby-comment cmt">#   root_path = /path/to/root</span>
+ 98:       <span class="ruby-comment cmt">#   image_path = %{root_path}/images</span>
+ 99:       <span class="ruby-identifier">config</span> = <span class="ruby-identifier">parse_references</span>(<span class="ruby-identifier">config</span>)
+100: 
+101:       <span class="ruby-identifier">config</span> <span class="ruby-comment cmt"># return config hash</span>
+102:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="parse-references-method" class="method-detail ">
+				<a name="method-c-parse_references"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">parse_references</span><span
+						class="method-args">(hash, config=nil)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Recursively checks all the values in the hash for references to other
+properties, and replaces the references with the actual values.  The syntax
+for referring to  another property in the config file is the ley of the
+property wrapped in curly braces, preceded by a percent sign.  If the
+property is in a group, then the full  namespace must be used.
+</p>
+<p>
+Example:
+</p>
+<pre>
+  root_path = /path/to/root             # In this property file snippet 
+  image_path = %{root_path}/images      # image path refers to root path</pre>
+					
+
+					
+					<div class="method-source-code"
+						id="parse-references-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/rconfig/properties_file.rb, line 116</span>
+116:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">parse_references</span> <span class="ruby-identifier">hash</span>, <span class="ruby-identifier">config</span>=<span class="ruby-keyword kw">nil</span>
+117:       <span class="ruby-identifier">config</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">dup</span>
+118: 
+119:       <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">val</span><span class="ruby-operator">|</span>
+120:         <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">val</span>
+121:         <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Hash</span>
+122:           <span class="ruby-identifier">hash</span>[<span class="ruby-identifier">key</span>] = <span class="ruby-identifier">parse_references</span>(<span class="ruby-identifier">val</span>, <span class="ruby-identifier">config</span>)
+123:         <span class="ruby-keyword kw">when</span> <span class="ruby-constant">String</span>
+124:           <span class="ruby-identifier">pre</span>, <span class="ruby-identifier">ref</span>, <span class="ruby-identifier">post</span> = <span class="ruby-constant">KEY_REF</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">val</span>).<span class="ruby-identifier">to_a</span>[<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">1</span>]
+125:           <span class="ruby-identifier">hash</span>[<span class="ruby-identifier">key</span>] = <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ref</span>
+126:               <span class="ruby-identifier">ref</span> = <span class="ruby-identifier">ref</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">'.'</span>).<span class="ruby-identifier">inject</span>(<span class="ruby-identifier">config</span>){<span class="ruby-operator">|</span><span class="ruby-identifier">c</span>,<span class="ruby-identifier">i</span><span class="ruby-operator">|</span> <span class="ruby-identifier">c</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">c</span>[<span class="ruby-identifier">i</span>] }
+127:               [<span class="ruby-identifier">pre</span>, <span class="ruby-identifier">ref</span>, <span class="ruby-identifier">post</span>].<span class="ruby-identifier">join</span>              
+128:             <span class="ruby-keyword kw">else</span>
+129:               <span class="ruby-identifier">val</span>
+130:             <span class="ruby-keyword kw">end</span>         
+131:         <span class="ruby-keyword kw">end</span>
+132:       <span class="ruby-keyword kw">end</span>
+133: 
+134:       <span class="ruby-identifier">hash</span>
+135:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+		</div>
+	
+
+	</div>
+
+
+	<div id="rdoc-debugging-section-dump" class="debugging-section">
+	
+		<p>Disabled; run with --debug to generate this.</p>
+	
+	</div>
+
+	<div id="validator-badges">
+		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+			Rdoc Generator</a> 1.1.6</small>.</p>
+	</div>
+
+</body>
+</html>
+

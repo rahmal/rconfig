@@ -1,0 +1,841 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+	<title>Module: RConfig::Utils</title>
+
+	<link rel="stylesheet" href="../rdoc.css" type="text/css" media="screen" />
+
+	<script src="../js/jquery.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/thickbox-compressed.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/quicksearch.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/darkfish.js" type="text/javascript"
+		charset="utf-8"></script>
+
+</head>
+<body class="module">
+
+	<div id="metadata">
+		<div id="home-metadata">
+			<div id="home-section" class="section">
+        <h3 class="section-header">
+          <a href="../index.html">Home</a>
+          <a href="../index.html#classes">Classes</a>
+          <a href="../index.html#methods">Methods</a>
+        </h3>
+			</div>
+		</div>
+
+		<div id="file-metadata">
+			<div id="file-list-section" class="section">
+				<h3 class="section-header">In Files</h3>
+				<div class="section-body">
+					<ul>
+					
+						<li><a href="../lib/rconfig/utils_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+							class="thickbox" title="lib/rconfig/utils.rb">lib/rconfig/utils.rb</a></li>
+					
+					</ul>
+				</div>
+			</div>
+
+			
+		</div>
+
+		<div id="class-metadata">
+
+			<!-- Parent Class -->
+			
+
+			<!-- Namespace Contents -->
+			
+
+			<!-- Method Quickref -->
+			
+			<div id="method-list-section" class="section">
+				<h3 class="section-header">Methods</h3>
+				<ul class="link-list">
+					
+					<li><a href="#method-i-app_root">#app_root</a></li>
+					
+					<li><a href="#method-i-create_dottable_hash">#create_dottable_hash</a></li>
+					
+					<li><a href="#method-i-default_load_paths">#default_load_paths</a></li>
+					
+					<li><a href="#method-i-filename_for_name">#filename_for_name</a></li>
+					
+					<li><a href="#method-i-flush_cache">#flush_cache</a></li>
+					
+					<li><a href="#method-i-log_level">#log_level</a></li>
+					
+					<li><a href="#method-i-log_level%3D">#log_level=</a></li>
+					
+					<li><a href="#method-i-make_indifferent">#make_indifferent</a></li>
+					
+					<li><a href="#method-i-merge_hashes">#merge_hashes</a></li>
+					
+					<li><a href="#method-i-parse">#parse</a></li>
+					
+					<li><a href="#method-i-parse_xml">#parse_xml</a></li>
+					
+					<li><a href="#method-i-rails%3F">#rails?</a></li>
+					
+					<li><a href="#method-i-read">#read</a></li>
+					
+					<li><a href="#method-i-setting">#setting</a></li>
+					
+					<li><a href="#method-i-setup">#setup</a></li>
+					
+				</ul>
+			</div>
+			
+
+			<!-- Included Modules -->
+			
+			<div id="includes-section" class="section">
+				<h3 class="section-header">Included Modules</h3>
+				<ul class="link-list">
+				
+				
+					<li><span class="include">Constants</span></li>
+				
+				
+				</ul>
+			</div>
+			
+		</div>
+
+		<div id="project-metadata">
+			
+			
+			<div id="fileindex-section" class="section project-section">
+				<h3 class="section-header">Files</h3>
+				<ul>
+				
+					<li class="file"><a href="../README_rdoc.html">README.rdoc</a></li>
+				
+				</ul>
+			</div>
+			
+
+			<div id="classindex-section" class="section project-section">
+				<h3 class="section-header">Class Index
+					<span class="search-toggle"><img src="../images/find.png"
+						height="16" width="16" alt="[+]"
+						title="show/hide quicksearch" /></span></h3>
+				<form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+				<fieldset>
+					<legend>Quicksearch</legend>
+					<input type="text" name="quicksearch" value=""
+						class="quicksearch-field" />
+				</fieldset>
+				</form>
+
+				<ul class="link-list">
+				
+					<li><a href="../RConfig.html">RConfig</a></li>
+				
+					<li><a href="../RConfig/Callbacks.html">RConfig::Callbacks</a></li>
+				
+					<li><a href="../RConfig/Cascade.html">RConfig::Cascade</a></li>
+				
+					<li><a href="../RConfig/Config.html">RConfig::Config</a></li>
+				
+					<li><a href="../RConfig/ConfigError.html">RConfig::ConfigError</a></li>
+				
+					<li><a href="../RConfig/Constants.html">RConfig::Constants</a></li>
+				
+					<li><a href="../RConfig/CoreMethods.html">RConfig::CoreMethods</a></li>
+				
+					<li><a href="../RConfig/DisabledLogger.html">RConfig::DisabledLogger</a></li>
+				
+					<li><a href="../RConfig/Exceptions.html">RConfig::Exceptions</a></li>
+				
+					<li><a href="../RConfig/Generators.html">RConfig::Generators</a></li>
+				
+					<li><a href="../RConfig/Generators/InstallGenerator.html">RConfig::Generators::InstallGenerator</a></li>
+				
+					<li><a href="../RConfig/InvalidLoadPathError.html">RConfig::InvalidLoadPathError</a></li>
+				
+					<li><a href="../RConfig/LoadPaths.html">RConfig::LoadPaths</a></li>
+				
+					<li><a href="../RConfig/PropertiesFile.html">RConfig::PropertiesFile</a></li>
+				
+					<li><a href="../RConfig/Reload.html">RConfig::Reload</a></li>
+				
+					<li><a href="../RConfig/Settings.html">RConfig::Settings</a></li>
+				
+					<li><a href="../RConfig/Utils.html">RConfig::Utils</a></li>
+				
+					<li><a href="../Array.html">Array</a></li>
+				
+					<li><a href="../Hash.html">Hash</a></li>
+				
+					<li><a href="../NilClass.html">NilClass</a></li>
+				
+					<li><a href="../String.html">String</a></li>
+				
+				</ul>
+				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
+			</div>
+
+			
+		</div>
+	</div>
+
+	<div id="documentation">
+		<h1 class="module">RConfig::Utils</h1>
+
+		<div id="description">
+			
+		</div>
+
+		<!-- Constants -->
+		
+
+		<!-- Attributes -->
+		
+
+		<!-- Methods -->
+		
+		<div id="public-instance-method-details" class="method-section section">
+			<h3 class="section-header">Public Instance Methods</h3>
+
+		
+			<div id="app-root-method" class="method-detail ">
+				<a name="method-i-app_root"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">app_root</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="app-root-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/rconfig/utils.rb, line 53</span>
+53:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">app_root</span>
+54:       <span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-keyword kw">__FILE__</span>))
+55:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="create-dottable-hash-method" class="method-detail ">
+				<a name="method-i-create_dottable_hash"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">create_dottable_hash</span><span
+						class="method-args">(hash)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Creates a dottable hash for all <a href="../Hash.html">Hash</a> objects,
+recursively.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="create-dottable-hash-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/rconfig/utils.rb, line 72</span>
+72:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create_dottable_hash</span>(<span class="ruby-identifier">hash</span>)
+73:       <span class="ruby-identifier">make_indifferent</span>(<span class="ruby-identifier">hash</span>)
+74:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="default-load-paths-method" class="method-detail ">
+				<a name="method-i-default_load_paths"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">default_load_paths</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Checks environment for default configuration load paths.  Adds them to load
+paths if found.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="default-load-paths-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/rconfig/utils.rb, line 28</span>
+28:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">default_load_paths</span>
+29:       <span class="ruby-identifier">paths</span> = []
+30: 
+31:       <span class="ruby-comment cmt"># Check for Rails config path</span>
+32:       <span class="ruby-identifier">paths</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;#{::Rails.root}/config&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">rails?</span>
+33: 
+34:       <span class="ruby-comment cmt"># Check for defined constants</span>
+35:       <span class="ruby-identifier">paths</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">CONFIG_ROOT</span> <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">defined?</span>(<span class="ruby-constant">CONFIG_ROOT</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-constant">CONFIG_ROOT</span>)
+36:       <span class="ruby-identifier">paths</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">CONFIG_PATH</span> <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">defined?</span>(<span class="ruby-constant">CONFIG_PATH</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-constant">CONFIG_PATH</span>)
+37: 
+38:       <span class="ruby-comment cmt"># Check for config directory in app root</span>
+39:       <span class="ruby-identifier">config_dir</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">app_root</span>, <span class="ruby-value str">'config'</span>)
+40:       <span class="ruby-identifier">paths</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">config_dir</span> <span class="ruby-keyword kw">if</span> <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">config_dir</span>)
+41: 
+42:       <span class="ruby-identifier">paths</span>
+43:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="filename-for-name-method" class="method-detail ">
+				<a name="method-i-filename_for_name"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">filename_for_name</span><span
+						class="method-args">(name, directory=self.load_paths.first, ext=:yml)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Get complete file name, including file path for the given config name and
+directory.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="filename-for-name-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/rconfig/utils.rb, line 168</span>
+168:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">filename_for_name</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">directory</span>=<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">load_paths</span>.<span class="ruby-identifier">first</span>, <span class="ruby-identifier">ext</span>=<span class="ruby-value">:yml</span>)
+169:       <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">directory</span>, <span class="ruby-node">&quot;#{name}.#{ext}&quot;</span>)
+170:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="flush-cache-method" class="method-detail ">
+				<a name="method-i-flush_cache"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">flush_cache</span><span
+						class="method-args">(name=nil)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+If a config file name is specified, flushes cached config values for
+specified config file. Otherwise, flushes all cached config data. The
+latter should be avoided in production environments, if possible.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="flush-cache-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/rconfig/utils.rb, line 150</span>
+150:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">flush_cache</span>(<span class="ruby-identifier">name</span>=<span class="ruby-keyword kw">nil</span>)
+151:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">name</span>
+152:         <span class="ruby-identifier">name</span> = <span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_s</span>
+153:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">cache_hash</span>[<span class="ruby-identifier">name</span>] <span class="ruby-operator">&amp;&amp;=</span> <span class="ruby-keyword kw">nil</span>
+154:       <span class="ruby-keyword kw">else</span>
+155:         <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">warn</span> <span class="ruby-value str">&quot;RConfig: Flushing config data cache.&quot;</span>
+156:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">suffixes</span>        = {}
+157:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">cache</span>           = {}
+158:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">cache_files</span>     = {}
+159:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">cache_hash</span>      = {}
+160:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">last_auto_check</span> = {}
+161:         <span class="ruby-keyword kw">self</span>
+162:       <span class="ruby-keyword kw">end</span>
+163:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="log-level-method" class="method-detail ">
+				<a name="method-i-log_level"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">log_level</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					
+					
+
+					
+					<div class="method-source-code"
+						id="log-level-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/rconfig/utils.rb, line 66</span>
+66:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">log_level</span>
+67:       <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">try</span>(<span class="ruby-value">:level</span>)
+68:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="log-level--method" class="method-detail ">
+				<a name="method-i-log_level%3D"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">log_level=</span><span
+						class="method-args">(level)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Helper method for white-box testing and debugging. Sets the flag indicating
+whether or not to log errors and application run-time information.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="log-level--source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/rconfig/utils.rb, line 61</span>
+61:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">log_level=</span>(<span class="ruby-identifier">level</span>)
+62:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">logger</span>
+63:       <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">level</span> = <span class="ruby-identifier">level</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">level</span>.<span class="ruby-identifier">nil?</span>
+64:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="make-indifferent-method" class="method-detail ">
+				<a name="method-i-make_indifferent"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">make_indifferent</span><span
+						class="method-args">(hash)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Recursively makes hashes into frozen IndifferentAccess <a
+href="Config.html">Config</a> <a href="../Hash.html">Hash</a> Arrays are
+also traversed and frozen.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="make-indifferent-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/rconfig/utils.rb, line 122</span>
+122:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">make_indifferent</span>(<span class="ruby-identifier">hash</span>)
+123:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">hash</span>
+124:         <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Hash</span>
+125:           <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">frozen?</span>
+126:             <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
+127:               <span class="ruby-identifier">hash</span>[<span class="ruby-identifier">k</span>] = <span class="ruby-identifier">make_indifferent</span>(<span class="ruby-identifier">v</span>)
+128:             <span class="ruby-keyword kw">end</span>
+129:             <span class="ruby-identifier">hash</span> = <span class="ruby-constant">RConfig</span><span class="ruby-operator">::</span><span class="ruby-constant">Config</span>.<span class="ruby-identifier">new</span>.<span class="ruby-identifier">merge!</span>(<span class="ruby-identifier">hash</span>).<span class="ruby-identifier">freeze</span>
+130:           <span class="ruby-keyword kw">end</span>
+131:           <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;make_indefferent: x = #{hash.inspect}:#{hash.class}&quot;</span>
+132:         <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Array</span>
+133:           <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">frozen?</span>
+134:             <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">collect!</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
+135:               <span class="ruby-identifier">make_indifferent</span>(<span class="ruby-identifier">v</span>)
+136:             <span class="ruby-keyword kw">end</span>
+137:             <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">freeze</span>
+138:           <span class="ruby-keyword kw">end</span>
+139:           <span class="ruby-comment cmt"># Freeze Strings.</span>
+140:         <span class="ruby-keyword kw">when</span> <span class="ruby-constant">String</span>
+141:           <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">freeze</span>
+142:         <span class="ruby-keyword kw">end</span>
+143:       <span class="ruby-identifier">hash</span>
+144:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="merge-hashes-method" class="method-detail ">
+				<a name="method-i-merge_hashes"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">merge_hashes</span><span
+						class="method-args">(hashes)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Returns a merge of hashes.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="merge-hashes-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/rconfig/utils.rb, line 114</span>
+114:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">merge_hashes</span>(<span class="ruby-identifier">hashes</span>)
+115:       <span class="ruby-identifier">hashes</span>.<span class="ruby-identifier">inject</span>({}) { <span class="ruby-operator">|</span><span class="ruby-identifier">n</span>, <span class="ruby-identifier">h</span><span class="ruby-operator">|</span> <span class="ruby-identifier">n</span>.<span class="ruby-identifier">weave</span>(<span class="ruby-identifier">h</span>, <span class="ruby-keyword kw">true</span>) }
+116:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="parse-method" class="method-detail ">
+				<a name="method-i-parse"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">parse</span><span
+						class="method-args">(contents, name, ext)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Parses contents of the config file based on file type. XML files expect the
+root element to be the same as the file name.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="parse-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/rconfig/utils.rb, line 89</span>
+ 89:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parse</span>(<span class="ruby-identifier">contents</span>, <span class="ruby-identifier">name</span>, <span class="ruby-identifier">ext</span>)
+ 90:       <span class="ruby-identifier">hash</span> = <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">ext</span>
+ 91:         <span class="ruby-keyword kw">when</span> *<span class="ruby-constant">YML_FILE_TYPES</span>
+ 92:           <span class="ruby-constant">YAML</span><span class="ruby-operator">::</span><span class="ruby-identifier">load</span>(<span class="ruby-identifier">contents</span>)
+ 93:         <span class="ruby-keyword kw">when</span> *<span class="ruby-constant">XML_FILE_TYPES</span>
+ 94:           <span class="ruby-identifier">parse_xml</span>(<span class="ruby-identifier">contents</span>, <span class="ruby-identifier">name</span>)
+ 95:         <span class="ruby-keyword kw">when</span> *<span class="ruby-constant">CNF_FILE_TYPES</span>
+ 96:           <span class="ruby-constant">RConfig</span><span class="ruby-operator">::</span><span class="ruby-constant">PropertiesFile</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">contents</span>)
+ 97:         <span class="ruby-keyword kw">else</span>
+ 98:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">ConfigError</span>, <span class="ruby-node">&quot;Unknown File type: #{ext}&quot;</span>
+ 99:         <span class="ruby-keyword kw">end</span>
+100:       <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">freeze</span>
+101:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="parse-xml-method" class="method-detail ">
+				<a name="method-i-parse_xml"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">parse_xml</span><span
+						class="method-args">(contents, name)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Parses xml file and processes any references in the property values.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="parse-xml-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/rconfig/utils.rb, line 105</span>
+105:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parse_xml</span>(<span class="ruby-identifier">contents</span>, <span class="ruby-identifier">name</span>)
+106:       <span class="ruby-identifier">hash</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">from_xml</span>(<span class="ruby-identifier">contents</span>)
+107:       <span class="ruby-identifier">hash</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-identifier">name</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">name</span>)  <span class="ruby-comment cmt"># xml document could have root tag matching the file name.</span>
+108:       <span class="ruby-constant">RConfig</span><span class="ruby-operator">::</span><span class="ruby-constant">PropertiesFile</span>.<span class="ruby-identifier">parse_references</span>(<span class="ruby-identifier">hash</span>)
+109:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="rails--method" class="method-detail ">
+				<a name="method-i-rails%3F"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">rails?</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Returns true if the current application is a rails app.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="rails--source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/rconfig/utils.rb, line 47</span>
+47:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rails?</span>
+48:       <span class="ruby-operator">!</span><span class="ruby-operator">!</span><span class="ruby-keyword kw">defined?</span>(<span class="ruby-operator">::</span><span class="ruby-constant">Rails</span>)
+49:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="read-method" class="method-detail ">
+				<a name="method-i-read"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">read</span><span
+						class="method-args">(file, name, ext)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Reads and parses the config data from the specified file.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="read-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/rconfig/utils.rb, line 78</span>
+78:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">read</span>(<span class="ruby-identifier">file</span>, <span class="ruby-identifier">name</span>, <span class="ruby-identifier">ext</span>)
+79:       <span class="ruby-identifier">contents</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">file</span>)           <span class="ruby-comment cmt"># Read the contents from the file.</span>
+80:       <span class="ruby-identifier">contents</span> = <span class="ruby-constant">ERB</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">contents</span>).<span class="ruby-identifier">result</span>  <span class="ruby-comment cmt"># Evaluate any ruby code using ERB.</span>
+81:       <span class="ruby-identifier">parse</span>(<span class="ruby-identifier">contents</span>, <span class="ruby-identifier">name</span>, <span class="ruby-identifier">ext</span>)           <span class="ruby-comment cmt"># Parse the contents based on the file type</span>
+82:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="setting-method" class="method-detail ">
+				<a name="method-i-setting"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">setting</span><span
+						class="method-args">(name, default=nil)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Creates a class variable a sets it to the default value specified.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="setting-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/rconfig/utils.rb, line 14</span>
+14:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">setting</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">default</span>=<span class="ruby-keyword kw">nil</span>)
+15:       <span class="ruby-constant">RConfig</span>.<span class="ruby-identifier">class_eval</span> <span class="ruby-value str">        def self.#{name}          @@#{name}        end        def self.#{name}=(val)          @@#{name} = val        end</span>, <span class="ruby-keyword kw">__FILE__</span>, <span class="ruby-keyword kw">__LINE__</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>
+16: 
+17:       <span class="ruby-constant">RConfig</span>.<span class="ruby-identifier">send</span>(<span class="ruby-value">:&quot;#{name}=&quot;</span>, <span class="ruby-identifier">default</span>)
+18:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="setup-method" class="method-detail ">
+				<a name="method-i-setup"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">setup</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Used to customize configuration of <a href="../RConfig.html">RConfig</a>.
+Run &#8216;rails generate rconfig:install&#8217; to create a fresh
+initializer with all configuration values.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="setup-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/rconfig/utils.rb, line 7</span>
+ 7:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">setup</span>
+ 8:       <span class="ruby-keyword kw">yield</span> <span class="ruby-keyword kw">self</span>
+ 9:       <span class="ruby-identifier">raise_load_path_error</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">load_paths</span>.<span class="ruby-identifier">empty?</span>
+10:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">logger</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">DisabledLogger</span>.<span class="ruby-identifier">new</span>
+11:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+		</div>
+	
+
+	</div>
+
+
+	<div id="rdoc-debugging-section-dump" class="debugging-section">
+	
+		<p>Disabled; run with --debug to generate this.</p>
+	
+	</div>
+
+	<div id="validator-badges">
+		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+			Rdoc Generator</a> 1.1.6</small>.</p>
+	</div>
+
+</body>
+</html>
+

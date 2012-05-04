@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+	<title>File: README.rdoc [RDoc Documentation]</title>
+
+	<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet" />
+
+	<script src="./js/jquery.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="./js/thickbox-compressed.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="./js/quicksearch.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="./js/darkfish.js" type="text/javascript"
+		charset="utf-8"></script>
+</head>
+
+<body class="file">
+	<div id="metadata">
+		<div id="home-metadata">
+			<div id="home-section" class="section">
+        <h3 class="section-header">
+          <a href="./index.html">Home</a>
+          <a href="./index.html#classes">Classes</a>
+          <a href="./index.html#methods">Methods</a>
+        </h3>
+			</div>
+		</div>
+
+		<div id="project-metadata">
+			
+			
+			<div id="fileindex-section" class="section project-section">
+				<h3 class="section-header">Files</h3>
+				<ul>
+				
+					<li class="file"><a href="./README_rdoc.html">README.rdoc</a></li>
+				
+				</ul>
+			</div>
+			
+
+			<div id="classindex-section" class="section project-section">
+				<h3 class="section-header">Class Index
+					<span class="search-toggle"><img src="./images/find.png"
+						height="16" width="16" alt="[+]"
+						title="show/hide quicksearch" /></span></h3>
+				<form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+				<fieldset>
+					<legend>Quicksearch</legend>
+					<input type="text" name="quicksearch" value=""
+						class="quicksearch-field" />
+				</fieldset>
+				</form>
+
+				<ul class="link-list">
+				
+					<li><a href="./RConfig.html">RConfig</a></li>
+				
+					<li><a href="./RConfig/Callbacks.html">RConfig::Callbacks</a></li>
+				
+					<li><a href="./RConfig/Cascade.html">RConfig::Cascade</a></li>
+				
+					<li><a href="./RConfig/Config.html">RConfig::Config</a></li>
+				
+					<li><a href="./RConfig/ConfigError.html">RConfig::ConfigError</a></li>
+				
+					<li><a href="./RConfig/Constants.html">RConfig::Constants</a></li>
+				
+					<li><a href="./RConfig/CoreMethods.html">RConfig::CoreMethods</a></li>
+				
+					<li><a href="./RConfig/DisabledLogger.html">RConfig::DisabledLogger</a></li>
+				
+					<li><a href="./RConfig/Exceptions.html">RConfig::Exceptions</a></li>
+				
+					<li><a href="./RConfig/Generators.html">RConfig::Generators</a></li>
+				
+					<li><a href="./RConfig/Generators/InstallGenerator.html">RConfig::Generators::InstallGenerator</a></li>
+				
+					<li><a href="./RConfig/InvalidLoadPathError.html">RConfig::InvalidLoadPathError</a></li>
+				
+					<li><a href="./RConfig/LoadPaths.html">RConfig::LoadPaths</a></li>
+				
+					<li><a href="./RConfig/PropertiesFile.html">RConfig::PropertiesFile</a></li>
+				
+					<li><a href="./RConfig/Reload.html">RConfig::Reload</a></li>
+				
+					<li><a href="./RConfig/Settings.html">RConfig::Settings</a></li>
+				
+					<li><a href="./RConfig/Utils.html">RConfig::Utils</a></li>
+				
+					<li><a href="./Array.html">Array</a></li>
+				
+					<li><a href="./Hash.html">Hash</a></li>
+				
+					<li><a href="./NilClass.html">NilClass</a></li>
+				
+					<li><a href="./String.html">String</a></li>
+				
+				</ul>
+				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
+			</div>
+
+			
+		</div>
+	</div>
+
+	<div id="documentation">
+		<h1><a href="RConfig.html">RConfig</a> </h1>
+<p>
+The complete solution for Ruby Configuration Management. <a
+href="RConfig.html">RConfig</a> is a Ruby library that manages
+configuration within Ruby applications. It bridges the gap between yaml,
+xml, and key/value based properties files, by providing a centralized
+solution to handle application configuration from one location. It provides
+the simplicity of hash-based access, that Rubyists have come to know and
+love, supporting your configuration style of choice, while providing many
+new features, and an elegant API.
+</p>
+<h2>Features</h2>
+<ul>
+<li><p>
+Simple, easy to install and use.
+</p>
+</li>
+<li><p>
+Supports yaml, xml, and properties files.
+</p>
+</li>
+<li><p>
+Yaml and xml files support infinite level of configuration grouping.
+</p>
+</li>
+<li><p>
+Properties files support git config-like configuration grouping.
+</p>
+</li>
+<li><p>
+Intuitive dot-notation &#8216;key chaining&#8217; argument access.
+</p>
+</li>
+<li><p>
+Simple well-known hash/array based argument access.
+</p>
+</li>
+<li><p>
+Implements multilevel caching to reduce disk access.
+</p>
+</li>
+<li><p>
+Short-hand access to &#8216;global&#8217; application configuration, and
+shell environment.
+</p>
+</li>
+<li><p>
+Cascades multiple configuration files to support environment and
+host-specific configuration.
+</p>
+</li>
+<li><p>
+On-load callbacks for single, multiple, or any config file.
+</p>
+</li>
+<li><p>
+Embedded ruby code with ERB templating.
+</p>
+</li>
+<li><p>
+Support for referencing values in property files (Yaml also has built in
+support using node anchors).
+</p>
+</li>
+</ul>
+<h2>Getting Started</h2>
+<h3>Rails Apps</h3>
+<p>
+<a href="RConfig.html">RConfig</a> is released as a Ruby Gem. The gem is to
+be installed within a Ruby on Rails 3 application. To install, simply add
+the following to your Gemfile:
+</p>
+<pre>
+    # Gemfile
+    gem 'rconfig'
+</pre>
+<p>
+After updating your bundle, run the installer
+</p>
+<pre>
+    $&gt; rails generate rconfig:install
+</pre>
+<p>
+The installer creates an initializer used for configuring defaults used by
+<a href="RConfig.html">RConfig</a>
+</p>
+<h3>Non-Rails Apps</h3>
+<p>
+If you&#8217;re not using <a href="RConfig.html">RConfig</a> in a Rails
+app, and you don&#8217;t use Gemfile you can install <a
+href="RConfig.html">RConfig</a> with RubyGems
+</p>
+<pre>
+    gem install rconfig
+</pre>
+<h2>Requirements</h2>
+<p>
+Starting with version 0.4.0, <a href="RConfig.html">RConfig</a> requires at
+least Ruby 1.9, and Rails 3. Previous versions can be used in Ruby 1.8 and
+Rails 2.2+. Non-rails projects need ActiveSupport (>= 3 for <a
+href="RConfig.html">RConfig</a> 0.4.0, and > 2.2 for <a
+href="RConfig.html">RConfig</a> 0.3).
+</p>
+<ul>
+<li><p>
+Ruby 1.9+
+</p>
+</li>
+<li><p>
+ActiveSupport 3.0+
+</p>
+</li>
+</ul>
+<h2>Example</h2>
+<pre>
+  shell/console =&gt;
+    export LANG=en
+
+  demo.yml =&gt;
+   server:
+     address: host.domain.com
+     port: 81
+     host: &lt;%= %x{host_name} %&gt;
+   ...
+
+  application.properties =&gt;
+    debug_level=verbose
+    app_root=/home/rahmal/apps/rconfig
+    test_root=%{app_root}/tests
+  ...
+
+ demo.rb =&gt; 
+  require 'rconfig'
+  RConfig.config_paths = ['$HOME/config', '#{APP_ROOT}/config', '/demo/conf']
+  RConfig.demo[:server][:port] =&gt; 81
+  RConfig.demo.server.address  =&gt; 'host.domain.com'
+  RConfig.demo.server.host     =&gt; 'host.local'
+
+  RConfig.application.test_root =&gt; '/home/rahmal/apps/rconfig/tests'
+
+  RConfig[:debug_level] =&gt; 'verbose'
+  RConfig[:lang] =&gt; 'en'
+  ...
+</pre>
+<h2>Bugs and Feature Requests</h2>
+<ul>
+<li><p>
+Bug Reports &amp; Feature Requests: Please use to the [Issues page](<a
+href="https://github.com/rahmal/rconfig/issues">github.com/rahmal/rconfig/issues</a>)
+</p>
+</li>
+<li><p>
+Want to Contribute? Send a Pull Request
+</p>
+</li>
+</ul>
+<h2>Known Issues</h2>
+<ul>
+<li><p>
+None
+</p>
+</li>
+</ul>
+<h2>License</h2>
+<p>
+(The MIT License)
+</p>
+<p>
+Copyright &#169; 2009 Rahmal Conda <rahmal@gmail.com>
+</p>
+<p>
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the
+&#8216;Software&#8217;), to deal in the Software without restriction,
+including without limitation the rights to use, copy, modify, merge,
+publish, distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to the
+following conditions:
+</p>
+<p>
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+</p>
+<p>
+THE SOFTWARE IS PROVIDED &#8216;AS IS&#8217;, WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+USE OR OTHER DEALINGS IN THE SOFTWARE.
+</p>
+<h2>Credits</h2>
+<p>
+Thanks to everyone I included here. <a href="RConfig.html">RConfig</a>
+would not exist without their contributions.
+</p>
+<p>
+Mike Sandler, Kurt Stephens, CashNetUSA (CNU): 
+</p>
+<ul>
+<li><p>
+Wrote the proprietary class <a href="RConfig.html">RConfig</a> was
+originally based on.
+</p>
+</li>
+</ul>
+
+	</div>
+
+	<div id="validator-badges">
+		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+			Rdoc Generator</a> 1.1.6</small>.</p>
+	</div>
+</body>
+</html>
+

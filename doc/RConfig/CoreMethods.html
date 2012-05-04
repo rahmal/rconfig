@@ -1,0 +1,814 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+	<title>Module: RConfig::CoreMethods</title>
+
+	<link rel="stylesheet" href="../rdoc.css" type="text/css" media="screen" />
+
+	<script src="../js/jquery.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/thickbox-compressed.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/quicksearch.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/darkfish.js" type="text/javascript"
+		charset="utf-8"></script>
+
+</head>
+<body class="module">
+
+	<div id="metadata">
+		<div id="home-metadata">
+			<div id="home-section" class="section">
+        <h3 class="section-header">
+          <a href="../index.html">Home</a>
+          <a href="../index.html#classes">Classes</a>
+          <a href="../index.html#methods">Methods</a>
+        </h3>
+			</div>
+		</div>
+
+		<div id="file-metadata">
+			<div id="file-list-section" class="section">
+				<h3 class="section-header">In Files</h3>
+				<div class="section-body">
+					<ul>
+					
+						<li><a href="../lib/rconfig/core_methods_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+							class="thickbox" title="lib/rconfig/core_methods.rb">lib/rconfig/core_methods.rb</a></li>
+					
+					</ul>
+				</div>
+			</div>
+
+			
+		</div>
+
+		<div id="class-metadata">
+
+			<!-- Parent Class -->
+			
+
+			<!-- Namespace Contents -->
+			
+
+			<!-- Method Quickref -->
+			
+			<div id="method-list-section" class="section">
+				<h3 class="section-header">Methods</h3>
+				<ul class="link-list">
+					
+					<li><a href="#method-i-%5B%5D">#[]</a></li>
+					
+					<li><a href="#method-i-check_for_changes">#check_for_changes</a></li>
+					
+					<li><a href="#method-i-config_changed%3F">#config_changed?</a></li>
+					
+					<li><a href="#method-i-config_files">#config_files</a></li>
+					
+					<li><a href="#method-i-config_for">#config_for</a></li>
+					
+					<li><a href="#method-i-get_config_data">#get_config_data</a></li>
+					
+					<li><a href="#method-i-get_config_files">#get_config_files</a></li>
+					
+					<li><a href="#method-i-load_config_files">#load_config_files</a></li>
+					
+					<li><a href="#method-i-method_missing">#method_missing</a></li>
+					
+					<li><a href="#method-i-reload_on_change">#reload_on_change</a></li>
+					
+					<li><a href="#method-i-with_file">#with_file</a></li>
+					
+				</ul>
+			</div>
+			
+
+			<!-- Included Modules -->
+			
+			<div id="includes-section" class="section">
+				<h3 class="section-header">Included Modules</h3>
+				<ul class="link-list">
+				
+				
+					<li><span class="include">Constants</span></li>
+				
+				
+				</ul>
+			</div>
+			
+		</div>
+
+		<div id="project-metadata">
+			
+			
+			<div id="fileindex-section" class="section project-section">
+				<h3 class="section-header">Files</h3>
+				<ul>
+				
+					<li class="file"><a href="../README_rdoc.html">README.rdoc</a></li>
+				
+				</ul>
+			</div>
+			
+
+			<div id="classindex-section" class="section project-section">
+				<h3 class="section-header">Class Index
+					<span class="search-toggle"><img src="../images/find.png"
+						height="16" width="16" alt="[+]"
+						title="show/hide quicksearch" /></span></h3>
+				<form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+				<fieldset>
+					<legend>Quicksearch</legend>
+					<input type="text" name="quicksearch" value=""
+						class="quicksearch-field" />
+				</fieldset>
+				</form>
+
+				<ul class="link-list">
+				
+					<li><a href="../RConfig.html">RConfig</a></li>
+				
+					<li><a href="../RConfig/Callbacks.html">RConfig::Callbacks</a></li>
+				
+					<li><a href="../RConfig/Cascade.html">RConfig::Cascade</a></li>
+				
+					<li><a href="../RConfig/Config.html">RConfig::Config</a></li>
+				
+					<li><a href="../RConfig/ConfigError.html">RConfig::ConfigError</a></li>
+				
+					<li><a href="../RConfig/Constants.html">RConfig::Constants</a></li>
+				
+					<li><a href="../RConfig/CoreMethods.html">RConfig::CoreMethods</a></li>
+				
+					<li><a href="../RConfig/DisabledLogger.html">RConfig::DisabledLogger</a></li>
+				
+					<li><a href="../RConfig/Exceptions.html">RConfig::Exceptions</a></li>
+				
+					<li><a href="../RConfig/Generators.html">RConfig::Generators</a></li>
+				
+					<li><a href="../RConfig/Generators/InstallGenerator.html">RConfig::Generators::InstallGenerator</a></li>
+				
+					<li><a href="../RConfig/InvalidLoadPathError.html">RConfig::InvalidLoadPathError</a></li>
+				
+					<li><a href="../RConfig/LoadPaths.html">RConfig::LoadPaths</a></li>
+				
+					<li><a href="../RConfig/PropertiesFile.html">RConfig::PropertiesFile</a></li>
+				
+					<li><a href="../RConfig/Reload.html">RConfig::Reload</a></li>
+				
+					<li><a href="../RConfig/Settings.html">RConfig::Settings</a></li>
+				
+					<li><a href="../RConfig/Utils.html">RConfig::Utils</a></li>
+				
+					<li><a href="../Array.html">Array</a></li>
+				
+					<li><a href="../Hash.html">Hash</a></li>
+				
+					<li><a href="../NilClass.html">NilClass</a></li>
+				
+					<li><a href="../String.html">String</a></li>
+				
+				</ul>
+				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
+			</div>
+
+			
+		</div>
+	</div>
+
+	<div id="documentation">
+		<h1 class="module">RConfig::CoreMethods</h1>
+
+		<div id="description">
+			
+		</div>
+
+		<!-- Constants -->
+		
+
+		<!-- Attributes -->
+		
+
+		<!-- Methods -->
+		
+		<div id="public-instance-method-details" class="method-section section">
+			<h3 class="section-header">Public Instance Methods</h3>
+
+		
+			<div id="--method" class="method-detail ">
+				<a name="method-i-%5B%5D"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">[]</span><span
+						class="method-args">(key, file=:application)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+This method provides shorthand to retrieve configuration data that is
+global in scope, and used on an application or environment-wide level. The
+default location that it checks is the application file. The application
+config file is a special config file that should be used for config data
+that is broad in scope and used throughout the application. Since <a
+href="../RConfig.html">RConfig</a> gives special regard to the application
+config file, thought should be given to whatever config information is
+placed there.
+</p>
+<p>
+Most config data will be specific to particular part of the application
+(i.e. database, web service), and should therefore be placed in its own
+specific config file, such as database.yml, or services.xml
+</p>
+<p>
+This method also acts as a wrapper for ENV. If no value is returned from
+the application config, it will also check ENV for a value matching the
+specified key.
+</p>
+<p>
+Ex.1  RConfig[:test_mode] =>
+</p>
+<pre>
+       RConfig.application[:test_mode] ||
+       RConfig.application.test_mode
+</pre>
+<p>
+Ex.2  RConfig[:web_app_root] => ENV[&#8216;WEB_APP_ROOT&#8217;]
+</p>
+<p>
+NOTE: The application config file can be in any of
+</p>
+<pre>
+      the supported formats (yml, xml, conf, etc.)</pre>
+					
+
+					
+					<div class="method-source-code"
+						id="--source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/rconfig/core_methods.rb, line 224</span>
+224:     <span class="ruby-keyword kw">def</span> <span class="ruby-operator">[]</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">file</span>=<span class="ruby-value">:application</span>)
+225:       <span class="ruby-identifier">with_file</span>(<span class="ruby-identifier">file</span>, <span class="ruby-identifier">key</span>) <span class="ruby-operator">||</span> <span class="ruby-constant">ENV</span>[<span class="ruby-identifier">key</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">upcase</span>]
+226:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="check-for-changes-method" class="method-detail ">
+				<a name="method-i-check_for_changes"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">check_for_changes</span><span
+						class="method-args">(name=nil)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+If name is specified, checks that file for changes and reloads it if there
+are.  Otherwise, checks all files in the cache, reloading the changed
+files.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="check-for-changes-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/rconfig/core_methods.rb, line 164</span>
+164:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">check_for_changes</span>(<span class="ruby-identifier">name</span>=<span class="ruby-keyword kw">nil</span>)
+165:       <span class="ruby-identifier">changed</span> = []
+166:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span>
+167:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">cache_hash</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">dup</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">name</span><span class="ruby-operator">|</span>
+168:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">reload_on_change</span>(<span class="ruby-identifier">name</span>)
+169:             <span class="ruby-identifier">changed</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">name</span>
+170:           <span class="ruby-keyword kw">end</span>
+171:         <span class="ruby-keyword kw">end</span>
+172:       <span class="ruby-keyword kw">else</span>
+173:         <span class="ruby-identifier">name</span> = <span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_s</span>
+174:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">reload_on_change</span>(<span class="ruby-identifier">name</span>)
+175:           <span class="ruby-identifier">changed</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">name</span>
+176:         <span class="ruby-keyword kw">end</span>
+177:       <span class="ruby-keyword kw">end</span>
+178:       <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;check_for_changes(#{name.inspect}) =&gt; #{changed.inspect}&quot;</span>
+179:       <span class="ruby-identifier">changed</span>
+180:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="config-changed--method" class="method-detail ">
+				<a name="method-i-config_changed%3F"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">config_changed?</span><span
+						class="method-args">(name)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Returns whether or not the config for the given config name has changed
+since it was last loaded.
+</p>
+<p>
+Returns true if any files for config have changes since last load.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="config-changed--source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/rconfig/core_methods.rb, line 131</span>
+131:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">config_changed?</span>(<span class="ruby-identifier">name</span>)
+132:       <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;config_changed?(#{name.inspect})&quot;</span>
+133:       <span class="ruby-identifier">name</span> = <span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_s</span>
+134:       <span class="ruby-operator">!</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">cache_files</span>[<span class="ruby-identifier">name</span>] <span class="ruby-operator">===</span> <span class="ruby-identifier">get_config_files</span>(<span class="ruby-identifier">name</span>))
+135:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="config-files-method" class="method-detail ">
+				<a name="method-i-config_files"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">config_files</span><span
+						class="method-args">(name)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Return the config file information for the given config name.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="config-files-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/rconfig/core_methods.rb, line 120</span>
+120:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">config_files</span>(<span class="ruby-identifier">name</span>)
+121:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">cache_files</span>[<span class="ruby-identifier">name</span>] <span class="ruby-operator">||=</span> <span class="ruby-identifier">get_config_files</span>(<span class="ruby-identifier">name</span>)
+122:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="config-for-method" class="method-detail ">
+				<a name="method-i-config_for"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">config_for</span><span
+						class="method-args">(name)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Get a hash of merged config data. Will auto check every 5 minutes, for
+longer running apps, unless reload is disabled.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="config-for-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/rconfig/core_methods.rb, line 252</span>
+252:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">config_for</span>(<span class="ruby-identifier">name</span>)
+253:       <span class="ruby-identifier">name</span> = <span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_s</span>
+254:       <span class="ruby-identifier">check_for_changes</span>(<span class="ruby-identifier">name</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">auto_check?</span>(<span class="ruby-identifier">name</span>)
+255:       <span class="ruby-identifier">data</span> = <span class="ruby-identifier">get_config_data</span>(<span class="ruby-identifier">name</span>)
+256:       <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;config_for(#{name.inspect}) =&gt; #{data.inspect}&quot;</span>
+257:       <span class="ruby-identifier">data</span>
+258:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="get-config-data-method" class="method-detail ">
+				<a name="method-i-get_config_data"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">get_config_data</span><span
+						class="method-args">(name)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Get the merged config hash for the named file. Returns a cached indifferent
+access faker hash merged from all config files for a name.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="get-config-data-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/rconfig/core_methods.rb, line 143</span>
+143:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_config_data</span>(<span class="ruby-identifier">name</span>)
+144:       <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;get_config_data(#{name.inspect})&quot;</span>
+145: 
+146:       <span class="ruby-identifier">name</span> = <span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_s</span>
+147:       <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">result</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">cache_hash</span>[<span class="ruby-identifier">name</span>]
+148:         <span class="ruby-identifier">result</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">cache_hash</span>[<span class="ruby-identifier">name</span>] =
+149:             <span class="ruby-identifier">make_indifferent</span>(
+150:                 <span class="ruby-identifier">merge_hashes</span>(
+151:                     <span class="ruby-identifier">load_config_files</span>(<span class="ruby-identifier">name</span>)
+152:                 )
+153:             )
+154:         <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;get_config_data(#{name.inspect}): reloaded&quot;</span>
+155:       <span class="ruby-keyword kw">end</span>
+156: 
+157:       <span class="ruby-identifier">result</span>
+158:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="get-config-files-method" class="method-detail ">
+				<a name="method-i-get_config_files"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">get_config_files</span><span
+						class="method-args">(name)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Returns a list of all relevant config files as specified by suffixes list.
+Each element is an <a href="../Array.html">Array</a>, containing:
+</p>
+<pre>
+  [ 
+    &quot;server&quot;,              # The base name of the 
+    &quot;server_production&quot;,   # The suffixed name
+    &quot;/path/to/server.yml&quot;, # The absolute path to the file 
+    &lt;Wed Apr 09 08:53:14&gt;  # The last modified time of the file or nil, if it doesn't exist.
+  ]</pre>
+					
+
+					
+					<div class="method-source-code"
+						id="get-config-files-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/rconfig/core_methods.rb, line 95</span>
+ 95:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_config_files</span>(<span class="ruby-identifier">name</span>)
+ 96:       <span class="ruby-identifier">files</span> = []
+ 97: 
+ 98:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">load_paths</span>.<span class="ruby-identifier">reverse</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">directory</span><span class="ruby-operator">|</span>
+ 99:         <span class="ruby-comment cmt"># splatting *suffix allows us to deal with multipart suffixes</span>
+100:         <span class="ruby-identifier">name_no_overlay</span>, <span class="ruby-identifier">suffixes</span> = <span class="ruby-identifier">suffixes_for</span>(<span class="ruby-identifier">name</span>)
+101:         <span class="ruby-identifier">suffixes</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">suffix</span><span class="ruby-operator">|</span> [<span class="ruby-identifier">name_no_overlay</span>, *<span class="ruby-identifier">suffix</span>].<span class="ruby-identifier">compact</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">'_'</span>) }.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">name_with_suffix</span><span class="ruby-operator">|</span>
+102:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">file_types</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">ext</span><span class="ruby-operator">|</span>
+103:             <span class="ruby-identifier">filename</span> = <span class="ruby-identifier">filename_for_name</span>(<span class="ruby-identifier">name_with_suffix</span>, <span class="ruby-identifier">directory</span>, <span class="ruby-identifier">ext</span>)
+104:             <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">filename</span>)
+105:               <span class="ruby-identifier">modified_time</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">stat</span>(<span class="ruby-identifier">filename</span>).<span class="ruby-identifier">mtime</span>
+106:               <span class="ruby-identifier">files</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">name</span>, <span class="ruby-identifier">name_with_suffix</span>, <span class="ruby-identifier">filename</span>, <span class="ruby-identifier">ext</span>, <span class="ruby-identifier">modified_time</span>]
+107:             <span class="ruby-keyword kw">end</span>
+108:           <span class="ruby-keyword kw">end</span>
+109:         <span class="ruby-keyword kw">end</span>
+110:       <span class="ruby-keyword kw">end</span>
+111: 
+112:       <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;get_config_files(#{name}) =&gt; #{files.select { |x| x[3] }.inspect}&quot;</span>
+113: 
+114:       <span class="ruby-identifier">files</span>
+115:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="load-config-files-method" class="method-detail ">
+				<a name="method-i-load_config_files"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">load_config_files</span><span
+						class="method-args">(name, force=false)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Get each config file&#8217;s yaml hash for the given config name, to be
+merged later. Files will only be loaded if they have not been loaded before
+or the files have changed within the last five minutes, or force is
+explicitly set to true.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="load-config-files-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/rconfig/core_methods.rb, line 14</span>
+14:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">load_config_files</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">force</span>=<span class="ruby-keyword kw">false</span>)
+15:       <span class="ruby-identifier">name</span> = <span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_s</span>
+16: 
+17:       <span class="ruby-comment cmt"># Return last config file hash list loaded,</span>
+18:       <span class="ruby-comment cmt"># if reload is disabled and files have already been loaded.</span>
+19:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">cache_config_files</span>[<span class="ruby-identifier">name</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">reload_disabled?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">cache_config_files</span>[<span class="ruby-identifier">name</span>]
+20: 
+21:       <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">info</span> <span class="ruby-node">&quot;Loading config files for: #{name}&quot;</span>
+22:       <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;load_config_files(#{name.inspect})&quot;</span>
+23: 
+24: 
+25:       <span class="ruby-identifier">now</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
+26: 
+27:       <span class="ruby-comment cmt"># Get array of all the existing files file the config name.</span>
+28:       <span class="ruby-identifier">config_files</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">get_config_files</span>(<span class="ruby-identifier">name</span>)
+29: 
+30:       <span class="ruby-comment cmt"># Get all the data from all yaml files into as configs</span>
+31:       <span class="ruby-identifier">configs</span> = <span class="ruby-identifier">config_files</span>.<span class="ruby-identifier">collect</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+32:         <span class="ruby-identifier">name</span>, <span class="ruby-identifier">name_with_suffix</span>, <span class="ruby-identifier">filename</span>, <span class="ruby-identifier">ext</span>, <span class="ruby-identifier">modified_time</span> = * <span class="ruby-identifier">f</span>
+33: 
+34:         <span class="ruby-comment cmt"># Get the cached file info the specific file, if</span>
+35:         <span class="ruby-comment cmt"># it's been loaded before.</span>
+36:         <span class="ruby-identifier">config_data</span>, <span class="ruby-identifier">last_modified</span>, <span class="ruby-identifier">last_loaded</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">cache</span>[<span class="ruby-identifier">filename</span>]
+37: 
+38:         <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;f = #{f.inspect}\n&quot;</span> <span class="ruby-operator">+</span>
+39:           <span class="ruby-node">&quot;cache #{name_with_suffix} filename      = #{filename.inspect}\n&quot;</span> <span class="ruby-operator">+</span>
+40:           <span class="ruby-node">&quot;cache #{name_with_suffix} config_data   = #{config_data.inspect}\n&quot;</span> <span class="ruby-operator">+</span>
+41:           <span class="ruby-node">&quot;cache #{name_with_suffix} last_modified = #{last_modified.inspect}\n&quot;</span> <span class="ruby-operator">+</span>
+42:           <span class="ruby-node">&quot;cache #{name_with_suffix} last_loaded   = #{last_loaded.inspect}\n&quot;</span>
+43: 
+44:         <span class="ruby-comment cmt"># Load the file if its never been loaded or its been more than</span>
+45:         <span class="ruby-comment cmt"># so many minutes since last load attempt. (default: 5 minutes)</span>
+46:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">config_data</span>.<span class="ruby-identifier">blank?</span> <span class="ruby-operator">||</span> (<span class="ruby-identifier">now</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">last_loaded</span> <span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">reload_interval</span>)
+47:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">force</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">config_data</span>.<span class="ruby-identifier">blank?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">modified_time</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">last_modified</span>
+48: 
+49:             <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;modified_time #{name.inspect} #{filename.inspect} &quot;</span> <span class="ruby-operator">+</span>
+50:               <span class="ruby-node">&quot;changed #{modified_time != last_modified} : #{modified_time.inspect} #{last_modified.inspect}&quot;</span>
+51: 
+52:             <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;RConfig: loading #{filename.inspect}&quot;</span>
+53: 
+54:             <span class="ruby-identifier">config_data</span> = <span class="ruby-identifier">read</span>(<span class="ruby-identifier">filename</span>, <span class="ruby-identifier">name</span>, <span class="ruby-identifier">ext</span>)  <span class="ruby-comment cmt"># Get contents from config file</span>
+55: 
+56:             <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;RConfig: loaded #{filename.inspect} =&gt; #{config_data.inspect}&quot;</span>
+57: 
+58:             (<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">config_loaded</span> <span class="ruby-operator">||=</span> {})[<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">config_files</span>  <span class="ruby-comment cmt"># add files to the loaded files cache</span>
+59: 
+60:             <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">cache</span>[<span class="ruby-identifier">filename</span>] = [<span class="ruby-identifier">config_data</span>, <span class="ruby-identifier">modified_time</span>, <span class="ruby-identifier">now</span>]  <span class="ruby-comment cmt"># Save cached config file contents, and modified_time.</span>
+61: 
+62:             <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;cache[#{filename.inspect}] = #{self.cache[filename].inspect}&quot;</span>
+63: 
+64:             <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">cache_hash</span>[<span class="ruby-identifier">name</span>] = <span class="ruby-keyword kw">nil</span> <span class="ruby-comment cmt"># Flush merged hash cache.</span>
+65: 
+66:             <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">cache_files</span>[<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">config_files</span>  <span class="ruby-comment cmt"># Config files changed or disappeared.</span>
+67: 
+68:           <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt"># if config_data == nil || (now - last_loaded &gt; self.reload_interval)</span>
+69:         <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt"># if force || config_data == nil || modified_time != last_modified</span>
+70: 
+71:         <span class="ruby-identifier">config_data</span>
+72:       <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt"># config_files.collect</span>
+73:       <span class="ruby-identifier">configs</span>.<span class="ruby-identifier">compact!</span>
+74: 
+75:       <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;load_config_files(#{name.inspect}) =&gt; #{configs.inspect}&quot;</span>
+76: 
+77:       <span class="ruby-comment cmt"># Keep last loaded config files around in case self.reload_dsabled.</span>
+78:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">cache_config_files</span>[<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">configs</span> <span class="ruby-comment cmt">#unless configs.empty?</span>
+79: 
+80:       <span class="ruby-identifier">configs</span>
+81:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="method-missing-method" class="method-detail ">
+				<a name="method-i-method_missing"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">method_missing</span><span
+						class="method-args">(method, * args)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Short-hand access to config file by its name.
+</p>
+<p>
+Example:
+</p>
+<pre>
+  RConfig.provider(:foo) =&gt; RConfig.with_file(:provider).foo
+  RConfig.provider.foo   =&gt; RConfig.with_file(:provider).foo</pre>
+					
+
+					
+					<div class="method-source-code"
+						id="method-missing-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/rconfig/core_methods.rb, line 268</span>
+268:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">method</span>, * <span class="ruby-identifier">args</span>)
+269:       <span class="ruby-identifier">value</span> = <span class="ruby-identifier">with_file</span>(<span class="ruby-identifier">method</span>, * <span class="ruby-identifier">args</span>)
+270:       <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;#{self}.method_missing(#{method.inspect}, #{args.inspect}) =&gt; #{value.inspect}&quot;</span>
+271:       <span class="ruby-identifier">value</span>
+272:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="reload-on-change-method" class="method-detail ">
+				<a name="method-i-reload_on_change"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">reload_on_change</span><span
+						class="method-args">(name)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+If config files have changed, caches are flushed, on_load triggers are run.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="reload-on-change-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/rconfig/core_methods.rb, line 184</span>
+184:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">reload_on_change</span>(<span class="ruby-identifier">name</span>)
+185:       <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;reload_on_change(#{name.inspect}), reload_disabled=#{self.reload_disabled?}&quot;</span>
+186:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">changed</span> = <span class="ruby-identifier">config_changed?</span>(<span class="ruby-identifier">name</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">reload?</span>
+187:         <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">cache_hash</span>[<span class="ruby-identifier">name</span>]
+188:           <span class="ruby-identifier">flush_cache</span>(<span class="ruby-identifier">name</span>)  <span class="ruby-comment cmt"># flush cached config values.</span>
+189:           <span class="ruby-identifier">fire_on_load</span>(<span class="ruby-identifier">name</span>) <span class="ruby-comment cmt"># force on_load triggers.</span>
+190:         <span class="ruby-keyword kw">end</span>
+191:       <span class="ruby-keyword kw">end</span>
+192:       <span class="ruby-identifier">changed</span>
+193:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="with-file-method" class="method-detail ">
+				<a name="method-i-with_file"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">with_file</span><span
+						class="method-args">(name, *args)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Get the value specified by the args, in the file specified by th name
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="with-file-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/rconfig/core_methods.rb, line 231</span>
+231:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">with_file</span>(<span class="ruby-identifier">name</span>, *<span class="ruby-identifier">args</span>)
+232:       <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;with_file(#{name.inspect}, #{args.inspect})&quot;</span>
+233:       <span class="ruby-identifier">result</span> = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">inject</span>(<span class="ruby-identifier">config_for</span>(<span class="ruby-identifier">name</span>)) { <span class="ruby-operator">|</span><span class="ruby-identifier">v</span>, <span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+234:         <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;v = #{v.inspect}, i = #{i.inspect}&quot;</span>
+235:         <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">v</span>
+236:           <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Hash</span>
+237:             <span class="ruby-identifier">v</span>[<span class="ruby-identifier">i</span>.<span class="ruby-identifier">to_s</span>]
+238:           <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Array</span>
+239:             <span class="ruby-identifier">i</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Integer</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">v</span>[<span class="ruby-identifier">i</span>] <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
+240:           <span class="ruby-keyword kw">else</span>
+241:             <span class="ruby-keyword kw">nil</span>
+242:         <span class="ruby-keyword kw">end</span>
+243:       }
+244:       <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;with_file(#{name.inspect}, #{args.inspect}) =&gt; #{result.inspect}&quot;</span>
+245:       <span class="ruby-identifier">result</span>
+246:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+		</div>
+	
+
+	</div>
+
+
+	<div id="rdoc-debugging-section-dump" class="debugging-section">
+	
+		<p>Disabled; run with --debug to generate this.</p>
+	
+	</div>
+
+	<div id="validator-badges">
+		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+			Rdoc Generator</a> 1.1.6</small>.</p>
+	</div>
+
+</body>
+</html>
+

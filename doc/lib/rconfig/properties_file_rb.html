@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+	<title>File: properties_file.rb [RDoc Documentation]</title>
+
+	<link type="text/css" media="screen" href="../../rdoc.css" rel="stylesheet" />
+
+	<script src="../../js/jquery.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../../js/thickbox-compressed.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../../js/quicksearch.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../../js/darkfish.js" type="text/javascript"
+		charset="utf-8"></script>
+</head>
+
+<body class="file file-popup">
+	<div id="metadata">
+		<dl>
+			<dt class="modified-date">Last Modified</dt>
+			<dd class="modified-date">2012-04-11 17:06:06 -0700</dd>
+
+			
+			<dt class="requires">Requires</dt>
+			<dd class="requires">
+				<ul>
+				
+				</ul>
+			</dd>
+			
+
+			
+		</dl>
+	</div>
+
+	<div id="documentation">
+		
+		<div class="description">
+			<h2>Description</h2>
+			<p>
+Copyright &#169; 2009 Rahmal Conda <rahmal@gmail.com>
+</p>
+<p>
+This class parses key/value based properties files used for configuration.
+It is used by rconfig to import configuration files of the aforementioned
+format. Unlike yaml, and xml files it can only support three levels. First,
+it can have root level properties:
+</p>
+<pre>
+           server_url=host.domain.com
+           server_port=8080
+</pre>
+<p>
+Secondly, it can have properties grouped into catagories. The group names
+must be specified within brackets like [ &#8230; ]
+</p>
+<pre>
+           [server]
+           url=host.domain.com
+           port=8080
+</pre>
+<p>
+Finally, groups can also be qualified with namespaces, similar to git 
+config files. Group names are same as before, but with namespace in within
+the brackets like [ <group> &#8220;<name>&#8221; ]
+</p>
+<pre>
+           [host &quot;dev&quot;]
+           domain=dev.server.com
+
+           [host &quot;prod&quot;]
+           domain=www.server.com
+</pre>
+<p>
+These can be retrieved using dot-notation or variable to do it dynamically.
+</p>
+<pre>
+           RConfig.props.host.dev.domain
+                     * or -
+           RConfig.props.host[env].domain  (where env is 'dev' or 'prod')</pre>
+
+		</div>
+		
+	</div>
+</body>
+</html>
+

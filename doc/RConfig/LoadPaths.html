@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+	<title>Module: RConfig::LoadPaths</title>
+
+	<link rel="stylesheet" href="../rdoc.css" type="text/css" media="screen" />
+
+	<script src="../js/jquery.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/thickbox-compressed.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/quicksearch.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/darkfish.js" type="text/javascript"
+		charset="utf-8"></script>
+
+</head>
+<body class="module">
+
+	<div id="metadata">
+		<div id="home-metadata">
+			<div id="home-section" class="section">
+        <h3 class="section-header">
+          <a href="../index.html">Home</a>
+          <a href="../index.html#classes">Classes</a>
+          <a href="../index.html#methods">Methods</a>
+        </h3>
+			</div>
+		</div>
+
+		<div id="file-metadata">
+			<div id="file-list-section" class="section">
+				<h3 class="section-header">In Files</h3>
+				<div class="section-body">
+					<ul>
+					
+						<li><a href="../lib/rconfig/load_paths_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+							class="thickbox" title="lib/rconfig/load_paths.rb">lib/rconfig/load_paths.rb</a></li>
+					
+					</ul>
+				</div>
+			</div>
+
+			
+		</div>
+
+		<div id="class-metadata">
+
+			<!-- Parent Class -->
+			
+
+			<!-- Namespace Contents -->
+			
+
+			<!-- Method Quickref -->
+			
+			<div id="method-list-section" class="section">
+				<h3 class="section-header">Methods</h3>
+				<ul class="link-list">
+					
+					<li><a href="#method-i-add_load_path">#add_load_path</a></li>
+					
+					<li><a href="#method-i-load_paths_set%3F">#load_paths_set?</a></li>
+					
+					<li><a href="#method-i-parse_load_paths">#parse_load_paths</a></li>
+					
+					<li><a href="#method-i-set_load_paths">#set_load_paths</a></li>
+					
+				</ul>
+			</div>
+			
+
+			<!-- Included Modules -->
+			
+			<div id="includes-section" class="section">
+				<h3 class="section-header">Included Modules</h3>
+				<ul class="link-list">
+				
+				
+					<li><span class="include">Constants</span></li>
+				
+				
+				</ul>
+			</div>
+			
+		</div>
+
+		<div id="project-metadata">
+			
+			
+			<div id="fileindex-section" class="section project-section">
+				<h3 class="section-header">Files</h3>
+				<ul>
+				
+					<li class="file"><a href="../README_rdoc.html">README.rdoc</a></li>
+				
+				</ul>
+			</div>
+			
+
+			<div id="classindex-section" class="section project-section">
+				<h3 class="section-header">Class Index
+					<span class="search-toggle"><img src="../images/find.png"
+						height="16" width="16" alt="[+]"
+						title="show/hide quicksearch" /></span></h3>
+				<form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+				<fieldset>
+					<legend>Quicksearch</legend>
+					<input type="text" name="quicksearch" value=""
+						class="quicksearch-field" />
+				</fieldset>
+				</form>
+
+				<ul class="link-list">
+				
+					<li><a href="../RConfig.html">RConfig</a></li>
+				
+					<li><a href="../RConfig/Callbacks.html">RConfig::Callbacks</a></li>
+				
+					<li><a href="../RConfig/Cascade.html">RConfig::Cascade</a></li>
+				
+					<li><a href="../RConfig/Config.html">RConfig::Config</a></li>
+				
+					<li><a href="../RConfig/ConfigError.html">RConfig::ConfigError</a></li>
+				
+					<li><a href="../RConfig/Constants.html">RConfig::Constants</a></li>
+				
+					<li><a href="../RConfig/CoreMethods.html">RConfig::CoreMethods</a></li>
+				
+					<li><a href="../RConfig/DisabledLogger.html">RConfig::DisabledLogger</a></li>
+				
+					<li><a href="../RConfig/Exceptions.html">RConfig::Exceptions</a></li>
+				
+					<li><a href="../RConfig/Generators.html">RConfig::Generators</a></li>
+				
+					<li><a href="../RConfig/Generators/InstallGenerator.html">RConfig::Generators::InstallGenerator</a></li>
+				
+					<li><a href="../RConfig/InvalidLoadPathError.html">RConfig::InvalidLoadPathError</a></li>
+				
+					<li><a href="../RConfig/LoadPaths.html">RConfig::LoadPaths</a></li>
+				
+					<li><a href="../RConfig/PropertiesFile.html">RConfig::PropertiesFile</a></li>
+				
+					<li><a href="../RConfig/Reload.html">RConfig::Reload</a></li>
+				
+					<li><a href="../RConfig/Settings.html">RConfig::Settings</a></li>
+				
+					<li><a href="../RConfig/Utils.html">RConfig::Utils</a></li>
+				
+					<li><a href="../Array.html">Array</a></li>
+				
+					<li><a href="../Hash.html">Hash</a></li>
+				
+					<li><a href="../NilClass.html">NilClass</a></li>
+				
+					<li><a href="../String.html">String</a></li>
+				
+				</ul>
+				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
+			</div>
+
+			
+		</div>
+	</div>
+
+	<div id="documentation">
+		<h1 class="module">RConfig::LoadPaths</h1>
+
+		<div id="description">
+			
+		</div>
+
+		<!-- Constants -->
+		
+
+		<!-- Attributes -->
+		
+
+		<!-- Methods -->
+		
+		<div id="public-instance-method-details" class="method-section section">
+			<h3 class="section-header">Public Instance Methods</h3>
+
+		
+			<div id="add-load-path-method" class="method-detail ">
+				<a name="method-i-add_load_path"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">add_load_path</span><span
+						class="method-args">(path)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Adds the specified path to the list of directories to search for
+configuration files. It only allows one path to be entered at a time.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="add-load-path-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/rconfig/load_paths.rb, line 21</span>
+21:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_load_path</span>(<span class="ruby-identifier">path</span>)
+22:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">path</span> = <span class="ruby-identifier">parse_load_paths</span>(<span class="ruby-identifier">path</span>).<span class="ruby-identifier">first</span> <span class="ruby-comment cmt"># only accept first one.</span>
+23:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">load_paths</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">path</span>
+24:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">load_paths</span>.<span class="ruby-identifier">uniq!</span>
+25:         <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">reload</span>(<span class="ruby-keyword kw">true</span>)  <span class="ruby-comment cmt"># Load Paths have changed so force a reload</span>
+26:       <span class="ruby-keyword kw">end</span>
+27:       <span class="ruby-keyword kw">false</span>
+28:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="load-paths-set--method" class="method-detail ">
+				<a name="method-i-load_paths_set%3F"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">load_paths_set?</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Indicates whether or not config_paths have been set. Returns true if
+self.load_paths has at least one directory.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="load-paths-set--source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/rconfig/load_paths.rb, line 50</span>
+50:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">load_paths_set?</span>
+51:       <span class="ruby-keyword kw">not</span> <span class="ruby-identifier">load_paths</span>.<span class="ruby-identifier">blank?</span>
+52:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="parse-load-paths-method" class="method-detail ">
+				<a name="method-i-parse_load_paths"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">parse_load_paths</span><span
+						class="method-args">(paths)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+If the paths are made up of a delimited string, then parse out the
+individual paths. Verify that each path is valid.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="parse-load-paths-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/rconfig/load_paths.rb, line 33</span>
+33:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parse_load_paths</span>(<span class="ruby-identifier">paths</span>)
+34:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">paths</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">String</span>
+35:         <span class="ruby-identifier">path_sep</span> = (<span class="ruby-identifier">paths</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/;/</span>) <span class="ruby-operator">?</span> <span class="ruby-value str">';'</span> <span class="ruby-operator">:</span> <span class="ruby-value str">':'</span>
+36:         <span class="ruby-identifier">paths</span> = <span class="ruby-identifier">paths</span>.<span class="ruby-identifier">split</span>(<span class="ruby-node">/#{path_sep}+/</span>)
+37:       <span class="ruby-keyword kw">end</span>
+38:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;Path(s) must be a String or an Array [#{paths.inspect}]&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">paths</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">Array</span>
+39:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;Must provide at least one load path: [#{paths.inspect}]&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">paths</span>.<span class="ruby-identifier">empty?</span>
+40:       <span class="ruby-identifier">paths</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">dir</span><span class="ruby-operator">|</span>
+41:         <span class="ruby-identifier">dir</span> = <span class="ruby-constant">CONFIG_ROOT</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">dir</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'CONFIG_ROOT'</span>
+42:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">InvalidLoadPathError</span>, <span class="ruby-node">&quot;This directory is invalid: [#{dir.inspect}]&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">dir</span>)
+43:       <span class="ruby-keyword kw">end</span>
+44:       <span class="ruby-identifier">paths</span>
+45:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="set-load-paths-method" class="method-detail ">
+				<a name="method-i-set_load_paths"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">set_load_paths</span><span
+						class="method-args">(paths)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Sets the list of directories to search for configuration files. The
+argument must be an array of strings representing the paths to the
+directories, or a string representing either a single path or a list of
+paths separated by either a colon (:) or a semi-colon (;).
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="set-load-paths-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/rconfig/load_paths.rb, line 12</span>
+12:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">set_load_paths</span>(<span class="ruby-identifier">paths</span>)
+13:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">load_paths</span> = <span class="ruby-identifier">parse_load_paths</span>(<span class="ruby-identifier">paths</span>)
+14:       <span class="ruby-identifier">reload</span>(<span class="ruby-keyword kw">true</span>)  <span class="ruby-comment cmt"># Load Paths have changed so force a reload</span>
+15:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+		</div>
+	
+
+	</div>
+
+
+	<div id="rdoc-debugging-section-dump" class="debugging-section">
+	
+		<p>Disabled; run with --debug to generate this.</p>
+	
+	</div>
+
+	<div id="validator-badges">
+		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+			Rdoc Generator</a> 1.1.6</small>.</p>
+	</div>
+
+</body>
+</html>
+

@@ -1,24 +1,427 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE html 
-     PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN"
-     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 
-<!--
-
-    RDoc Documentation
-
-  -->
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-  <title>RDoc Documentation</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+	<title>RDoc Documentation</title>
+
+	<link type="text/css" media="screen" href="rdoc.css" rel="stylesheet" />
+
+	<script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/thickbox-compressed.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/quicksearch.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/darkfish.js" type="text/javascript" charset="utf-8"></script>
+
 </head>
-<frameset rows="20%, 80%">
-    <frameset cols="25%,35%,45%">
-        <frame src="fr_file_index.html"   title="Files" name="Files" />
-        <frame src="fr_class_index.html"  name="Classes" />
-        <frame src="fr_method_index.html" name="Methods" />
-    </frameset>
-    <frame src="files/README_rdoc.html" name="docwin" />
-</frameset>
+<body class="indexpage">
+
+	
+	<h1>RDoc Documentation</h1>
+
+	
+	<div id="main">
+		
+<p>
+The complete solution for Ruby Configuration Management. <a
+href="RConfig.html">RConfig</a> is a Ruby library that manages
+configuration within Ruby applications. It bridges the gap between yaml,
+xml, and key/value based properties files, by providing a centralized
+solution to handle application configuration from one location. It provides
+the simplicity of hash-based access, that Rubyists have come to know and
+love, supporting your configuration style of choice, while providing many
+new features, and an elegant API.
+</p>
+<h2>Features</h2>
+<ul>
+<li><p>
+Simple, easy to install and use.
+</p>
+</li>
+<li><p>
+Supports yaml, xml, and properties files.
+</p>
+</li>
+<li><p>
+Yaml and xml files support infinite level of configuration grouping.
+</p>
+</li>
+<li><p>
+Properties files support git config-like configuration grouping.
+</p>
+</li>
+<li><p>
+Intuitive dot-notation &#8216;key chaining&#8217; argument access.
+</p>
+</li>
+<li><p>
+Simple well-known hash/array based argument access.
+</p>
+</li>
+<li><p>
+Implements multilevel caching to reduce disk access.
+</p>
+</li>
+<li><p>
+Short-hand access to &#8216;global&#8217; application configuration, and
+shell environment.
+</p>
+</li>
+<li><p>
+Cascades multiple configuration files to support environment and
+host-specific configuration.
+</p>
+</li>
+<li><p>
+On-load callbacks for single, multiple, or any config file.
+</p>
+</li>
+<li><p>
+Embedded ruby code with ERB templating.
+</p>
+</li>
+<li><p>
+Support for referencing values in property files (Yaml also has built in
+support using node anchors).
+</p>
+</li>
+</ul>
+<h2>Getting Started</h2>
+<h3>Rails Apps</h3>
+<p>
+<a href="RConfig.html">RConfig</a> is released as a Ruby Gem. The gem is to
+be installed within a Ruby on Rails 3 application. To install, simply add
+the following to your Gemfile:
+</p>
+<pre>
+    # Gemfile
+    gem 'rconfig'
+</pre>
+<p>
+After updating your bundle, run the installer
+</p>
+<pre>
+    $&gt; rails generate rconfig:install
+</pre>
+<p>
+The installer creates an initializer used for configuring defaults used by
+<a href="RConfig.html">RConfig</a>
+</p>
+<h3>Non-Rails Apps</h3>
+<p>
+If you&#8217;re not using <a href="RConfig.html">RConfig</a> in a Rails
+app, and you don&#8217;t use Gemfile you can install <a
+href="RConfig.html">RConfig</a> with RubyGems
+</p>
+<pre>
+    gem install rconfig
+</pre>
+<h2>Requirements</h2>
+<p>
+Starting with version 0.4.0, <a href="RConfig.html">RConfig</a> requires at
+least Ruby 1.9, and Rails 3. Previous versions can be used in Ruby 1.8 and
+Rails 2.2+. Non-rails projects need ActiveSupport (>= 3 for <a
+href="RConfig.html">RConfig</a> 0.4.0, and > 2.2 for <a
+href="RConfig.html">RConfig</a> 0.3).
+</p>
+<ul>
+<li><p>
+Ruby 1.9+
+</p>
+</li>
+<li><p>
+ActiveSupport 3.0+
+</p>
+</li>
+</ul>
+<h2>Example</h2>
+<pre>
+  shell/console =&gt;
+    export LANG=en
+
+  demo.yml =&gt;
+   server:
+     address: host.domain.com
+     port: 81
+     host: &lt;%= %x{host_name} %&gt;
+   ...
+
+  application.properties =&gt;
+    debug_level=verbose
+    app_root=/home/rahmal/apps/rconfig
+    test_root=%{app_root}/tests
+  ...
+
+ demo.rb =&gt; 
+  require 'rconfig'
+  RConfig.config_paths = ['$HOME/config', '#{APP_ROOT}/config', '/demo/conf']
+  RConfig.demo[:server][:port] =&gt; 81
+  RConfig.demo.server.address  =&gt; 'host.domain.com'
+  RConfig.demo.server.host     =&gt; 'host.local'
+
+  RConfig.application.test_root =&gt; '/home/rahmal/apps/rconfig/tests'
+
+  RConfig[:debug_level] =&gt; 'verbose'
+  RConfig[:lang] =&gt; 'en'
+  ...
+</pre>
+<h2>Bugs and Feature Requests</h2>
+<ul>
+<li><p>
+Bug Reports &amp; Feature Requests: Please use to the [Issues page](<a
+href="https://github.com/rahmal/rconfig/issues">github.com/rahmal/rconfig/issues</a>)
+</p>
+</li>
+<li><p>
+Want to Contribute? Send a Pull Request
+</p>
+</li>
+</ul>
+<h2>Known Issues</h2>
+<ul>
+<li><p>
+None
+</p>
+</li>
+</ul>
+<h2>License</h2>
+<p>
+(The MIT License)
+</p>
+<p>
+Copyright &#169; 2009 Rahmal Conda <rahmal@gmail.com>
+</p>
+<p>
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the
+&#8216;Software&#8217;), to deal in the Software without restriction,
+including without limitation the rights to use, copy, modify, merge,
+publish, distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to the
+following conditions:
+</p>
+<p>
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+</p>
+<p>
+THE SOFTWARE IS PROVIDED &#8216;AS IS&#8217;, WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+USE OR OTHER DEALINGS IN THE SOFTWARE.
+</p>
+<h2>Credits</h2>
+<p>
+Thanks to everyone I included here. <a href="RConfig.html">RConfig</a>
+would not exist without their contributions.
+</p>
+<p>
+Mike Sandler, Kurt Stephens, CashNetUSA (CNU): 
+</p>
+<ul>
+<li><p>
+Wrote the proprietary class <a href="RConfig.html">RConfig</a> was
+originally based on.
+</p>
+</li>
+</ul>
+
+	</div>
+	
+
+	
+	
+	<h2>Files</h2>
+	<ul>
+		
+			<li class="file"><a href="README_rdoc.html">README.rdoc</a></li>
+		
+	</ul>
+	
+
+	<h2 id="classes">Classes/Modules</h2>
+	<ul>
+		
+		<li class="module"><a href="RConfig.html">RConfig</a></li>
+		
+		<li class="module"><a href="RConfig/Callbacks.html">RConfig::Callbacks</a></li>
+		
+		<li class="module"><a href="RConfig/Cascade.html">RConfig::Cascade</a></li>
+		
+		<li class="class"><a href="RConfig/Config.html">RConfig::Config</a></li>
+		
+		<li class="class"><a href="RConfig/ConfigError.html">RConfig::ConfigError</a></li>
+		
+		<li class="module"><a href="RConfig/Constants.html">RConfig::Constants</a></li>
+		
+		<li class="module"><a href="RConfig/CoreMethods.html">RConfig::CoreMethods</a></li>
+		
+		<li class="class"><a href="RConfig/DisabledLogger.html">RConfig::DisabledLogger</a></li>
+		
+		<li class="module"><a href="RConfig/Exceptions.html">RConfig::Exceptions</a></li>
+		
+		<li class="module"><a href="RConfig/Generators.html">RConfig::Generators</a></li>
+		
+		<li class="class"><a href="RConfig/Generators/InstallGenerator.html">RConfig::Generators::InstallGenerator</a></li>
+		
+		<li class="class"><a href="RConfig/InvalidLoadPathError.html">RConfig::InvalidLoadPathError</a></li>
+		
+		<li class="module"><a href="RConfig/LoadPaths.html">RConfig::LoadPaths</a></li>
+		
+		<li class="class"><a href="RConfig/PropertiesFile.html">RConfig::PropertiesFile</a></li>
+		
+		<li class="module"><a href="RConfig/Reload.html">RConfig::Reload</a></li>
+		
+		<li class="module"><a href="RConfig/Settings.html">RConfig::Settings</a></li>
+		
+		<li class="module"><a href="RConfig/Utils.html">RConfig::Utils</a></li>
+		
+		<li class="class"><a href="Array.html">Array</a></li>
+		
+		<li class="class"><a href="Hash.html">Hash</a></li>
+		
+		<li class="class"><a href="NilClass.html">NilClass</a></li>
+		
+		<li class="class"><a href="String.html">String</a></li>
+		
+	</ul>
+
+	<h2 id="methods">Methods</h2>
+	<ul>
+		
+			<li><a href="RConfig/PropertiesFile.html#method-c-parse">::parse &mdash; RConfig::PropertiesFile</a></li>
+		
+			<li><a href="RConfig/PropertiesFile.html#method-c-parse_references">::parse_references &mdash; RConfig::PropertiesFile</a></li>
+		
+			<li><a href="RConfig/Config.html#method-i-%5B%5D">#[] &mdash; RConfig::Config</a></li>
+		
+			<li><a href="RConfig/CoreMethods.html#method-i-%5B%5D">#[] &mdash; RConfig::CoreMethods</a></li>
+		
+			<li><a href="RConfig/LoadPaths.html#method-i-add_load_path">#add_load_path &mdash; RConfig::LoadPaths</a></li>
+		
+			<li><a href="RConfig/Utils.html#method-i-app_root">#app_root &mdash; RConfig::Utils</a></li>
+		
+			<li><a href="RConfig/Reload.html#method-i-auto_check%3F">#auto_check? &mdash; RConfig::Reload</a></li>
+		
+			<li><a href="NilClass.html#method-i-blank%3F">#blank? &mdash; NilClass</a></li>
+		
+			<li><a href="RConfig/CoreMethods.html#method-i-check_for_changes">#check_for_changes &mdash; RConfig::CoreMethods</a></li>
+		
+			<li><a href="RConfig/CoreMethods.html#method-i-config_changed%3F">#config_changed? &mdash; RConfig::CoreMethods</a></li>
+		
+			<li><a href="RConfig/CoreMethods.html#method-i-config_files">#config_files &mdash; RConfig::CoreMethods</a></li>
+		
+			<li><a href="RConfig/CoreMethods.html#method-i-config_for">#config_for &mdash; RConfig::CoreMethods</a></li>
+		
+			<li><a href="RConfig/Config.html#method-i-convert_value">#convert_value &mdash; RConfig::Config</a></li>
+		
+			<li><a href="RConfig/Generators/InstallGenerator.html#method-i-copy_initializer">#copy_initializer &mdash; RConfig::Generators::InstallGenerator</a></li>
+		
+			<li><a href="RConfig/Utils.html#method-i-create_dottable_hash">#create_dottable_hash &mdash; RConfig::Utils</a></li>
+		
+			<li><a href="RConfig/DisabledLogger.html#method-i-debug">#debug &mdash; RConfig::DisabledLogger</a></li>
+		
+			<li><a href="RConfig/Config.html#method-i-default">#default &mdash; RConfig::Config</a></li>
+		
+			<li><a href="RConfig/Utils.html#method-i-default_load_paths">#default_load_paths &mdash; RConfig::Utils</a></li>
+		
+			<li><a href="RConfig/DisabledLogger.html#method-i-dont_log">#dont_log &mdash; RConfig::DisabledLogger</a></li>
+		
+			<li><a href="RConfig/Reload.html#method-i-enable_reload%3D">#enable_reload= &mdash; RConfig::Reload</a></li>
+		
+			<li><a href="RConfig/DisabledLogger.html#method-i-error">#error &mdash; RConfig::DisabledLogger</a></li>
+		
+			<li><a href="RConfig/DisabledLogger.html#method-i-fatal">#fatal &mdash; RConfig::DisabledLogger</a></li>
+		
+			<li><a href="RConfig/Utils.html#method-i-filename_for_name">#filename_for_name &mdash; RConfig::Utils</a></li>
+		
+			<li><a href="RConfig/Callbacks.html#method-i-fire_on_load">#fire_on_load &mdash; RConfig::Callbacks</a></li>
+		
+			<li><a href="RConfig/Utils.html#method-i-flush_cache">#flush_cache &mdash; RConfig::Utils</a></li>
+		
+			<li><a href="RConfig/CoreMethods.html#method-i-get_config_data">#get_config_data &mdash; RConfig::CoreMethods</a></li>
+		
+			<li><a href="RConfig/CoreMethods.html#method-i-get_config_files">#get_config_files &mdash; RConfig::CoreMethods</a></li>
+		
+			<li><a href="RConfig/DisabledLogger.html#method-i-info">#info &mdash; RConfig::DisabledLogger</a></li>
+		
+			<li><a href="RConfig/CoreMethods.html#method-i-load_config_files">#load_config_files &mdash; RConfig::CoreMethods</a></li>
+		
+			<li><a href="RConfig/LoadPaths.html#method-i-load_paths_set%3F">#load_paths_set? &mdash; RConfig::LoadPaths</a></li>
+		
+			<li><a href="RConfig/DisabledLogger.html#method-i-log">#log &mdash; RConfig::DisabledLogger</a></li>
+		
+			<li><a href="RConfig/Utils.html#method-i-log_level">#log_level &mdash; RConfig::Utils</a></li>
+		
+			<li><a href="RConfig/Utils.html#method-i-log_level%3D">#log_level= &mdash; RConfig::Utils</a></li>
+		
+			<li><a href="RConfig/Utils.html#method-i-make_indifferent">#make_indifferent &mdash; RConfig::Utils</a></li>
+		
+			<li><a href="RConfig/Utils.html#method-i-merge_hashes">#merge_hashes &mdash; RConfig::Utils</a></li>
+		
+			<li><a href="RConfig/CoreMethods.html#method-i-method_missing">#method_missing &mdash; RConfig::CoreMethods</a></li>
+		
+			<li><a href="RConfig/Config.html#method-i-method_missing">#method_missing &mdash; RConfig::Config</a></li>
+		
+			<li><a href="RConfig/Callbacks.html#method-i-on_load">#on_load &mdash; RConfig::Callbacks</a></li>
+		
+			<li><a href="RConfig/Cascade.html#method-i-overlay%3D">#overlay= &mdash; RConfig::Cascade</a></li>
+		
+			<li><a href="RConfig/Utils.html#method-i-parse">#parse &mdash; RConfig::Utils</a></li>
+		
+			<li><a href="RConfig/LoadPaths.html#method-i-parse_load_paths">#parse_load_paths &mdash; RConfig::LoadPaths</a></li>
+		
+			<li><a href="RConfig/Utils.html#method-i-parse_xml">#parse_xml &mdash; RConfig::Utils</a></li>
+		
+			<li><a href="RConfig/Utils.html#method-i-rails%3F">#rails? &mdash; RConfig::Utils</a></li>
+		
+			<li><a href="RConfig/Exceptions.html#method-i-raise_load_path_error">#raise_load_path_error &mdash; RConfig::Exceptions</a></li>
+		
+			<li><a href="RConfig/Exceptions.html#method-i-raise_logger_error">#raise_logger_error &mdash; RConfig::Exceptions</a></li>
+		
+			<li><a href="RConfig/Utils.html#method-i-read">#read &mdash; RConfig::Utils</a></li>
+		
+			<li><a href="RConfig/Reload.html#method-i-reload">#reload &mdash; RConfig::Reload</a></li>
+		
+			<li><a href="RConfig/Reload.html#method-i-reload%3F">#reload? &mdash; RConfig::Reload</a></li>
+		
+			<li><a href="RConfig/Reload.html#method-i-reload_disabled%3F">#reload_disabled? &mdash; RConfig::Reload</a></li>
+		
+			<li><a href="RConfig/Reload.html#method-i-reload_interval%3D">#reload_interval= &mdash; RConfig::Reload</a></li>
+		
+			<li><a href="RConfig/CoreMethods.html#method-i-reload_on_change">#reload_on_change &mdash; RConfig::CoreMethods</a></li>
+		
+			<li><a href="RConfig/LoadPaths.html#method-i-set_load_paths">#set_load_paths &mdash; RConfig::LoadPaths</a></li>
+		
+			<li><a href="RConfig/Utils.html#method-i-setting">#setting &mdash; RConfig::Utils</a></li>
+		
+			<li><a href="RConfig/Utils.html#method-i-setup">#setup &mdash; RConfig::Utils</a></li>
+		
+			<li><a href="RConfig/Cascade.html#method-i-suffixes_for">#suffixes_for &mdash; RConfig::Cascade</a></li>
+		
+			<li><a href="RConfig/Config.html#method-i-unknown">#unknown &mdash; RConfig::Config</a></li>
+		
+			<li><a href="RConfig/DisabledLogger.html#method-i-warn">#warn &mdash; RConfig::DisabledLogger</a></li>
+		
+			<li><a href="Hash.html#method-i-weave">#weave &mdash; Hash</a></li>
+		
+			<li><a href="Hash.html#method-i-weave%21">#weave! &mdash; Hash</a></li>
+		
+			<li><a href="RConfig/CoreMethods.html#method-i-with_file">#with_file &mdash; RConfig::CoreMethods</a></li>
+		
+			<li><a href="RConfig/Reload.html#method-i-without_reload">#without_reload &mdash; RConfig::Reload</a></li>
+		
+	</ul>
+
+	<div id="validator-badges">
+		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+			Rdoc Generator</a> 1.1.6</small>.</p>
+	</div>
+</body>
 </html>

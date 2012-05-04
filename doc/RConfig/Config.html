@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+	<title>Class: RConfig::Config</title>
+
+	<link rel="stylesheet" href="../rdoc.css" type="text/css" media="screen" />
+
+	<script src="../js/jquery.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/thickbox-compressed.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/quicksearch.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/darkfish.js" type="text/javascript"
+		charset="utf-8"></script>
+
+</head>
+<body class="class">
+
+	<div id="metadata">
+		<div id="home-metadata">
+			<div id="home-section" class="section">
+        <h3 class="section-header">
+          <a href="../index.html">Home</a>
+          <a href="../index.html#classes">Classes</a>
+          <a href="../index.html#methods">Methods</a>
+        </h3>
+			</div>
+		</div>
+
+		<div id="file-metadata">
+			<div id="file-list-section" class="section">
+				<h3 class="section-header">In Files</h3>
+				<div class="section-body">
+					<ul>
+					
+						<li><a href="../lib/rconfig/config_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+							class="thickbox" title="lib/rconfig/config.rb">lib/rconfig/config.rb</a></li>
+					
+					</ul>
+				</div>
+			</div>
+
+			
+		</div>
+
+		<div id="class-metadata">
+
+			<!-- Parent Class -->
+			
+			<div id="parent-class-section" class="section">
+				<h3 class="section-header">Parent</h3>
+				
+				<p class="link">::HashWithIndifferentAccess</p>
+				
+			</div>
+			
+
+			<!-- Namespace Contents -->
+			
+
+			<!-- Method Quickref -->
+			
+			<div id="method-list-section" class="section">
+				<h3 class="section-header">Methods</h3>
+				<ul class="link-list">
+					
+					<li><a href="#method-i-%5B%5D">#[]</a></li>
+					
+					<li><a href="#method-i-convert_value">#convert_value</a></li>
+					
+					<li><a href="#method-i-default">#default</a></li>
+					
+					<li><a href="#method-i-method_missing">#method_missing</a></li>
+					
+					<li><a href="#method-i-unknown">#unknown</a></li>
+					
+				</ul>
+			</div>
+			
+
+			<!-- Included Modules -->
+			
+		</div>
+
+		<div id="project-metadata">
+			
+			
+			<div id="fileindex-section" class="section project-section">
+				<h3 class="section-header">Files</h3>
+				<ul>
+				
+					<li class="file"><a href="../README_rdoc.html">README.rdoc</a></li>
+				
+				</ul>
+			</div>
+			
+
+			<div id="classindex-section" class="section project-section">
+				<h3 class="section-header">Class Index
+					<span class="search-toggle"><img src="../images/find.png"
+						height="16" width="16" alt="[+]"
+						title="show/hide quicksearch" /></span></h3>
+				<form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+				<fieldset>
+					<legend>Quicksearch</legend>
+					<input type="text" name="quicksearch" value=""
+						class="quicksearch-field" />
+				</fieldset>
+				</form>
+
+				<ul class="link-list">
+				
+					<li><a href="../RConfig.html">RConfig</a></li>
+				
+					<li><a href="../RConfig/Callbacks.html">RConfig::Callbacks</a></li>
+				
+					<li><a href="../RConfig/Cascade.html">RConfig::Cascade</a></li>
+				
+					<li><a href="../RConfig/Config.html">RConfig::Config</a></li>
+				
+					<li><a href="../RConfig/ConfigError.html">RConfig::ConfigError</a></li>
+				
+					<li><a href="../RConfig/Constants.html">RConfig::Constants</a></li>
+				
+					<li><a href="../RConfig/CoreMethods.html">RConfig::CoreMethods</a></li>
+				
+					<li><a href="../RConfig/DisabledLogger.html">RConfig::DisabledLogger</a></li>
+				
+					<li><a href="../RConfig/Exceptions.html">RConfig::Exceptions</a></li>
+				
+					<li><a href="../RConfig/Generators.html">RConfig::Generators</a></li>
+				
+					<li><a href="../RConfig/Generators/InstallGenerator.html">RConfig::Generators::InstallGenerator</a></li>
+				
+					<li><a href="../RConfig/InvalidLoadPathError.html">RConfig::InvalidLoadPathError</a></li>
+				
+					<li><a href="../RConfig/LoadPaths.html">RConfig::LoadPaths</a></li>
+				
+					<li><a href="../RConfig/PropertiesFile.html">RConfig::PropertiesFile</a></li>
+				
+					<li><a href="../RConfig/Reload.html">RConfig::Reload</a></li>
+				
+					<li><a href="../RConfig/Settings.html">RConfig::Settings</a></li>
+				
+					<li><a href="../RConfig/Utils.html">RConfig::Utils</a></li>
+				
+					<li><a href="../Array.html">Array</a></li>
+				
+					<li><a href="../Hash.html">Hash</a></li>
+				
+					<li><a href="../NilClass.html">NilClass</a></li>
+				
+					<li><a href="../String.html">String</a></li>
+				
+				</ul>
+				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
+			</div>
+
+			
+		</div>
+	</div>
+
+	<div id="documentation">
+		<h1 class="class">RConfig::Config</h1>
+
+		<div id="description">
+			
+		</div>
+
+		<!-- Constants -->
+		
+
+		<!-- Attributes -->
+		
+
+		<!-- Methods -->
+		
+		<div id="public-instance-method-details" class="method-section section">
+			<h3 class="section-header">Public Instance Methods</h3>
+
+		
+			<div id="--method" class="method-detail ">
+				<a name="method-i-%5B%5D"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">[]</span><span
+						class="method-args">(key)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Why the &amp;*#^@*^&amp;$ isn&#8217;t HashWithIndifferentAccess doing this?
+HashWithIndifferentAccess doesn&#8217;t override Hash&#8217;s []!
+That&#8217;s  why it&#8217;s so destructive!
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="--source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/rconfig/config.rb, line 60</span>
+60:     <span class="ruby-keyword kw">def</span> <span class="ruby-operator">[]</span>(<span class="ruby-identifier">key</span>)
+61:       <span class="ruby-identifier">key</span> = <span class="ruby-identifier">key</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">key</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Symbol</span>)
+62:       <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">key</span>)
+63:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="default-method" class="method-detail ">
+				<a name="method-i-default"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">default</span><span
+						class="method-args">(key = self.default_key)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Allow hash.default => hash[&#8216;default&#8217;] without breaking
+Hash&#8217;s usage of default(key)
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="default-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/rconfig/config.rb, line 68</span>
+68:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">default</span>(<span class="ruby-identifier">key</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">default_key</span>)
+69:       <span class="ruby-identifier">key</span> = <span class="ruby-identifier">key</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">key</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Symbol</span>)
+70:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">key</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">default_key</span> 
+71:         <span class="ruby-keyword kw">self</span>[<span class="ruby-value str">'default'</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">key?</span>(<span class="ruby-value str">'default'</span>)
+72:       <span class="ruby-keyword kw">else</span>
+73:         <span class="ruby-identifier">hash_default</span>(<span class="ruby-identifier">key</span>)
+74:       <span class="ruby-keyword kw">end</span>
+75:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="method-missing-method" class="method-detail ">
+				<a name="method-i-method_missing"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">method_missing</span><span
+						class="method-args">(method, *args)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Dotted notation can be used with arguments (useful for creating mock
+objects) in the YAML file the method name is a key, argument(s) form a
+nested key, so that the correct value is retrieved and returned.
+</p>
+<p>
+For example loading to variable foo a yaml file that looks like: customer:
+</p>
+<pre>
+  id: 12345678
+  verified:
+    phone: verified
+    :address: info_not_available
+    ? [name, employer]
+    : not_verified
+</pre>
+<p>
+Allows the following calls: foo.customer.id                 => 12345678
+foo.customer.verified.phone     => verified
+foo.customer.verified(&#8220;phone&#8221;)  => verified
+foo.customer.verified(:address) => info_not_available
+foo.customer.verified(&#8220;name&#8221;, &#8220;employer&#8221;) =>
+not_verified
+</p>
+<p>
+Note that :address is specified as a symbol, where phone is just a string.
+Depending on what kind of parameter the method being mocked out is going to
+be called with, define in the YAML file either a string or a symbol. This
+also works inside the composite array keys.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="method-missing-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/rconfig/config.rb, line 42</span>
+42:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">method</span>, *<span class="ruby-identifier">args</span>)
+43:       <span class="ruby-identifier">method</span> = <span class="ruby-identifier">method</span>.<span class="ruby-identifier">to_s</span>
+44:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">method</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'default_key'</span>
+45:       <span class="ruby-identifier">value</span> = <span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">method</span>]
+46:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">size</span>
+47:       <span class="ruby-keyword kw">when</span> <span class="ruby-value">0</span>  <span class="ruby-comment cmt"># e.g.: RConfig.application.method</span>
+48:         <span class="ruby-identifier">value</span>
+49:       <span class="ruby-keyword kw">when</span> <span class="ruby-value">1</span>  <span class="ruby-comment cmt"># e.g.: RConfig.application.method(one_arg)</span>
+50:         <span class="ruby-identifier">value</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">args</span>[<span class="ruby-value">0</span>])
+51:       <span class="ruby-keyword kw">else</span>    <span class="ruby-comment cmt"># e.g.: RConfig.application.method(arg_one, args_two, ...)</span>
+52:         <span class="ruby-identifier">value</span>[<span class="ruby-identifier">args</span>]
+53:       <span class="ruby-keyword kw">end</span>
+54:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="unknown-method" class="method-detail ">
+				<a name="method-i-unknown"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">unknown</span><span
+						class="method-args"></span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+HashWithIndifferentAccess#default is broken in early versions of Rails.
+This is defined to use the hash version in <a
+href="Config.html#method-i-default">Config#default</a>
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="unknown-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/rconfig/config.rb, line 15</span>
+15:     <span class="ruby-identifier">define_method</span>(<span class="ruby-value">:hash_default</span>, <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">instance_method</span>(<span class="ruby-value">:default</span>))
+</pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+		</div>
+	
+		<div id="protected-instance-method-details" class="method-section section">
+			<h3 class="section-header">Protected Instance Methods</h3>
+
+		
+			<div id="convert-value-method" class="method-detail ">
+				<a name="method-i-convert_value"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">convert_value</span><span
+						class="method-args">(value)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Override HashWithIndifferentAccess#convert_value return instance of <a
+href="Config.html">Config</a> for <a href="../Hash.html">Hash</a> values.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="convert-value-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/rconfig/config.rb, line 82</span>
+82:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">convert_value</span>(<span class="ruby-identifier">value</span>)
+83:       <span class="ruby-identifier">value</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>) <span class="ruby-operator">?</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">value</span>).<span class="ruby-identifier">freeze</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">super</span>
+84:     <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+		</div>
+	
+
+	</div>
+
+
+	<div id="rdoc-debugging-section-dump" class="debugging-section">
+	
+		<p>Disabled; run with --debug to generate this.</p>
+	
+	</div>
+
+	<div id="validator-badges">
+		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+			Rdoc Generator</a> 1.1.6</small>.</p>
+	</div>
+
+</body>
+</html>
+
