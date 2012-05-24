@@ -1,6 +1,15 @@
 ROOT_DIR = File.expand_path(File.dirname(__FILE__))
 CONF_DIR = File.join(ROOT_DIR, 'config')
 
+# Set the environment to test
+ENV['CONFIG_ENV'] = 'test'
+
+# Host-specific config to test cascade logic
+cascade_host_file = "spec/config/cascade2_#{Socket.gethostname}.yml"
+unless File.exist?(cascade_host_file)
+  %x[ cp spec/config/cascade2_host.yml #{cascade_host_file}]
+end
+
 # Loads the rconfig library
 $LOAD_PATH << File.join(ROOT_DIR, '..', 'lib')
 
