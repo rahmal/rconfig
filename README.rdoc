@@ -65,7 +65,7 @@ Starting with version 0.4.0, RConfig requires at least Ruby 1.9, and Rails 3. Pr
 
  demo.rb => 
   require 'rconfig'
-  RConfig.config_paths = ['$HOME/config', '#{APP_ROOT}/config', '/demo/conf']
+  RConfig.load_paths = ['$HOME/config', '#{APP_ROOT}/config', '/demo/conf']
   RConfig.demo[:server][:port] => 81
   RConfig.demo.server.address  => 'host.domain.com'
   RConfig.demo.server.host     => 'host.local'
