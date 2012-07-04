@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>RConfig by rahmal</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/rahmal/rconfig">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/rahmal/rconfig/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/rahmal/rconfig/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>RConfig</h1>
+          <p>The complete solution for Ruby Configuration Management</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/rahmal">rahmal</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h3>Description</h3>
+
+<p>The complete solution for Ruby Configuration Management. RConfig is a Ruby library that manages configuration within Ruby applications. It bridges the gap between yaml, xml, and key/value based properties files, by providing a centralized solution to handle application configuration from one location. It provides the simplicity of hash-based access, that Rubyists have come to know and love, supporting your configuration style of choice, while providing many new features, and an elegant API.</p>
+
+<h3>features</h3>
+
+<ul>
+<li>Simple, easy to install and use.</li>
+<li>Supports yaml, xml, and properties files.</li>
+<li>Yaml and xml files support infinite level of configuration grouping.</li>
+<li>Properties files support git config-like configuration grouping.</li>
+<li>Intuitive dot-notation ‘key chaining’ argument access.</li>
+<li>Simple well-known hash/array based argument access.</li>
+<li>Implements multilevel caching to reduce disk access.</li>
+<li>Short-hand access to ‘global’ application configuration, and shell environment.</li>
+<li>Cascades multiple configuration files to support environment and host-specific configuration.</li>
+<li>On-load callbacks for single, multiple, or any config file.</li>
+<li>Embedded ruby code with ERB templating.</li>
+<li>Support for referencing values in property files (Yaml also has built in support using node anchors).</li>
+</ul><h3>Getting Started</h3>
+
+<h4>Rails Apps</h4>
+
+<p>RConfig is released as a Ruby Gem. The gem is to be installed within a Ruby on Rails 3 application. To install, simply add the following to your Gemfile:</p>
+
+<pre><code># Gemfile
+gem 'rconfig'
+</code></pre>
+
+<p>After updating your bundle, run the installer</p>
+
+<pre><code>$&gt; rails generate rconfig:install
+</code></pre>
+
+<p>The installer creates an initializer used for configuring defaults used by RConfig</p>
+
+<h4>Non-Rails Apps</h4>
+
+<p>If you're not using RConfig in a Rails app, and you don't use Gemfile you can install RConfig with RubyGems</p>
+
+<pre><code>gem install rconfig
+</code></pre>
+
+<h3>Requirements</h3>
+
+<p>Starting with version 0.4.0, RConfig requires at least Ruby 1.9, and Rails 3. Previous versions can be used in Ruby 1.8 and Rails 2.2+. Non-rails projects need ActiveSupport (&gt;= 3 for RConfig 0.4.0, and &gt; 2.2 for RConfig 0.3).</p>
+
+<ul>
+<li>Ruby 1.9</li>
+<li>RubyGems 1.3.5+</li>
+<li>ActiveSupport 3.0+</li>
+</ul><h3>Usage</h3>
+
+<pre><code>shell/console =&gt;
+  export LANG=en
+
+demo.yml =&gt;
+  server:
+    address: host.domain.com
+    port: 81
+    host: &lt;%= %x{host_name} %&gt;
+  ...
+
+application.properties =&gt;
+  debug_level=verbose
+  app_root=/home/rahmal/apps/rconfig
+  test_root=%{app_root}/tests
+  ...
+
+demo.rb =&gt; 
+  require 'rconfig'
+  RConfig.load_paths = ['$HOME/config', '#{APP_ROOT}/config', '/demo/conf']
+  RConfig.demo[:server][:port] =&gt; 81
+  RConfig.demo.server.address  =&gt; 'host.domain.com'
+  RConfig.demo.server.host     =&gt; 'host.local'
+
+  RConfig.application.test_root =&gt; '/home/rahmal/apps/rconfig/tests'
+
+  RConfig[:debug_level] =&gt; 'verbose'
+  RConfig[:lang] =&gt; 'en'
+</code></pre>
+
+<h3>Bugs and Feature Requests</h3>
+
+<ul>
+<li>Bug Reports &amp; Feature Requests: Please use to the <a href="https://github.com/rahmal/rconfig/issues">Issues page</a>
+</li>
+<li>Want to Contribute? Send a Pull Request</li>
+</ul><h3>Authors and Contributors</h3>
+
+<p>Thanks to everyone I included here. RConfig would not exist without their contributions.</p>
+
+<ul>
+<li><a href="https://github.com/kstephens" class="user-mention">@kstephens</a></li>
+<li><a href="https://github.com/mike-sandler" class="user-mention">@mike-sandler</a></li>
+<li>Enova Financial</li>
+</ul><h3>Support or Contact</h3>
+
+<p>Having trouble with RConfig? Check out the <a href="http://www.rahmalconda.com/rdoc/rconfig/index.html">documentation</a> at or contact <a href="mailto:rahmal@gmail.com">rahmal@gmail.com</a> and I’ll help you sort it out. You can also checkout my <a href="http://www.rahmalconda.com">homepage</a>, and leave comments.</p>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
+    
+  </body>
+</html>
