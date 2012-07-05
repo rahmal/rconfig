@@ -1,3 +1,7 @@
+0.4.4
+=====
+* Updated README file
+
 0.4.3
 =====
 * Fixed error handling in parse_load_paths
