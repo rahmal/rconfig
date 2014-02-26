@@ -58,7 +58,7 @@ describe RConfig do
 
     it 'should parse xml files with activesupport hash' do
       contents = "<admin><name>/Users/rahmal</name><home>rahmal</home></admin>"
-      Hash.should_receive(:from_xml).with(contents)
+      Hash.should_receive(:from_xml).with(contents).and_call_original
       RConfig.parse(contents, 'xml_file', :xml)
     end
   end
