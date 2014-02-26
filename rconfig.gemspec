@@ -24,12 +24,12 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib']
 
   # Dependencies
-  s.add_dependency 'activesupport',       '~>   3.0'
+  s.add_dependency 'activesupport',       '>   3.0'
 
   # Development Dependencies
-  s.add_development_dependency 'rspec',   '~> 2.3.0'
-  s.add_development_dependency 'bundler', '~> 1.0.0'
-  s.add_development_dependency 'jeweler', '~> 1.6.4'
+  s.add_development_dependency 'rspec',   '> 2.3.0'
+  s.add_development_dependency 'bundler', '> 1.0.0'
+  s.add_development_dependency 'jeweler', '> 1.6.4'
   s.add_development_dependency 'i18n'
 end
 
