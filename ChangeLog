@@ -1,3 +1,9 @@
+0.5.1
+=====
+* Fixed bug: New Active Support convert_value method signature
+* Fixing rspec test
+* Update from lepek/rconfig (See github commit #e51f73b)
+
 0.5.0
 =====
 * Corrected typo in generator template
