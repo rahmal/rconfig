@@ -19,7 +19,7 @@ module RConfig
       end
 
       # Use log file
-      if output.nil? && options[:file] && File.exists?(optios[:file])
+      if output.nil? && options[:file] && File.exists?(options[:file])
         @output = File.open(options[:file].to_s, 'a')
         @needs_close = true
       end
