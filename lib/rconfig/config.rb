@@ -79,7 +79,7 @@ module RConfig
     ##
     # Override HashWithIndifferentAccess#convert_value
     # return instance of Config for Hash values.
-    def convert_value(value, options = {})
+    def convert_value(value)
       value.is_a?(Hash) ? self.class.new(value).freeze : super
     end
 

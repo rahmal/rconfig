@@ -6,12 +6,9 @@ module RConfig
     CONFIG_ROOT = File.join(::Rails.root || '', 'config').gsub(/^\//, '').gsub(/\/$/,'') if defined?(::Rails) && !defined?(CONFIG_ROOT)
 
     # ENV TIER i.e. (development, integration, staging, or production)
-    # Defaults to Rails.env (or RAILS_ENV) if running in Rails, otherwise, 
-    # it checks ENV for 'RACK_ENV', or 'CONFIG_ENV'. If neither is present, it 
-    # assumes production. In apps that are not Rails or Rack-based, CONFIG_ENV 
-    # can be set to provide RConfig with a environment other than prodution.
-    ENV_TIER = ((defined?(Rails) && Rails.env) || (defined?(RAILS_ENV) && RAILS_ENV) || 
-                ENV['RAILS_ENV'] || ENV['RACK_ENV'] || ENV['CONFIG_ENV'] || 'production') unless defined? ENV_TIER
+    # Defaults to RAILS_ENV if running in Rails, otherwise, it checks
+    # if ENV['TIER'] is present. If not, it assumes production.
+    ENV_TIER = (defined?(RAILS_ENV) ? RAILS_ENV : (ENV['TIER'] || 'production')) unless defined? ENV_TIER
 
     # yml, yaml => yaml files, parsable by YAML library
     YML_FILE_TYPES = [:yml, :yaml].freeze unless defined? YML_FILE_TYPES

@@ -45,7 +45,7 @@ RConfig.setup do |config|
   # Flag variable indicating whether or not periodic reloads should 
   # be performed. Defaults to false.
   #
-  # config.enable_reload = false
+  # config.enabled_reload = false
 
   # ==> Interval for Reloading Configuration Data
   # The interval in which to perform periodic reloading of config files (in

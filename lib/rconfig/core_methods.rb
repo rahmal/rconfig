@@ -21,7 +21,7 @@ module RConfig
       logger.info "Loading config files for: #{name}"
       logger.debug "load_config_files(#{name.inspect})"
 
-      # Get current time for checking last loaded status.
+
       now = Time.now
 
       # Get array of all the existing files file the config name.

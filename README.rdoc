@@ -39,7 +39,7 @@ If you're not using RConfig in a Rails app, and you don't use Gemfile you can in
 
 
 == Requirements
-Starting with version 0.4.0, RConfig requires at least Ruby 1.9, and Rails 3. Previous versions can be used in Ruby 1.8 and Rails 2.2+. Non-rails projects need ActiveSupport (>= 3 for RConfig 0.4.0, and > 2.2 for RConfig 0.3). RConfig now supports Rails 4 as of 0.5.0.
+Starting with version 0.4.0, RConfig requires at least Ruby 1.9, and Rails 3. Previous versions can be used in Ruby 1.8 and Rails 2.2+. Non-rails projects need ActiveSupport (>= 3 for RConfig 0.4.0, and > 2.2 for RConfig 0.3).
 
 * Ruby 1.9+
 * ActiveSupport 3.0+
@@ -65,7 +65,7 @@ Starting with version 0.4.0, RConfig requires at least Ruby 1.9, and Rails 3. Pr
 
  demo.rb => 
   require 'rconfig'
-  RConfig.load_paths = ['$HOME/config', '#{APP_ROOT}/config', '/demo/conf']
+  RConfig.config_paths = ['$HOME/config', '#{APP_ROOT}/config', '/demo/conf']
   RConfig.demo[:server][:port] => 81
   RConfig.demo.server.address  => 'host.domain.com'
   RConfig.demo.server.host     => 'host.local'
