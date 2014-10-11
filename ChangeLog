@@ -1,7 +1,12 @@
+0.5.3
+=====
+* Removed .rvmrc (which was wrong anyway), in favor of .ruby-version and .ruby-gemset
+
 0.5.2
 =====
 * Fixed Typo
 * Updated from jrhorn424/rconfig (See github commit #0bc5f9741c1f066d0dee4aa40eccbf81ad7caf11)
+* Removed
 
 0.5.1
 =====
