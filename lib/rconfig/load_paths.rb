@@ -31,8 +31,14 @@ module RConfig
     # If the paths are made up of a delimited string, then parse out the
     # individual paths. Verify that each path is valid.
     def parse_load_paths(paths)
+      is_windows = Gem.win_platform?
+
       if paths.is_a? String
-        path_sep = (paths =~ /;/) ? ';' : ':'
+        if is_windows
+          path_sep = (paths =~ /;/) ? ';' : '!'
+        else
+          path_sep = (paths =~ /;/) ? ';' : ':'
+        end
         paths = paths.split(/#{path_sep}+/)
       end
       raise ArgumentError, "Path(s) must be a String or an Array [#{paths.inspect}]" unless paths.is_a? Array
