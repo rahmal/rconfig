@@ -1,3 +1,9 @@
+0.5.4
+=====
+* Added support for windows paths
+* Updated tests specs so that they can run on windows
+* Updated gem dependencies so thay can install on ruby 2.2.x
+
 0.5.3
 =====
 * Removed .rvmrc (which was wrong anyway), in favor of .ruby-version and .ruby-gemset

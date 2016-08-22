@@ -65,7 +65,7 @@ require 'rconfig/core_ext/hash'
 require 'rconfig/core_ext/nil'
 
 module RConfig
-  VERSION = '0.5.3'
+  VERSION = '0.5.4'
 
   autoload :Socket,                    'socket'
   autoload :YAML,                      'yaml'
