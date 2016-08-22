@@ -3,6 +3,7 @@
 * Added support for windows paths
 * Updated tests specs so that they can run on windows
 * Updated gem dependencies so thay can install on ruby 2.2.x
+* Removed overriden HashWithIndifferentAccess#convert_value.
 
 0.5.3
 =====

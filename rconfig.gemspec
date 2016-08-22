@@ -24,16 +24,15 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib']
 
   # Dependencies
-  s.add_dependency 'activesupport',       '>   3.0'
+  s.add_dependency 'activesupport',       '~>   3.2'
+  s.add_dependency 'json',                '>  1.8.1'
 
   # Development Dependencies
-  s.add_development_dependency 'rspec',   '> 2.3.0'
-  s.add_development_dependency 'bundler', '> 1.0.0'
-  s.add_development_dependency 'jeweler', '> 1.6.4'
-  s.add_development_dependency 'i18n'
-  ## json 1.8.1 has a error in native extension that makes it impossible to install with
-  ## ruby 2.2.x, so we have to force it to be greater than that
-  ## check https://github.com/flori/json/issues/229 for the issue
-  s.add_development_dependency 'json', '> 1.8.1'
+  s.add_development_dependency 'rake',    '~>  11.2'
+  s.add_development_dependency 'rack',    '~> 1.4.2'
+  s.add_development_dependency 'rspec',   '>  2.3.0'
+  s.add_development_dependency 'bundler', '>  1.0.0'
+  s.add_development_dependency 'jeweler', '>  1.6.4'
+  s.add_development_dependency 'i18n'  
 end
 
