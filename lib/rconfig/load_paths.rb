@@ -31,8 +31,9 @@ module RConfig
     # If the paths are made up of a delimited string, then parse out the
     # individual paths. Verify that each path is valid.
     #
-    # If windows path separators are ';' and '!'
-    # otherwise the path separators are ';' and ':'
+    # - If windows path separators are ';' and '!'
+    # - otherwise the path separators are ';' and ':'
+    #
     # This is necessary so windows paths can be correctly processed
     def parse_load_paths(paths)
 
@@ -58,6 +59,8 @@ module RConfig
       not load_paths.blank?
     end
 
+
+    private
 
     def get_path_separators
       is_windows = Gem.win_platform?
