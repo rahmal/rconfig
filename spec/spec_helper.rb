@@ -5,9 +5,10 @@ CONF_DIR = File.join(ROOT_DIR, 'config')
 ENV['CONFIG_ENV'] = 'test'
 
 # Host-specific config to test cascade logic
-cascade_host_file = "spec/config/cascade2_#{Socket.gethostname}.yml"
+cascade_host_file = File.join(File.dirname(__FILE__),'config',"cascade2_#{Socket.gethostname}.yml")
 unless File.exist?(cascade_host_file)
-  %x[ cp spec/config/cascade2_host.yml #{cascade_host_file}]
+   cascade_original_file = File.join(File.dirname(__FILE__),'config','cascade2_host.yml')
+   FileUtils.copy(cascade_original_file, cascade_host_file)
 end
 
 # Loads the rconfig library
