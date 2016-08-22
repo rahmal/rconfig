@@ -13,17 +13,17 @@ describe RConfig do
 
     it 'should reload if reload enabled' do
       RConfig.enable_reload = true
-      RConfig.reload.should be_true
+      RConfig.reload.should be_truthy
     end
 
     it 'should not reload if reload disabled' do
       RConfig.enable_reload = false
-      RConfig.reload.should be_false
+      RConfig.reload.should be_falsey
     end
 
     it 'should reload if forced' do
       RConfig.enable_reload = false
-      RConfig.reload(true).should be_true
+      RConfig.reload(true).should be_truthy
     end
 
     it 'should flush cache on reload' do

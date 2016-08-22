@@ -30,13 +30,21 @@ module RConfig
     ##
     # If the paths are made up of a delimited string, then parse out the
     # individual paths. Verify that each path is valid.
+    #
+    # - If windows path separators are ';' and '!'
+    # - otherwise the path separators are ';' and ':'
+    #
+    # This is necessary so windows paths can be correctly processed
     def parse_load_paths(paths)
+
       if paths.is_a? String
-        path_sep = (paths =~ /;/) ? ';' : ':'
-        paths = paths.split(/#{path_sep}+/)
+        path_separators = get_path_separators
+        paths = paths.split(/#{path_separators}+/)
       end
+
       raise ArgumentError, "Path(s) must be a String or an Array [#{paths.inspect}]" unless paths.is_a? Array
       raise ArgumentError, "Must provide at least one load path: [#{paths.inspect}]" if paths.empty?
+
       paths.each do |dir|
         dir = CONFIG_ROOT if dir == 'CONFIG_ROOT'
         raise InvalidLoadPathError, "This directory is invalid: [#{dir.inspect}]" unless Dir.exists?(dir)
@@ -49,6 +57,21 @@ module RConfig
     # Returns true if self.load_paths has at least one directory.
     def load_paths_set?
       not load_paths.blank?
+    end
+
+
+    private
+
+    def get_path_separators
+      is_windows = Gem.win_platform?
+      if is_windows
+        path_sep = (paths =~ /;/) ? ';' : '!'
+      else
+        path_sep = (paths =~ /;/) ? ';' : ':'
+      end
+
+      path_sep
+
     end
 
   end

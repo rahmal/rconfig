@@ -8,7 +8,7 @@ describe RConfig do
   context 'load paths' do
     it 'should have a valid load path' do
       RConfig.load_paths.should_not be_blank
-      RConfig.load_paths.all?{|path| File.exists?(path) }.should be_true
+      RConfig.load_paths.all?{|path| File.exists?(path) }.should be_truthy
     end
 
     it 'should allow multiple load paths' do
