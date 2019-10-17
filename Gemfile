@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'activesupport', '~> 3.2', require: 'active_support'
+gem 'activesupport', '~> 6.0', require: 'active_support'
 gem 'json', '> 1.8.1'
 
 group :development do

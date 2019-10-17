@@ -24,7 +24,7 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib']
 
   # Dependencies
-  s.add_dependency 'activesupport',       '~>   3.2'
+  s.add_dependency 'activesupport',       '>= 3.2', '< 7.0'
   s.add_dependency 'json',                '>  1.8.1'
 
   # Development Dependencies
