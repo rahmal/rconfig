@@ -29,7 +29,7 @@ Gem::Specification.new do |s|
 
   # Development Dependencies
   s.add_development_dependency 'rake',    '~>  11.2'
-  s.add_development_dependency 'rack',    '~> 1.4.2'
+  s.add_development_dependency 'rack',    '~> 1.6.11'
   s.add_development_dependency 'rspec',   '>  2.3.0'
   s.add_development_dependency 'bundler', '>  1.0.0'
   s.add_development_dependency 'jeweler', '>  1.6.4'
