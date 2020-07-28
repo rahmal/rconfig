@@ -35,7 +35,7 @@ GEM
       rake
       rdoc
       semver
-    json (2.0.2)
+    json (2.3.0)
     jwt (1.5.4)
     mini_portile2 (2.4.0)
     minitest (5.12.2)
