@@ -92,7 +92,7 @@ GEM
     ruby2_keywords (0.0.5)
     semver (1.0.1)
     thread_safe (0.3.6)
-    tzinfo (1.2.5)
+    tzinfo (1.2.10)
       thread_safe (~> 0.1)
     zeitwerk (2.2.0)
 
