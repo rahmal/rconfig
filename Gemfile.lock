@@ -46,7 +46,7 @@ GEM
       oauth2 (~> 1.0)
     hashie (3.6.0)
     highline (1.7.8)
-    i18n (0.7.0)
+    i18n (0.8.0)
     jeweler (2.1.1)
       builder
       bundler (>= 1.0)
