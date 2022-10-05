@@ -5,7 +5,7 @@ gem 'json', '> 1.8.1'
 
 group :development do
   gem 'rake',    '~> 12.3'
-  gem 'rack',    '~> 1.6.11'
+  gem 'rack',    '~> 2.1.4'
   gem 'rspec',   '> 2.3.0'
   gem 'bundler', '> 1.0.0'
   gem 'jeweler', '> 1.6.4'

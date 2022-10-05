@@ -46,7 +46,7 @@ GEM
       oauth2 (~> 1.0)
     hashie (3.6.0)
     highline (1.7.8)
-    i18n (0.7.0)
+    i18n (0.8.0)
     jeweler (2.1.1)
       builder
       bundler (>= 1.0)
@@ -57,15 +57,16 @@ GEM
       rake
       rdoc
       semver
-    json (2.0.2)
+    json (2.3.0)
     jwt (2.5.0)
-    mini_portile2 (2.4.0)
-    minitest (5.16.3)
+    mini_portile2 (2.8.0)
+    minitest (5.12.2)
     multi_json (1.15.0)
     multi_xml (0.6.0)
     multipart-post (2.2.3)
-    nokogiri (1.10.5)
-      mini_portile2 (~> 2.4.0)
+    nokogiri (1.13.8)
+      mini_portile2 (~> 2.8.0)
+      racc (~> 1.4)
     oauth2 (1.4.11)
       faraday (>= 0.17.3, < 3.0)
       jwt (>= 1.0, < 3.0)
@@ -73,7 +74,8 @@ GEM
       multi_xml (~> 0.5)
       rack (>= 1.2, < 4)
     public_suffix (5.0.0)
-    rack (1.6.11)
+    racc (1.6.0)
+    rack (2.1.4.1)
     rake (12.3.3)
     rdoc (4.1.0)
     rspec (3.5.0)
@@ -105,6 +107,6 @@ DEPENDENCIES
   i18n
   jeweler (> 1.6.4)
   json (> 1.8.1)
-  rack (~> 1.6.11)
+  rack (~> 2.1.4)
   rake (~> 12.3)
   rspec (> 2.3.0)
