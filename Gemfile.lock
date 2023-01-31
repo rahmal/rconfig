@@ -1,7 +1,7 @@
 GEM
   remote: http://rubygems.org/
   specs:
-    activesupport (6.0.3.1)
+    activesupport (6.0.6.1)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 0.7, < 2)
       minitest (~> 5.1)
@@ -10,7 +10,7 @@ GEM
     addressable (2.8.1)
       public_suffix (>= 2.0.2, < 6.0)
     builder (3.2.2)
-    concurrent-ruby (1.1.10)
+    concurrent-ruby (1.2.0)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
     diff-lcs (1.2.5)
@@ -62,7 +62,7 @@ GEM
     json (2.3.0)
     jwt (2.5.0)
     mini_portile2 (2.8.0)
-    minitest (5.12.2)
+    minitest (5.17.0)
     multi_json (1.15.0)
     multi_xml (0.6.0)
     multipart-post (2.2.3)
@@ -101,9 +101,9 @@ GEM
     semver (1.0.1)
     stringio (3.0.2)
     thread_safe (0.3.6)
-    tzinfo (1.2.10)
+    tzinfo (1.2.11)
       thread_safe (~> 0.1)
-    zeitwerk (2.6.1)
+    zeitwerk (2.6.6)
 
 PLATFORMS
   ruby
